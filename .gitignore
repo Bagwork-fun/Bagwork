@@ -21,3 +21,7 @@ node_modules
 
 # cli
 dist
+.cursor/plans/circle_+_prediction_market_d9e77aa2.plan.md
+packages/cre-jobs/prediction-market-job/.env
+packages/cre-jobs/**/.workflow-temp-*
+package-lock.json
