@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Prediction Market Metadata",
+  "description": "Schema for IPFS metadata JSON stored per prediction market",
+  "type": "object",
+  "required": ["title", "description", "outcomes", "resolutionTime", "category"],
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Short market question (e.g. 'Will the green car win the race?')",
+      "maxLength": 256
+    },
+    "description": {
+      "type": "string",
+      "description": "Full resolution criteria. Gemini reads this to determine the outcome.",
+      "maxLength": 4096
+    },
+    "outcomes": {
+      "type": "array",
+      "description": "Ordered list of outcomes. Index matches CTF partition indexSet.",
+      "items": { "type": "string" },
+      "minItems": 2,
+      "maxItems": 8,
+      "examples": [["Yes", "No"], ["Team A wins", "Team B wins", "Draw"]]
+    },
+    "resolutionTime": {
+      "type": "integer",
+      "description": "Unix timestamp (seconds) when CRE will attempt AI resolution"
+    },
+    "category": {
+      "type": "string",
+      "description": "Market category for display (e.g. 'Sports', 'Crypto', 'Politics')"
+    },
+    "imageUrl": {
+      "type": "string",
+      "description": "Optional banner image URL for the market card"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "title": "Will the green car win the race?",
+    "description": "Resolves YES if car #7 (green livery, team Alpine) finishes in 1st place at the 2024 Monaco Grand Prix. Result must be official before dispute window close. Source: formula1.com official results.",
+    "outcomes": ["Yes", "No"],
+    "resolutionTime": 1748649600,
+    "category": "Sports",
+    "imageUrl": "https://cloudflare-ipfs.com/ipfs/QmExampleImageCID",
+    "tags": ["racing", "motorsport", "2024"]
+  }
+}
