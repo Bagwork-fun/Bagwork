@@ -4,6 +4,8 @@
  */
 
 const SEPOLIA_MARKET_LOG_HINT = 10_859_626n;
+/** Earliest Arc Testnet deploy in `deployments/arcTestnet` (ConditionalTokens). Avoids scanning ~40M+ blocks on production. */
+const ARC_TESTNET_MARKET_LOG_HINT = 42_877_913n;
 
 export function marketRegistryLogsFromBlock(chainId: number | undefined): bigint {
   const raw =
@@ -12,7 +14,7 @@ export function marketRegistryLogsFromBlock(chainId: number | undefined): bigint
 
   if (chainId === 31337 || chainId === 31338 || chainId === 1337) return 0n;
   if (chainId === 11_155_111) return SEPOLIA_MARKET_LOG_HINT;
-  if (chainId === 5_042_002) return 0n;
+  if (chainId === 5_042_002) return ARC_TESTNET_MARKET_LOG_HINT;
   return 0n;
 }
 

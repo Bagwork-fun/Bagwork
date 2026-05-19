@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import { useState, useEffect, useMemo, type ChangeEvent } from "react";
 import type { Abi } from "viem";
-import { useAccount, useReadContract, useChainId, useReadContracts } from "wagmi";
+import { useAccount, useReadContract, useReadContracts } from "wagmi";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import {
@@ -16,6 +16,7 @@ import {
 } from "~~/hooks/scaffold-eth";
 import { filterVisibleMarkets } from "@/lib/market-blocklist";
 import { fetchIpfsJson, marketRegistryLogsFromBlock, parseMarketCreatedIpfsCid } from "@/lib/market-ipfs";
+import { useMarketChainId } from "~~/hooks/markets/useMarketMetadata";
 import { canAddressFinalizeResolution } from "@/lib/adapter-finalize";
 import { railFromUint8, type SettlementRail } from "@/lib/marketRails";
 
@@ -388,7 +389,7 @@ function MarketRow({
   disputeActive?: boolean;
   isMultisigSigner?: boolean;
 }) {
-  const chainId = useChainId();
+  const marketChainId = useMarketChainId();
   const { address: userAddress } = useAccount();
   const [metadata, setMetadata] = useState<{ title: string; category: string } | null>(null);
 
@@ -403,7 +404,8 @@ function MarketRow({
   const { data: creationEvents, isLoading: eventsLoading } = useScaffoldEventHistory({
     contractName: "MarketRegistry",
     eventName: "MarketCreated",
-    fromBlock: marketRegistryLogsFromBlock(chainId),
+    chainId: marketChainId,
+    fromBlock: marketRegistryLogsFromBlock(marketChainId),
     filters: { questionId },
     enabled: !!questionId,
   });
@@ -526,7 +528,7 @@ function SelectedMarketPanel({
   adapterAddress?: `0x${string}`;
   adapterAbi: Abi;
 }) {
-  const chainId = useChainId();
+  const marketChainId = useMarketChainId();
   const [panelMetadata, setPanelMetadata] = useState<{ title: string; description?: string } | null>(null);
 
   const { data: q } = useReadContract({
@@ -550,7 +552,8 @@ function SelectedMarketPanel({
   const { data: creationEvents } = useScaffoldEventHistory({
     contractName: "MarketRegistry",
     eventName: "MarketCreated",
-    fromBlock: marketRegistryLogsFromBlock(chainId),
+    chainId: marketChainId,
+    fromBlock: marketRegistryLogsFromBlock(marketChainId),
     filters: { questionId },
     enabled: !!questionId,
   });

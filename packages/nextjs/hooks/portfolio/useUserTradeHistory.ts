@@ -2,16 +2,17 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { type Address } from "viem";
-import { useAccount, useChainId, usePublicClient } from "wagmi";
+import { useAccount, usePublicClient } from "wagmi";
 
 import { marketRegistryLogsFromBlock } from "@/lib/market-ipfs";
+import { useMarketChainId } from "~~/hooks/markets/useMarketMetadata";
 import { fetchUserRedemptions, fetchUserTrades, type RedemptionEvent } from "@/lib/user-trade-index";
 import type { UserTradeEvent } from "@/lib/position-pnl";
 import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
 
 export function useUserTradeHistory(conditionIdFilter?: `0x${string}`) {
   const { address } = useAccount();
-  const chainId = useChainId();
+  const chainId = useMarketChainId();
   const publicClient = usePublicClient({ chainId });
 
   const { data: ammUsdc } = useDeployedContractInfo({ contractName: "PredictionMarketAMM_USDC" });

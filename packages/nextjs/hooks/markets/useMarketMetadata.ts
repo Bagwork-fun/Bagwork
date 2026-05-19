@@ -1,10 +1,10 @@
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useChainId } from "wagmi";
 
 import { fetchIpfsJson, marketRegistryLogsFromBlock, parseMarketCreatedIpfsCid } from "@/lib/market-ipfs";
-import { useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
+import { useScaffoldEventHistory, useTargetNetwork } from "~~/hooks/scaffold-eth";
+import type { AllowedChainIds } from "~~/utils/scaffold-eth";
 
 export interface MarketMetadata {
   title: string;
@@ -32,13 +32,20 @@ async function loadMarketMetadata(ipfsCid: string): Promise<MarketMetadata | nul
   return fetchIpfsJson<MarketMetadata>(ipfsCid);
 }
 
+/** Chain for market registry logs — scaffold target network, not the connected wallet chain. */
+export function useMarketChainId(): AllowedChainIds {
+  const { targetNetwork } = useTargetNetwork();
+  return targetNetwork.id;
+}
+
 /** Resolve IPFS CID from MarketCreated log or localStorage cache. */
 export function useMarketIpfsCid(questionId: `0x${string}` | undefined) {
-  const chainId = useChainId();
+  const chainId = useMarketChainId();
 
   const { data: creationEvents } = useScaffoldEventHistory({
     contractName: "MarketRegistry",
     eventName: "MarketCreated",
+    chainId,
     fromBlock: marketRegistryLogsFromBlock(chainId),
     filters: questionId ? { questionId } : undefined,
     enabled: !!questionId,

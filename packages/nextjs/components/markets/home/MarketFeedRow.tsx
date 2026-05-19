@@ -2,13 +2,14 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { useChainId, useReadContract } from "wagmi";
+import { useReadContract } from "wagmi";
 
 import { Spinner } from "@/components/ui/spinner";
 import { computeConditionId } from "@/lib/market-tokens";
 import { parseYesNoFromProbability } from "@/lib/prices";
 import { ammContractName, railFromUint8, type SettlementRail } from "@/lib/marketRails";
 import { fetchIpfsJson, marketRegistryLogsFromBlock, parseMarketCreatedIpfsCid } from "@/lib/market-ipfs";
+import { useMarketChainId } from "~~/hooks/markets/useMarketMetadata";
 import { useDeployedContractInfo, useScaffoldEventHistory, useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 interface MarketMetadata {
@@ -24,7 +25,7 @@ interface Props {
 }
 
 export function MarketFeedRow({ questionId, index, isActive }: Props) {
-  const chainId = useChainId();
+  const marketChainId = useMarketChainId();
   const [metadata, setMetadata] = useState<MarketMetadata | null>(null);
   const [ipfsCid, setIpfsCid] = useState<string | null>(null);
 
@@ -44,7 +45,8 @@ export function MarketFeedRow({ questionId, index, isActive }: Props) {
   const { data: creationEvents } = useScaffoldEventHistory({
     contractName: "MarketRegistry",
     eventName: "MarketCreated",
-    fromBlock: marketRegistryLogsFromBlock(chainId),
+    chainId: marketChainId,
+    fromBlock: marketRegistryLogsFromBlock(marketChainId),
     filters: { questionId },
     enabled: !!questionId,
   });

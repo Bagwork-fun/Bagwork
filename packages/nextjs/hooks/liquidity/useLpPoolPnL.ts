@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { type Address, decodeEventLog, parseAbi } from "viem";
-import { useChainId, usePublicClient } from "wagmi";
+import { usePublicClient } from "wagmi";
 
 import {
   depositsFromEvents,
@@ -12,6 +12,7 @@ import {
 } from "@/lib/lp-pnl";
 import { ammContractName, type SettlementRail } from "@/lib/marketRails";
 import { marketRegistryLogsFromBlock } from "@/lib/market-ipfs";
+import { useMarketChainId } from "~~/hooks/markets/useMarketMetadata";
 import { useDeployedContractInfo, useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 const LP_EVENTS_ABI = parseAbi([
@@ -21,7 +22,7 @@ const LP_EVENTS_ABI = parseAbi([
 ]);
 
 export function useLpPoolPnL(conditionId: `0x${string}` | undefined, rail: SettlementRail, lpOwner?: Address) {
-  const chainId = useChainId();
+  const chainId = useMarketChainId();
   const publicClient = usePublicClient({ chainId });
   const contractName = ammContractName(rail);
   const { data: ammInfo } = useDeployedContractInfo({ contractName });

@@ -4,13 +4,14 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { formatUnits, parseUnits, parseAbi } from "viem";
-import { useAccount, useChainId, useReadContract, usePublicClient, useBlockNumber } from "wagmi";
+import { useAccount, useReadContract, usePublicClient, useBlockNumber } from "wagmi";
 import {
   useDeployedContractInfo,
   useScaffoldWriteContract,
   useScaffoldEventHistory,
   useScaffoldReadContract,
 } from "~~/hooks/scaffold-eth";
+import { useMarketChainId } from "~~/hooks/markets/useMarketMetadata";
 import { railFromUint8, type SettlementRail } from "@/lib/marketRails";
 import { fetchIpfsJson, marketRegistryLogsFromBlock, parseMarketCreatedIpfsCid } from "@/lib/market-ipfs";
 import {
@@ -78,9 +79,9 @@ export default function MarketDetailPage({ params }: PageProps) {
   const { questionId } = React.use(params);
   if (isHiddenMarket(questionId)) notFound();
 
-  const chainId = useChainId();
-  const publicClient = usePublicClient({ chainId });
-  const { data: latestBlock } = useBlockNumber({ chainId, watch: true });
+  const marketChainId = useMarketChainId();
+  const publicClient = usePublicClient({ chainId: marketChainId });
+  const { data: latestBlock } = useBlockNumber({ chainId: marketChainId, watch: true });
   const { address: userAddress } = useAccount();
 
   const [metadata, setMetadata] = useState<MarketMetadata | null>(null);
@@ -114,7 +115,8 @@ export default function MarketDetailPage({ params }: PageProps) {
   const { data: creationEvents, isLoading: creationLoading } = useScaffoldEventHistory({
     contractName: "MarketRegistry",
     eventName: "MarketCreated",
-    fromBlock: marketRegistryLogsFromBlock(chainId),
+    chainId: marketChainId,
+    fromBlock: marketRegistryLogsFromBlock(marketChainId),
     filters: { questionId },
     enabled: !!questionId,
     blockData: true,
@@ -123,7 +125,8 @@ export default function MarketDetailPage({ params }: PageProps) {
   const { data: initEvents, isLoading: initLoading } = useScaffoldEventHistory({
     contractName: "AiCTFAdapter",
     eventName: "MarketInitialized",
-    fromBlock: marketRegistryLogsFromBlock(chainId),
+    chainId: marketChainId,
+    fromBlock: marketRegistryLogsFromBlock(marketChainId),
     filters: { questionId },
     enabled: !!questionId,
     blockData: true,
@@ -136,7 +139,8 @@ export default function MarketDetailPage({ params }: PageProps) {
   const { data: resolvedEvents } = useScaffoldEventHistory({
     contractName: "AiCTFAdapter",
     eventName: "MarketResolved",
-    fromBlock: marketRegistryLogsFromBlock(chainId),
+    chainId: marketChainId,
+    fromBlock: marketRegistryLogsFromBlock(marketChainId),
     filters: { questionId },
     enabled: !!questionId,
   });
@@ -294,7 +298,7 @@ export default function MarketDetailPage({ params }: PageProps) {
     }
     let cancelled = false;
     setVolume24hWei("loading");
-    const fromBlock = volumeFromBlock(latestBlock, birthLog?.blockNumber, chainId);
+    const fromBlock = volumeFromBlock(latestBlock, birthLog?.blockNumber, marketChainId);
     void (async () => {
       try {
         const addr = ammInfo.address as `0x${string}`;
@@ -331,7 +335,7 @@ export default function MarketDetailPage({ params }: PageProps) {
     return () => {
       cancelled = true;
     };
-  }, [publicClient, ammInfo?.address, conditionId, latestBlock, birthLog?.blockNumber, chainId]);
+  }, [publicClient, ammInfo?.address, conditionId, latestBlock, birthLog?.blockNumber, marketChainId]);
 
   const yesProb = yesProbability ? Math.round((Number(yesProbability) / 1e6) * 100) : 50;
   const noProb = 100 - yesProb;
@@ -474,8 +478,8 @@ export default function MarketDetailPage({ params }: PageProps) {
       ? (finalizeEvent as { transactionHash?: `0x${string}` }).transactionHash
       : undefined;
 
-  const creationTxLink = creationTxHash ? getBlockExplorerTxLink(chainId, creationTxHash) : "";
-  const finalizeTxLink = finalizeTxHash ? getBlockExplorerTxLink(chainId, finalizeTxHash) : "";
+  const creationTxLink = creationTxHash ? getBlockExplorerTxLink(marketChainId, creationTxHash) : "";
+  const finalizeTxLink = finalizeTxHash ? getBlockExplorerTxLink(marketChainId, finalizeTxHash) : "";
 
   const handleTrade = async () => {
     if (activeTab === "buy") {

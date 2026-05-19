@@ -1,20 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useChainId } from "wagmi";
-
 import { fetchIpfsJson, marketRegistryLogsFromBlock, parseMarketCreatedIpfsCid } from "@/lib/market-ipfs";
 type MarketMetadata = { title?: string };
+import { useMarketChainId } from "~~/hooks/markets/useMarketMetadata";
 import { useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
 
 export function PortfolioMarketTitle({ questionId }: { questionId: `0x${string}` }) {
-  const chainId = useChainId();
+  const marketChainId = useMarketChainId();
   const [title, setTitle] = useState<string | null>(null);
 
   const { data: creationEvents } = useScaffoldEventHistory({
     contractName: "MarketRegistry",
     eventName: "MarketCreated",
-    fromBlock: marketRegistryLogsFromBlock(chainId),
+    chainId: marketChainId,
+    fromBlock: marketRegistryLogsFromBlock(marketChainId),
     filters: { questionId },
     enabled: !!questionId,
   });
