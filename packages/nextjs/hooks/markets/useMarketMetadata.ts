@@ -2,9 +2,11 @@
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { fetchIpfsJson, marketRegistryLogsFromBlock, parseMarketCreatedIpfsCid } from "@/lib/market-ipfs";
-import { useScaffoldEventHistory, useTargetNetwork } from "~~/hooks/scaffold-eth";
-import type { AllowedChainIds } from "~~/utils/scaffold-eth";
+import { fetchIpfsJson } from "@/lib/market-ipfs";
+import { useMarketChainId } from "~~/hooks/markets/useMarketChainId";
+import { lookupMarketIpfsCid, useMarketCidIndex } from "~~/hooks/markets/useMarketCidIndex";
+
+export { useMarketChainId } from "~~/hooks/markets/useMarketChainId";
 
 export interface MarketMetadata {
   title: string;
@@ -14,6 +16,8 @@ export interface MarketMetadata {
   category: string;
   imageUrl?: string;
   settlementAsset?: string;
+  resolutionReasoning?: string;
+  aiResolutionSummary?: string;
 }
 
 const METADATA_STALE_MS = 5 * 60_000;
@@ -32,31 +36,27 @@ async function loadMarketMetadata(ipfsCid: string): Promise<MarketMetadata | nul
   return fetchIpfsJson<MarketMetadata>(ipfsCid);
 }
 
-/** Chain for market registry logs — scaffold target network, not the connected wallet chain. */
-export function useMarketChainId(): AllowedChainIds {
-  const { targetNetwork } = useTargetNetwork();
-  return targetNetwork.id;
+/** Resolve IPFS CID from indexed MarketCreated logs or localStorage cache. */
+export function useMarketIpfsCid(questionId: `0x${string}` | undefined) {
+  const { data: cidIndex, isLoading: indexLoading } = useMarketCidIndex();
+
+  const fromIndex = lookupMarketIpfsCid(cidIndex, questionId);
+  if (fromIndex) return fromIndex;
+
+  if (!questionId) return null;
+  const stored = readStoredCid(questionId);
+  if (stored) return stored;
+
+  // Still loading on-chain index — treat as pending (not missing)
+  if (indexLoading) return null;
+  return null;
 }
 
-/** Resolve IPFS CID from MarketCreated log or localStorage cache. */
-export function useMarketIpfsCid(questionId: `0x${string}` | undefined) {
-  const chainId = useMarketChainId();
-
-  const { data: creationEvents } = useScaffoldEventHistory({
-    contractName: "MarketRegistry",
-    eventName: "MarketCreated",
-    chainId,
-    fromBlock: marketRegistryLogsFromBlock(chainId),
-    filters: questionId ? { questionId } : undefined,
-    enabled: !!questionId,
-  });
-
-  const creationEvent = creationEvents?.[0];
-  const fromLog = parseMarketCreatedIpfsCid(creationEvent);
-
-  if (fromLog) return fromLog;
-  if (!questionId) return null;
-  return readStoredCid(questionId);
+/** True while the on-chain CID index is still loading and no CID is cached locally. */
+export function useMarketIpfsCidPending(questionId: `0x${string}` | undefined): boolean {
+  const cid = useMarketIpfsCid(questionId);
+  const { isLoading, isFetching } = useMarketCidIndex();
+  return !!questionId && !cid && (isLoading || isFetching);
 }
 
 export function useMarketMetadata(questionId: `0x${string}` | undefined) {

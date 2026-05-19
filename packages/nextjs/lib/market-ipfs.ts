@@ -33,7 +33,19 @@ export function ipfsJsonGatewayUrls(cid: string): string[] {
 }
 
 export async function fetchIpfsJson<T>(cid: string): Promise<T | null> {
-  for (const url of ipfsJsonGatewayUrls(cid)) {
+  const trimmed = cid.trim();
+  if (!trimmed) return null;
+
+  if (typeof window !== "undefined") {
+    try {
+      const res = await fetch(`/api/ipfs/${encodeURIComponent(trimmed)}`);
+      if (res.ok) return (await res.json()) as T;
+    } catch {
+      // fall through to public gateways
+    }
+  }
+
+  for (const url of ipfsJsonGatewayUrls(trimmed)) {
     try {
       const res = await fetch(url);
       if (!res.ok) continue;
@@ -45,10 +57,14 @@ export async function fetchIpfsJson<T>(cid: string): Promise<T | null> {
   return null;
 }
 
-/** Read ipfsCid from a decoded MarketCreated log (viem may use named args or tuple). */
+/** Read ipfsCid from a decoded MarketCreated / MarketInitialized log. */
 export function parseMarketCreatedIpfsCid(creationLog: unknown): string | null {
   if (creationLog == null || typeof creationLog !== "object") return null;
   const rec = creationLog as Record<string, unknown>;
+
+  const topLevel = rec.ipfsCid;
+  if (typeof topLevel === "string" && topLevel.length > 0) return topLevel;
+
   const args = rec.args;
   if (args == null) return null;
 

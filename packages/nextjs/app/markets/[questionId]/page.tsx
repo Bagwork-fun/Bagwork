@@ -11,9 +11,14 @@ import {
   useScaffoldEventHistory,
   useScaffoldReadContract,
 } from "~~/hooks/scaffold-eth";
-import { useMarketChainId } from "~~/hooks/markets/useMarketMetadata";
+import {
+  useMarketChainId,
+  useMarketIpfsCid,
+  useMarketIpfsCidPending,
+  useMarketMetadata,
+} from "~~/hooks/markets/useMarketMetadata";
 import { railFromUint8, type SettlementRail } from "@/lib/marketRails";
-import { fetchIpfsJson, marketRegistryLogsFromBlock, parseMarketCreatedIpfsCid } from "@/lib/market-ipfs";
+import { marketRegistryLogsFromBlock } from "@/lib/market-ipfs";
 import {
   buildRedeemIndexSets,
   CTF_PARENT_COLLECTION_ZERO,
@@ -39,19 +44,6 @@ import {
   SourceCodeIcon,
   InformationCircleIcon,
 } from "@hugeicons/core-free-icons";
-
-interface MarketMetadata {
-  title: string;
-  description: string;
-  outcomes: string[];
-  resolutionTime: number;
-  category: string;
-  imageUrl?: string;
-  settlementAsset?: string;
-  /** Optional: include in IPFS JSON after resolution if you publish narrative off-chain */
-  resolutionReasoning?: string;
-  aiResolutionSummary?: string;
-}
 
 interface PageProps {
   params: Promise<{ questionId: `0x${string}` }>;
@@ -84,8 +76,9 @@ export default function MarketDetailPage({ params }: PageProps) {
   const { data: latestBlock } = useBlockNumber({ chainId: marketChainId, watch: true });
   const { address: userAddress } = useAccount();
 
-  const [metadata, setMetadata] = useState<MarketMetadata | null>(null);
-  const [ipfsCid, setIpfsCid] = useState<string | null>(null);
+  const ipfsCid = useMarketIpfsCid(questionId);
+  const cidPending = useMarketIpfsCidPending(questionId);
+  const { data: metadata, isLoading: metadataLoading } = useMarketMetadata(questionId);
   const [volume24hWei, setVolume24hWei] = useState<bigint | null | "loading">("loading");
 
   const [activeTab, setActiveTab] = useState<"buy" | "sell">("buy");
@@ -269,29 +262,6 @@ export default function MarketDetailPage({ params }: PageProps) {
   const { writeContractAsync: writeCTF } = useScaffoldWriteContract({ contractName: "ConditionalTokens" });
 
   useEffect(() => {
-    const fromLog =
-      parseMarketCreatedIpfsCid(creationEvent) ?? parseMarketCreatedIpfsCid(initEvent);
-    if (fromLog) {
-      setIpfsCid(fromLog);
-      return;
-    }
-    const stored = typeof window !== "undefined" ? localStorage.getItem(`market_cid_${questionId}`) : null;
-    setIpfsCid(stored);
-  }, [questionId, creationEvent, initEvent]);
-
-  useEffect(() => {
-    if (!ipfsCid) return;
-    let cancelled = false;
-    void (async () => {
-      const data = await fetchIpfsJson<MarketMetadata>(ipfsCid);
-      if (!cancelled && data) setMetadata(data);
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [ipfsCid]);
-
-  useEffect(() => {
     if (!publicClient || !ammInfo?.address || !conditionId || latestBlock == null) {
       setVolume24hWei(null);
       return;
@@ -344,7 +314,7 @@ export default function MarketDetailPage({ params }: PageProps) {
   const isResolved = status === 3 || ammPool?.resolved;
   const statusLabel =
     ADAPTER_STATUS_LABELS[Math.min(status, ADAPTER_STATUS_LABELS.length - 1)] ?? "Unknown";
-  const metadataPending = Boolean(ipfsCid) && !metadata;
+  const metadataPending = cidPending || (Boolean(ipfsCid) && (metadataLoading || !metadata));
   const displayTitle =
     metadata?.title ?? (ipfsCid ? "Loading market…" : `Market ${questionId.slice(0, 10)}…`);
 

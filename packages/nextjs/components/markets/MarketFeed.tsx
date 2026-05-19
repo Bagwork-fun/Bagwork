@@ -18,6 +18,7 @@ import {
   type MarketRailTab,
   type SettlementRail,
 } from "@/lib/marketRails";
+import { useMarketCidIndex } from "~~/hooks/markets/useMarketCidIndex";
 import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
 import { useGlobalState } from "~~/services/store/store";
 
@@ -37,6 +38,9 @@ export function MarketFeed() {
   const handleMetaLoaded = useCallback((questionId: `0x${string}`, meta: MarketMetadataLite) => {
     setMetaByQuestion(prev => ({ ...prev, [questionId]: meta }));
   }, []);
+
+  // Warm the questionId → IPFS CID index once for all market cards on the feed.
+  useMarketCidIndex();
 
   const { data: registryInfo } = useDeployedContractInfo({ contractName: "MarketRegistry" });
 

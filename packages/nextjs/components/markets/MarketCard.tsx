@@ -18,6 +18,7 @@ import {
 import {
   type MarketMetadata,
   useMarketIpfsCid,
+  useMarketIpfsCidPending,
   useMarketMetadata,
 } from "~~/hooks/markets/useMarketMetadata";
 import { useDeployedContractInfo, useScaffoldReadContract } from "~~/hooks/scaffold-eth";
@@ -50,6 +51,7 @@ function OddsBar({ label, price }: { label: string; price: number }) {
 
 export function MarketCard({ questionId, registryAddress, registryAbi, onMetadataLoaded }: Props) {
   const ipfsCid = useMarketIpfsCid(questionId);
+  const cidPending = useMarketIpfsCidPending(questionId);
   const { data: metadata, isLoading: metadataLoading } = useMarketMetadata(questionId);
 
   const { data: adapterInfo } = useDeployedContractInfo({ contractName: "AiCTFAdapter" });
@@ -121,7 +123,7 @@ export function MarketCard({ questionId, registryAddress, registryAbi, onMetadat
 
   const title = metadata?.title ?? `Market ${questionId.slice(0, 10)}…`;
   const outcomes = metadata?.outcomes ?? ["Yes", "No"];
-  const metadataPending = Boolean(ipfsCid) && metadataLoading && !metadata;
+  const metadataPending = cidPending || (Boolean(ipfsCid) && metadataLoading && !metadata);
 
   return (
     <Link href={`/markets/${questionId}`} className="block h-full group">

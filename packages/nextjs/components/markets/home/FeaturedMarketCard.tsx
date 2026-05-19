@@ -13,7 +13,11 @@ import { getFeaturedHeroChartData } from "@/lib/mock-yes-chance-history";
 import { parseYesNoFromProbability, formatOdds } from "@/lib/prices";
 import { ammContractName, railFromUint8, type SettlementRail } from "@/lib/marketRails";
 import type { MarketMetadata } from "~~/hooks/markets/useMarketMetadata";
-import { useMarketIpfsCid, useMarketMetadata } from "~~/hooks/markets/useMarketMetadata";
+import {
+  useMarketIpfsCid,
+  useMarketIpfsCidPending,
+  useMarketMetadata,
+} from "~~/hooks/markets/useMarketMetadata";
 import { useDeployedContractInfo, useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 interface Props {
@@ -28,6 +32,7 @@ interface Props {
 
 export function FeaturedMarketCard({ questionId, registryAddress, registryAbi, onMetadataLoaded }: Props) {
   const ipfsCid = useMarketIpfsCid(questionId);
+  const cidPending = useMarketIpfsCidPending(questionId);
   const { data: metadata, isLoading: metadataLoading } = useMarketMetadata(questionId);
 
   const { data: adapterInfo } = useDeployedContractInfo({ contractName: "AiCTFAdapter" });
@@ -89,7 +94,7 @@ export function FeaturedMarketCard({ questionId, registryAddress, registryAbi, o
 
   const title = metadata?.title ?? `Market ${questionId.slice(0, 10)}…`;
   const outcomes = metadata?.outcomes ?? ["Yes", "No"];
-  const metadataPending = Boolean(ipfsCid) && metadataLoading && !metadata;
+  const metadataPending = cidPending || (Boolean(ipfsCid) && metadataLoading && !metadata);
   const yesPct = Math.round(yesPrice * 100);
   const deltaPct = chartPack.deltaPct;
 

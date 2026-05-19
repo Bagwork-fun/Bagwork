@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import Link from "next/link";
 import { useReadContract } from "wagmi";
 
@@ -8,15 +8,12 @@ import { Spinner } from "@/components/ui/spinner";
 import { computeConditionId } from "@/lib/market-tokens";
 import { parseYesNoFromProbability } from "@/lib/prices";
 import { ammContractName, railFromUint8, type SettlementRail } from "@/lib/marketRails";
-import { fetchIpfsJson, marketRegistryLogsFromBlock, parseMarketCreatedIpfsCid } from "@/lib/market-ipfs";
-import { useMarketChainId } from "~~/hooks/markets/useMarketMetadata";
-import { useDeployedContractInfo, useScaffoldEventHistory, useScaffoldReadContract } from "~~/hooks/scaffold-eth";
-
-interface MarketMetadata {
-  title: string;
-  category: string;
-  outcomes: string[];
-}
+import {
+  useMarketIpfsCid,
+  useMarketIpfsCidPending,
+  useMarketMetadata,
+} from "~~/hooks/markets/useMarketMetadata";
+import { useDeployedContractInfo, useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 interface Props {
   questionId: `0x${string}`;
@@ -25,9 +22,9 @@ interface Props {
 }
 
 export function MarketFeedRow({ questionId, index, isActive }: Props) {
-  const marketChainId = useMarketChainId();
-  const [metadata, setMetadata] = useState<MarketMetadata | null>(null);
-  const [ipfsCid, setIpfsCid] = useState<string | null>(null);
+  const ipfsCid = useMarketIpfsCid(questionId);
+  const cidPending = useMarketIpfsCidPending(questionId);
+  const { data: metadata } = useMarketMetadata(questionId);
 
   const { data: registryInfo } = useDeployedContractInfo({ contractName: "MarketRegistry" });
   const { data: adapterInfo } = useDeployedContractInfo({ contractName: "AiCTFAdapter" });
@@ -41,15 +38,6 @@ export function MarketFeedRow({ questionId, index, isActive }: Props) {
   const rail: SettlementRail = railFromUint8(railRaw as bigint | undefined);
   const ammName = ammContractName(rail);
   const { data: ammInfo } = useDeployedContractInfo({ contractName: ammName });
-
-  const { data: creationEvents } = useScaffoldEventHistory({
-    contractName: "MarketRegistry",
-    eventName: "MarketCreated",
-    chainId: marketChainId,
-    fromBlock: marketRegistryLogsFromBlock(marketChainId),
-    filters: { questionId },
-    enabled: !!questionId,
-  });
 
   const { data: marketInfo } = useReadContract({
     address: registryInfo?.address,
@@ -75,31 +63,9 @@ export function MarketFeedRow({ questionId, index, isActive }: Props) {
     return yesProbability != null ? parseYesNoFromProbability(yesProbability)[0] : 0.5;
   }, [yesProbability]);
 
-  useEffect(() => {
-    const fromLog = parseMarketCreatedIpfsCid(creationEvents?.[0]);
-    if (fromLog) {
-      setIpfsCid(fromLog);
-      return;
-    }
-    const stored = typeof window !== "undefined" ? localStorage.getItem(`market_cid_${questionId}`) : null;
-    setIpfsCid(stored);
-  }, [questionId, creationEvents]);
-
-  useEffect(() => {
-    if (!ipfsCid) return;
-    let cancelled = false;
-    void (async () => {
-      const data = await fetchIpfsJson<MarketMetadata>(ipfsCid);
-      if (cancelled || !data) return;
-      setMetadata(data);
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [ipfsCid]);
-
   const title =
-    metadata?.title ?? (ipfsCid ? "Loading…" : `Market ${questionId.slice(0, 8)}…`);
+    metadata?.title ??
+    (cidPending || (ipfsCid && !metadata) ? "Loading…" : `Market ${questionId.slice(0, 8)}…`);
   const yesPct = Math.round(yesPrice * 100);
 
   return (

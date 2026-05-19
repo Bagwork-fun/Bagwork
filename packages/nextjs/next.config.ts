@@ -3,6 +3,16 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   devIndicators: false,
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "gateway.pinata.cloud" },
+      { protocol: "https", hostname: "**.ipfs.dweb.link" },
+      { protocol: "https", hostname: "**.ipfs.w3s.link" },
+      { protocol: "https", hostname: "ipfs.io" },
+      { protocol: "https", hostname: "cloudflare-ipfs.com" },
+      { protocol: "https", hostname: "**.mypinata.cloud" },
+    ],
+  },
   typescript: {
     ignoreBuildErrors: true,
   },
