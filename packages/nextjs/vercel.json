@@ -1,5 +1,5 @@
 {
-  "installCommand": "cd ../.. && corepack enable && yarn install",
+  "installCommand": "cd ../.. && corepack enable && YARN_CHECKSUM_BEHAVIOR=ignore YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install",
   "buildCommand": "yarn build",
   "framework": "nextjs"
 }
