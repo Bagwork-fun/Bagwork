@@ -1,0 +1,9 @@
+{
+  "title": "Will Aurora Vale win Best Picture at the 2027 Constellation Awards?",
+  "description": "Resolves YES if Aurora Vale wins the Constellation Awards Best Picture trophy for the listed ceremony. Otherwise NO.",
+  "outcomes": ["Yes", "No"],
+  "resolutionTime": 1801353600,
+  "category": "Entertainment",
+  "settlementAsset": "USDC",
+  "tags": ["film", "awards"]
+}

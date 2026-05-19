@@ -1,0 +1,32 @@
+[
+  {
+    "metadataFile": "sport-usdc.json",
+    "rail": "USDC",
+    "pinnedCid": ""
+  },
+  {
+    "metadataFile": "crypto-usdc.json",
+    "rail": "USDC",
+    "pinnedCid": ""
+  },
+  {
+    "metadataFile": "politics-eurc.json",
+    "rail": "EURC",
+    "pinnedCid": ""
+  },
+  {
+    "metadataFile": "science-eurc.json",
+    "rail": "EURC",
+    "pinnedCid": ""
+  },
+  {
+    "metadataFile": "entertainment-usdc.json",
+    "rail": "USDC",
+    "pinnedCid": ""
+  },
+  {
+    "metadataFile": "other-usdc.json",
+    "rail": "USDC",
+    "pinnedCid": ""
+  }
+]

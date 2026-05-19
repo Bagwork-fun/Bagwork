@@ -1,0 +1,9 @@
+{
+  "title": "Will ETH close above $5k on Coinbase on Dec 31, 2026?",
+  "description": "Resolves YES if ETH-USD spot on Coinbase at 23:59 UTC Dec 31, 2026 is strictly greater than 5000 USD. Otherwise NO.",
+  "outcomes": ["Yes", "No"],
+  "resolutionTime": 1798675200,
+  "category": "Crypto",
+  "settlementAsset": "USDC",
+  "tags": ["ethereum", "price"]
+}
