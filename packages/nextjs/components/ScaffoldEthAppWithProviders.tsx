@@ -15,10 +15,16 @@ const InnerScaffoldHooks = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
+const METADATA_CACHE_MS = 30 * 60_000;
+
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      staleTime: METADATA_CACHE_MS,
+      gcTime: METADATA_CACHE_MS,
     },
   },
 });

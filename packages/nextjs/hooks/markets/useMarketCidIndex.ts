@@ -9,10 +9,14 @@ import { useMarketChainId } from "~~/hooks/markets/useMarketChainId";
 import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
 import type { AllowedChainIds } from "~~/utils/scaffold-eth";
 
-const CID_INDEX_STALE_MS = 5 * 60_000;
+const CID_INDEX_STALE_MS = 30 * 60_000;
 const LOG_BATCH_BLOCKS = 10_000n;
 
 export type MarketCidIndex = Record<string, string>;
+
+export function marketCidIndexQueryKey(chainId: number, registryAddress?: string) {
+  return ["market-cid-index", chainId, registryAddress] as const;
+}
 
 function normalizeQuestionId(id: string): string {
   return id.toLowerCase();
@@ -65,7 +69,7 @@ export function useMarketCidIndex() {
   });
 
   return useQuery({
-    queryKey: ["market-cid-index", chainId, registryInfo?.address],
+    queryKey: marketCidIndexQueryKey(chainId, registryInfo?.address),
     queryFn: () =>
       fetchMarketCreatedCidIndex(
         publicClient!,
@@ -75,7 +79,9 @@ export function useMarketCidIndex() {
       ),
     enabled: !!publicClient && !!registryInfo?.address,
     staleTime: CID_INDEX_STALE_MS,
-    gcTime: 30 * 60_000,
+    gcTime: CID_INDEX_STALE_MS,
+    refetchOnMount: false,
+    placeholderData: previousData => previousData,
   });
 }
 

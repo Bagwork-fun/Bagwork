@@ -50,3 +50,4 @@ coverage.json
 **/secrets.active.yaml
 **/.env.cre-run
 **/config.sim-run.json
+.vercel

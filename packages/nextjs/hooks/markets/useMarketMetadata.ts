@@ -1,10 +1,15 @@
 "use client";
 
+import { useCallback } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { fetchIpfsJson } from "@/lib/market-ipfs";
 import { useMarketChainId } from "~~/hooks/markets/useMarketChainId";
-import { lookupMarketIpfsCid, useMarketCidIndex } from "~~/hooks/markets/useMarketCidIndex";
+import {
+  lookupMarketIpfsCid,
+  useMarketCidIndex,
+  type MarketCidIndex,
+} from "~~/hooks/markets/useMarketCidIndex";
 
 export { useMarketChainId } from "~~/hooks/markets/useMarketChainId";
 
@@ -20,7 +25,7 @@ export interface MarketMetadata {
   aiResolutionSummary?: string;
 }
 
-const METADATA_STALE_MS = 5 * 60_000;
+const METADATA_STALE_MS = 30 * 60_000;
 const METADATA_GC_MS = 30 * 60_000;
 
 function readStoredCid(questionId: string): string | null {
@@ -38,25 +43,22 @@ async function loadMarketMetadata(ipfsCid: string): Promise<MarketMetadata | nul
 
 /** Resolve IPFS CID from indexed MarketCreated logs or localStorage cache. */
 export function useMarketIpfsCid(questionId: `0x${string}` | undefined) {
-  const { data: cidIndex, isLoading: indexLoading } = useMarketCidIndex();
+  const { data: cidIndex } = useMarketCidIndex();
 
   const fromIndex = lookupMarketIpfsCid(cidIndex, questionId);
   if (fromIndex) return fromIndex;
 
   if (!questionId) return null;
-  const stored = readStoredCid(questionId);
-  if (stored) return stored;
-
-  // Still loading on-chain index — treat as pending (not missing)
-  if (indexLoading) return null;
-  return null;
+  return readStoredCid(questionId);
 }
 
-/** True while the on-chain CID index is still loading and no CID is cached locally. */
+/** True only on first load when CID is not yet known (not on background refetch). */
 export function useMarketIpfsCidPending(questionId: `0x${string}` | undefined): boolean {
   const cid = useMarketIpfsCid(questionId);
-  const { isLoading, isFetching } = useMarketCidIndex();
-  return !!questionId && !cid && (isLoading || isFetching);
+  const { data: cidIndex, isLoading, isFetched } = useMarketCidIndex();
+  if (cid) return false;
+  if (!questionId) return false;
+  return !isFetched && isLoading && !cidIndex;
 }
 
 export function useMarketMetadata(questionId: `0x${string}` | undefined) {
@@ -68,21 +70,36 @@ export function useMarketMetadata(questionId: `0x${string}` | undefined) {
     enabled: !!ipfsCid,
     staleTime: METADATA_STALE_MS,
     gcTime: METADATA_GC_MS,
-    placeholderData: (previousData) => previousData,
+    refetchOnMount: false,
+    placeholderData: previousData => previousData,
   });
 }
 
 export function usePrefetchMarketMetadata() {
   const queryClient = useQueryClient();
+  const chainId = useMarketChainId();
 
-  return async (questionId: `0x${string}`, ipfsCid?: string | null) => {
-    let cid = ipfsCid;
-    if (!cid) cid = readStoredCid(questionId);
-    if (!cid) return;
-    await queryClient.prefetchQuery({
-      queryKey: marketMetadataQueryKey(cid),
-      queryFn: () => loadMarketMetadata(cid),
-      staleTime: METADATA_STALE_MS,
-    });
-  };
+  return useCallback(
+    async (questionId: `0x${string}`, ipfsCid?: string | null) => {
+      let cid = ipfsCid;
+      if (!cid) {
+        const queries = queryClient.getQueriesData<MarketCidIndex>({
+          queryKey: ["market-cid-index", chainId],
+        });
+        const cachedIndex = queries.find(([, data]) => data != null)?.[1];
+        cid = lookupMarketIpfsCid(cachedIndex, questionId) ?? readStoredCid(questionId);
+      }
+      if (!cid) return;
+
+      const existing = queryClient.getQueryData<MarketMetadata>(marketMetadataQueryKey(cid));
+      if (existing) return;
+
+      await queryClient.prefetchQuery({
+        queryKey: marketMetadataQueryKey(cid),
+        queryFn: () => loadMarketMetadata(cid),
+        staleTime: METADATA_STALE_MS,
+      });
+    },
+    [queryClient, chainId],
+  );
 }

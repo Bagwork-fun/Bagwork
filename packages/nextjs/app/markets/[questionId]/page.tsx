@@ -314,7 +314,7 @@ export default function MarketDetailPage({ params }: PageProps) {
   const isResolved = status === 3 || ammPool?.resolved;
   const statusLabel =
     ADAPTER_STATUS_LABELS[Math.min(status, ADAPTER_STATUS_LABELS.length - 1)] ?? "Unknown";
-  const metadataPending = cidPending || (Boolean(ipfsCid) && (metadataLoading || !metadata));
+  const metadataPending = cidPending || (Boolean(ipfsCid) && metadataLoading && !metadata);
   const displayTitle =
     metadata?.title ?? (ipfsCid ? "Loading market…" : `Market ${questionId.slice(0, 10)}…`);
 
@@ -498,10 +498,10 @@ export default function MarketDetailPage({ params }: PageProps) {
   };
 
   return (
-    <div className="mx-auto max-w-[90rem] px-6 py-8 w-full flex gap-8 items-start relative">
-      <div className="flex-1 min-w-0 flex flex-col gap-8">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex items-center gap-4 min-w-0">
+    <div className="mx-auto w-full max-w-[90rem] px-4 py-6 sm:px-6 sm:py-8 flex flex-col gap-6 lg:flex-row lg:gap-8 items-start relative">
+      <div className="flex-1 min-w-0 flex flex-col gap-6 sm:gap-8">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div className="flex items-start gap-3 sm:gap-4 min-w-0">
             {metadataPending ? (
               <div className="size-14 rounded-xl bg-muted flex items-center justify-center shrink-0">
                 <Spinner className="size-6 text-muted-foreground" />
@@ -535,11 +535,11 @@ export default function MarketDetailPage({ params }: PageProps) {
                   Settles in {rail}
                 </span>
               </div>
-              <h1 className="text-2xl font-semibold leading-snug">{displayTitle}</h1>
+              <h1 className="text-xl font-semibold leading-snug sm:text-2xl">{displayTitle}</h1>
             </div>
           </div>
 
-          <div className="flex items-center gap-1 shrink-0">
+          <div className="flex items-center gap-1 shrink-0 self-end sm:self-auto">
             <Button variant="ghost" size="icon-sm" type="button">
               <HugeiconsIcon icon={SourceCodeIcon} className="size-4" />
             </Button>
@@ -595,7 +595,7 @@ export default function MarketDetailPage({ params }: PageProps) {
         )}
       </div>
 
-      <div className="w-full max-w-[380px] shrink-0 self-start lg:sticky lg:top-8 flex flex-col gap-6">
+      <div className="w-full max-w-none shrink-0 self-start lg:max-w-[380px] lg:sticky lg:top-8 flex flex-col gap-6">
         {userAddress && conditionId && (yesBal > 0n || noBal > 0n) && (
           <YourPositionCard
             conditionId={conditionId}

@@ -1,22 +1,16 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 import type { Abi } from "viem";
 
 import { cn } from "@/lib/utils";
+import { lookupMarketIpfsCid, useMarketCidIndex } from "~~/hooks/markets/useMarketCidIndex";
 import { usePrefetchMarketMetadata } from "~~/hooks/markets/useMarketMetadata";
 import { FeaturedMarketCard } from "~~/components/markets/home/FeaturedMarketCard";
 
-const AUTO_ADVANCE_MS = 5000;
-
-const slideVariants = {
-  enter: { opacity: 0 },
-  center: { opacity: 1 },
-  exit: { opacity: 0 },
-};
+const AUTO_ADVANCE_MS = 6000;
 
 interface MetaLite {
   category?: string;
@@ -50,6 +44,7 @@ export function FeaturedMarketCarousel({
   const [paused, setPaused] = useState(false);
   const [titles, setTitles] = useState<Record<string, string>>({});
   const prefetchMetadata = usePrefetchMarketMetadata();
+  const { data: cidIndex } = useMarketCidIndex();
 
   const count = questionIds.length;
 
@@ -75,20 +70,17 @@ export function FeaturedMarketCarousel({
     return () => clearInterval(t);
   }, [paused, count]);
 
+  useEffect(() => {
+    if (!cidIndex || questionIds.length === 0) return;
+    for (const id of questionIds) {
+      const cid = lookupMarketIpfsCid(cidIndex, id);
+      void prefetchMetadata(id, cid);
+    }
+  }, [cidIndex, questionIds, prefetchMetadata]);
+
   const currentId = questionIds[idx];
   const prevId = count > 1 ? questionIds[(idx - 1 + count) % count] : undefined;
   const nextId = count > 1 ? questionIds[(idx + 1) % count] : undefined;
-
-  useEffect(() => {
-    if (count <= 1) return;
-    const neighbors = [
-      questionIds[(idx + 1) % count],
-      questionIds[(idx - 1 + count) % count],
-    ];
-    for (const id of neighbors) {
-      void prefetchMetadata(id);
-    }
-  }, [idx, count, questionIds, prefetchMetadata]);
 
   const handleMeta = useCallback(
     (questionId: `0x${string}`, meta: { category?: string; settlementAsset?: string; title?: string }) => {
@@ -106,24 +98,26 @@ export function FeaturedMarketCarousel({
 
   return (
     <div onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-      <div className="relative min-h-[480px]">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={currentId}
-            variants={slideVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.35, ease: "easeInOut" }}
+      <div className="relative min-h-[420px] sm:min-h-[480px]">
+        {questionIds.map((id, i) => (
+          <div
+            key={id}
+            className={cn(
+              "w-full transition-opacity duration-200 ease-out",
+              i === idx
+                ? "relative z-10 opacity-100"
+                : "pointer-events-none absolute inset-x-0 top-0 z-0 opacity-0",
+            )}
+            aria-hidden={i !== idx}
           >
             <FeaturedMarketCard
-              questionId={currentId}
+              questionId={id}
               registryAddress={registryAddress}
               registryAbi={registryAbi}
               onMetadataLoaded={handleMeta}
             />
-          </motion.div>
-        </AnimatePresence>
+          </div>
+        ))}
       </div>
 
       {showControls && prevId && nextId ? (
