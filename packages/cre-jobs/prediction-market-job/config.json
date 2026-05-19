@@ -2,9 +2,9 @@
   "geminiModel": "gemini-2.5-flash",
   "evms": [
     {
-      "chainSelectorName": "ethereum-testnet-sepolia",
-      "adapterAddress": "0x6Bd828a468B3515D80dECD4A0051c85B83cd391d",
-      "registryAddress": "0x8B7AD40d519b103c1a735d47C836D04681d320cA",
+      "adapterAddress": "0xC6e6D16BF2EE18137E62AC9c44bCd692448f8354",
+      "registryAddress": "0x9361Bffb625F9406e30c984410A4e3E422Cf8AcE",
+      "chainSelectorName": "arc-testnet",
       "gasLimit": "1000000"
     }
   ]

@@ -1,5 +1,6 @@
 # dependencies
 node_modules
+**/node_modules
 
 # yarn
 .yarn/*
@@ -14,6 +15,7 @@ node_modules
 
 # misc
 .DS_Store
+*.log
 
 # IDE
 .vscode
@@ -21,7 +23,30 @@ node_modules
 
 # cli
 dist
-.cursor/plans/circle_+_prediction_market_d9e77aa2.plan.md
-packages/cre-jobs/prediction-market-job/.env
-packages/cre-jobs/**/.workflow-temp-*
-package-lock.json
+build
+out
+
+# Secrets and Sensitive files
+.env
+.env.*
+*.env*
+secrets.yaml
+**/secrets.yaml
+**/.env*
+**/secrets.yaml
+
+# Hardhat / Smart Contract artifacts
+artifacts
+cache
+typechain
+typechain-types
+coverage
+coverage.json
+
+# CRE Jobs temporary files
+**/tmp.js
+**/tmp.wasm
+**/tmp.*
+**/secrets.active.yaml
+**/.env.cre-run
+**/config.sim-run.json
