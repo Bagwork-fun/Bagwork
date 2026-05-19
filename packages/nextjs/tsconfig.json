@@ -15,7 +15,8 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "~~/*": ["./*"]
+      "~~/*": ["./*"],
+      "@/*": ["./*"]
     },
     "plugins": [
       {
@@ -24,5 +25,14 @@
     ]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "components/liquidity-provider/AddRemoveLiquidty.tsx",
+    "components/liquidity-provider/LPAddress.tsx",
+    "components/liquidity-provider/PredictionMarketInfoLP.tsx",
+    "components/liquidity-provider/ResolveMarketAndWithdraw.tsx",
+    "components/oracle/OracleAddress.tsx",
+    "components/oracle/ReportPrediction.tsx",
+    "components/race/**/*"
+  ]
 }

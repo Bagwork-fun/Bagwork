@@ -1,0 +1,11 @@
+{
+  "geminiModel": "gemini-2.5-flash",
+  "evms": [
+    {
+      "adapterAddress": "0xC6e6D16BF2EE18137E62AC9c44bCd692448f8354",
+      "registryAddress": "0x9361Bffb625F9406e30c984410A4e3E422Cf8AcE",
+      "chainSelectorName": "arc-testnet",
+      "gasLimit": "1000000"
+    }
+  ]
+}

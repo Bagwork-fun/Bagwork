@@ -1,0 +1,44 @@
+# CRE Workflow Settings
+# Matches Domino-market reference: must declare ALL external HTTP domains.
+# The CRE engine enforces this allowlist — unlisted domains will be blocked.
+
+local-simulation:
+  user-workflow:
+    workflow-name: "ctf-prediction-market"
+  workflow-artifacts:
+    workflow-path: "./main.ts"
+    config-path: "./config.sim-run.json"
+    # Project-root secrets (packages/cre-jobs/secrets.yaml); see Chainlink TS project layout
+    secrets-path: "../secrets.yaml"
+  capabilities:
+    http:
+      allowed-domains:
+        # Gemini AI
+        - "generativelanguage.googleapis.com"
+        # IPFS gateways (tried in order — first success wins)
+        - "dweb.link"
+        - "ipfs.io"
+        - "gateway.pinata.cloud"
+        - "cloudflare-ipfs.com"
+  rpcs:
+    - chain-name: arc-testnet
+      url: "https://rpc.testnet.arc.network"
+
+staging:
+  user-workflow:
+    workflow-name: "ctf-prediction-market"
+  workflow-artifacts:
+    workflow-path: "./main.ts"
+    config-path: "./config.json"
+    secrets-path: "./secrets.yaml"
+  capabilities:
+    http:
+      allowed-domains:
+        - "generativelanguage.googleapis.com"
+        - "dweb.link"
+        - "ipfs.io"
+        - "gateway.pinata.cloud"
+        - "cloudflare-ipfs.com"
+  rpcs:
+    - chain-name: arc-testnet
+      url: "https://rpc.testnet.arc.network"

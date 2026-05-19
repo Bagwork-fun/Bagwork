@@ -1,0 +1,1241 @@
+{
+  "address": "0x9850a00eBb9dA68Bc138065bd02Bcbf4580BB7e5",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_ctf",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_collateral",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "AmountZero",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "requested",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "available",
+          "type": "uint256"
+        }
+      ],
+      "name": "InsufficientBalance",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InsufficientLiquidity",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "outcome",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "requested",
+          "type": "uint256"
+        }
+      ],
+      "name": "InsufficientReserve",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidPercentage",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidProbability",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NotLPOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OnlyFromCTF",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnableInvalidOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "OwnableUnauthorizedAccount",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "PoolAlreadyExists",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "PoolNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "PoolNotResolved",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "PoolResolved_",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ReentrancyGuardReentrantCall",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "TransferFailed",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "WrongUsdcAmount",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "usdcAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "LiquidityAdded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "usdcAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "LiquidityRemoved",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "yesTokenId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "noTokenId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "usdcCollateral",
+          "type": "uint256"
+        }
+      ],
+      "name": "PoolCreated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "PoolResolved",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "buyer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "outcome",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "usdcPaid",
+          "type": "uint256"
+        }
+      ],
+      "name": "TokensBought",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "seller",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "outcome",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "usdcReceived",
+          "type": "uint256"
+        }
+      ],
+      "name": "TokensSold",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "usdcAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "addLiquidity",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "allPools",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "outcome",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "maxUsdcIn",
+          "type": "uint256"
+        }
+      ],
+      "name": "buyTokens",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "collateral",
+      "outputs": [
+        {
+          "internalType": "contract IERC20",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "yesTokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "noTokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "usdcAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint8",
+          "name": "initialYesProbability",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint8",
+          "name": "percentageToLock",
+          "type": "uint8"
+        }
+      ],
+      "name": "createPool",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "ctf",
+      "outputs": [
+        {
+          "internalType": "contract ConditionalTokens",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getAllPools",
+      "outputs": [
+        {
+          "internalType": "bytes32[]",
+          "name": "",
+          "type": "bytes32[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "outcome",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "getBuyPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getPool",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "yesTokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "noTokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "yesReserve",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "noReserve",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "usdcCollateral",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "lpTradingRevenue",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "initialYesProbability",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "percentageLocked",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "lpOwner",
+              "type": "address"
+            },
+            {
+              "internalType": "bool",
+              "name": "resolved",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "exists",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct PredictionMarketAMM.Pool",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "outcome",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "getSellPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getYesProbability",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "markResolved",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
+      ],
+      "name": "onERC1155BatchReceived",
+      "outputs": [
+        {
+          "internalType": "bytes4",
+          "name": "",
+          "type": "bytes4"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
+      ],
+      "name": "onERC1155Received",
+      "outputs": [
+        {
+          "internalType": "bytes4",
+          "name": "",
+          "type": "bytes4"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "pools",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "yesTokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "noTokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "yesReserve",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "noReserve",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "usdcCollateral",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "lpTradingRevenue",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "initialYesProbability",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "percentageLocked",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "lpOwner",
+          "type": "address"
+        },
+        {
+          "internalType": "bool",
+          "name": "resolved",
+          "type": "bool"
+        },
+        {
+          "internalType": "bool",
+          "name": "exists",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "usdcAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "removeLiquidity",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "outcome",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "minUsdcOut",
+          "type": "uint256"
+        }
+      ],
+      "name": "sellTokens",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes4",
+          "name": "interfaceId",
+          "type": "bytes4"
+        }
+      ],
+      "name": "supportsInterface",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "conditionId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "withdrawAfterResolution",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x199a83cd2b604234d4ace1ccb7d961e95d5660a392edc5a1a2ba73ecdd5e984a",
+  "receipt": {
+    "to": null,
+    "from": "0xd41587F9D5df02662Afa4AC60626154985E9149A",
+    "contractAddress": "0x9850a00eBb9dA68Bc138065bd02Bcbf4580BB7e5",
+    "transactionIndex": 80,
+    "gasUsed": "1903725",
+    "logsBloom": "0x00000000000080000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001001000000000000000000000000000000000020000000000000000000800000000000000000000000000000000400000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000000020000000000000021000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xae1b3d355c5e2092cd5c5d81931652afc496e0ce8a9f5adfe86ae51c260ca6d2",
+    "transactionHash": "0x199a83cd2b604234d4ace1ccb7d961e95d5660a392edc5a1a2ba73ecdd5e984a",
+    "logs": [
+      {
+        "transactionIndex": 80,
+        "blockNumber": 10859694,
+        "transactionHash": "0x199a83cd2b604234d4ace1ccb7d961e95d5660a392edc5a1a2ba73ecdd5e984a",
+        "address": "0x9850a00eBb9dA68Bc138065bd02Bcbf4580BB7e5",
+        "topics": [
+          "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x000000000000000000000000d41587f9d5df02662afa4ac60626154985e9149a"
+        ],
+        "data": "0x",
+        "logIndex": 219,
+        "blockHash": "0xae1b3d355c5e2092cd5c5d81931652afc496e0ce8a9f5adfe86ae51c260ca6d2"
+      }
+    ],
+    "blockNumber": 10859694,
+    "cumulativeGasUsed": "16140645",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "0x56c1CC0e0B44a59F0e36eA8Ec776cB5B1F4132f5",
+    "0xca68372498bB1A6572779FbDeaD31F95A76146a7"
+  ],
+  "numDeployments": 2,
+  "solcInputHash": "0eacdf88b0390cc697a6b24e4601d29e",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_ctf\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_collateral\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"AmountZero\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"requested\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"available\",\"type\":\"uint256\"}],\"name\":\"InsufficientBalance\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InsufficientLiquidity\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"outcome\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"requested\",\"type\":\"uint256\"}],\"name\":\"InsufficientReserve\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InvalidPercentage\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InvalidProbability\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NotLPOwner\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"OnlyFromCTF\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"}],\"name\":\"PoolAlreadyExists\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"}],\"name\":\"PoolNotFound\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"PoolNotResolved\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"PoolResolved_\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ReentrancyGuardReentrantCall\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"TransferFailed\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"WrongUsdcAmount\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"provider\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"usdcAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"tokenAmount\",\"type\":\"uint256\"}],\"name\":\"LiquidityAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"provider\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"usdcAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"tokenAmount\",\"type\":\"uint256\"}],\"name\":\"LiquidityRemoved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"yesTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"noTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"usdcCollateral\",\"type\":\"uint256\"}],\"name\":\"PoolCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"}],\"name\":\"PoolResolved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"buyer\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"outcome\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"tokenAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"usdcPaid\",\"type\":\"uint256\"}],\"name\":\"TokensBought\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"seller\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"outcome\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"tokenAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"usdcReceived\",\"type\":\"uint256\"}],\"name\":\"TokensSold\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"usdcAmount\",\"type\":\"uint256\"}],\"name\":\"addLiquidity\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allPools\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"outcome\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"tokenAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"maxUsdcIn\",\"type\":\"uint256\"}],\"name\":\"buyTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"collateral\",\"outputs\":[{\"internalType\":\"contract IERC20\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"yesTokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"noTokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"usdcAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint8\",\"name\":\"initialYesProbability\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"percentageToLock\",\"type\":\"uint8\"}],\"name\":\"createPool\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ctf\",\"outputs\":[{\"internalType\":\"contract ConditionalTokens\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getAllPools\",\"outputs\":[{\"internalType\":\"bytes32[]\",\"name\":\"\",\"type\":\"bytes32[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"outcome\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"tokenAmount\",\"type\":\"uint256\"}],\"name\":\"getBuyPrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"}],\"name\":\"getPool\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"yesTokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"noTokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"yesReserve\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"noReserve\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"usdcCollateral\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lpTradingRevenue\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"initialYesProbability\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"percentageLocked\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"lpOwner\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"resolved\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"exists\",\"type\":\"bool\"}],\"internalType\":\"struct PredictionMarketAMM.Pool\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"outcome\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"tokenAmount\",\"type\":\"uint256\"}],\"name\":\"getSellPrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"}],\"name\":\"getYesProbability\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"}],\"name\":\"markResolved\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"onERC1155BatchReceived\",\"outputs\":[{\"internalType\":\"bytes4\",\"name\":\"\",\"type\":\"bytes4\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"onERC1155Received\",\"outputs\":[{\"internalType\":\"bytes4\",\"name\":\"\",\"type\":\"bytes4\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"pools\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"yesTokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"noTokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"yesReserve\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"noReserve\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"usdcCollateral\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lpTradingRevenue\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"initialYesProbability\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"percentageLocked\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"lpOwner\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"resolved\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"exists\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"usdcAmount\",\"type\":\"uint256\"}],\"name\":\"removeLiquidity\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"outcome\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"tokenAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"minUsdcOut\",\"type\":\"uint256\"}],\"name\":\"sellTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"conditionId\",\"type\":\"bytes32\"}],\"name\":\"withdrawAfterResolution\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"This contract preserves the core probability-weighted pricing logic from the original      speedrun-ethereum PredictionMarket.sol but adapts it to:       - Trade ERC-1155 CTF positions instead of ERC-20 tokens       - Use USDC (ERC-20) as collateral instead of ETH       - Support multiple markets (pools) without deploying a new contract per market       - Disable trading after the CTF condition is resolved PRICING ALGORITHM (preserved from original):  Buy/Sell price = initialTokenValue \\u00d7 avgProbability \\u00d7 amount  Where probability = targetTokensSold / totalTokensSold for both outcomes  avgProbability = (probabilityBefore + probabilityAfter) / 2 Each pool is identified by a `conditionId` derived from the CTF:  conditionId = keccak256(adapter, questionId, outcomeSlotCount)\",\"errors\":{\"OwnableInvalidOwner(address)\":[{\"details\":\"The owner is not a valid owner account. (eg. `address(0)`)\"}],\"OwnableUnauthorizedAccount(address)\":[{\"details\":\"The caller account is not authorized to perform an operation.\"}],\"ReentrancyGuardReentrantCall()\":[{\"details\":\"Unauthorized reentrant call.\"}]},\"kind\":\"dev\",\"methods\":{\"buyTokens(bytes32,uint256,uint256,uint256)\":{\"details\":\"Caller must have approved this contract for `maxUsdcIn` USDC.\",\"params\":{\"conditionId\":\"The pool's conditionId.\",\"maxUsdcIn\":\"Maximum USDC willing to pay (slippage protection).\",\"outcome\":\"0 = YES, 1 = NO.\",\"tokenAmount\":\"Number of outcome tokens to buy (18 decimals).\"}},\"createPool(bytes32,uint256,uint256,uint256,uint8,uint8)\":{\"details\":\"Caller must have already approved this contract to spend `usdcAmount` USDC.      The USDC is split-positioned into YES/NO ERC-1155 tokens by the CTF;      then deposited into the pool as reserves.\",\"params\":{\"conditionId\":\"The CTF conditionId derived from keccak256(adapter, questionId, 2).\",\"initialYesProbability\":\"Starting YES probability (1-99).\",\"noTokenId\":\"ERC-1155 NO positionId from the CTF.\",\"percentageToLock\":\"% of token supply locked to simulate initial probability (1-99).\",\"usdcAmount\":\"Amount of USDC to provide as initial liquidity.\",\"yesTokenId\":\"ERC-1155 YES positionId from the CTF.\"}},\"markResolved(bytes32)\":{\"details\":\"Anyone can call this once the CTF condition has been resolved.      The actual payout distribution happens via ctf.redeemPositions().\"},\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner.\"},\"sellTokens(bytes32,uint256,uint256,uint256)\":{\"details\":\"Caller must have called ctf.setApprovalForAll(ammAddress, true) first.\",\"params\":{\"conditionId\":\"The pool's conditionId.\",\"minUsdcOut\":\"Minimum USDC to receive (slippage protection).\",\"outcome\":\"0 = YES, 1 = NO.\",\"tokenAmount\":\"Number of outcome tokens to sell.\"}},\"supportsInterface(bytes4)\":{\"details\":\"Returns true if this contract implements the interface defined by `interfaceId`. See the corresponding https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section] to learn more about how these ids are created. This function call must use less than 30 000 gas.\"},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"}},\"title\":\"PredictionMarketAMM\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"addLiquidity(bytes32,uint256)\":{\"notice\":\"LP owner adds more liquidity to an existing pool.\"},\"allPools(uint256)\":{\"notice\":\"List of all conditionIds for enumeration\"},\"buyTokens(bytes32,uint256,uint256,uint256)\":{\"notice\":\"Buys outcome tokens with USDC.\"},\"collateral()\":{\"notice\":\"The collateral ERC-20 (USDC on Sepolia: 0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238)\"},\"createPool(bytes32,uint256,uint256,uint256,uint8,uint8)\":{\"notice\":\"Creates an AMM pool for a CTF binary market and seeds initial liquidity.\"},\"ctf()\":{\"notice\":\"The Gnosis CTF contract\"},\"getBuyPrice(bytes32,uint256,uint256)\":{\"notice\":\"Calculate USDC cost to buy `tokenAmount` outcome tokens.  Preserves the original probability-weighted price model.\"},\"getSellPrice(bytes32,uint256,uint256)\":{\"notice\":\"Calculate USDC received for selling `tokenAmount` outcome tokens.\"},\"getYesProbability(bytes32)\":{\"notice\":\"Returns current implied probability of YES outcome (scaled by PRECISION).\"},\"markResolved(bytes32)\":{\"notice\":\"Marks a pool as resolved so trading is disabled.\"},\"pools(bytes32)\":{\"notice\":\"conditionId \\u2192 Pool\"},\"removeLiquidity(bytes32,uint256)\":{\"notice\":\"LP owner removes liquidity from an existing pool.\"},\"sellTokens(bytes32,uint256,uint256,uint256)\":{\"notice\":\"Sells outcome tokens for USDC.\"},\"withdrawAfterResolution(bytes32)\":{\"notice\":\"LP owner withdraws liquidity + trading revenue after resolution.\"}},\"notice\":\"AMM for trading YES/NO ERC-1155 CTF outcome tokens.\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/PredictionMarketAMM.sol\":\"PredictionMarketAMM\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[],\"viaIR\":true},\"sources\":{\"@openzeppelin/contracts/access/Ownable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (access/Ownable.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {Context} from \\\"../utils/Context.sol\\\";\\n\\n/**\\n * @dev Contract module which provides a basic access control mechanism, where\\n * there is an account (an owner) that can be granted exclusive access to\\n * specific functions.\\n *\\n * The initial owner is set to the address provided by the deployer. This can\\n * later be changed with {transferOwnership}.\\n *\\n * This module is used through inheritance. It will make available the modifier\\n * `onlyOwner`, which can be applied to your functions to restrict their use to\\n * the owner.\\n */\\nabstract contract Ownable is Context {\\n    address private _owner;\\n\\n    /**\\n     * @dev The caller account is not authorized to perform an operation.\\n     */\\n    error OwnableUnauthorizedAccount(address account);\\n\\n    /**\\n     * @dev The owner is not a valid owner account. (eg. `address(0)`)\\n     */\\n    error OwnableInvalidOwner(address owner);\\n\\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\\n\\n    /**\\n     * @dev Initializes the contract setting the address provided by the deployer as the initial owner.\\n     */\\n    constructor(address initialOwner) {\\n        if (initialOwner == address(0)) {\\n            revert OwnableInvalidOwner(address(0));\\n        }\\n        _transferOwnership(initialOwner);\\n    }\\n\\n    /**\\n     * @dev Throws if called by any account other than the owner.\\n     */\\n    modifier onlyOwner() {\\n        _checkOwner();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Returns the address of the current owner.\\n     */\\n    function owner() public view virtual returns (address) {\\n        return _owner;\\n    }\\n\\n    /**\\n     * @dev Throws if the sender is not the owner.\\n     */\\n    function _checkOwner() internal view virtual {\\n        if (owner() != _msgSender()) {\\n            revert OwnableUnauthorizedAccount(_msgSender());\\n        }\\n    }\\n\\n    /**\\n     * @dev Leaves the contract without owner. It will not be possible to call\\n     * `onlyOwner` functions. Can only be called by the current owner.\\n     *\\n     * NOTE: Renouncing ownership will leave the contract without an owner,\\n     * thereby disabling any functionality that is only available to the owner.\\n     */\\n    function renounceOwnership() public virtual onlyOwner {\\n        _transferOwnership(address(0));\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Can only be called by the current owner.\\n     */\\n    function transferOwnership(address newOwner) public virtual onlyOwner {\\n        if (newOwner == address(0)) {\\n            revert OwnableInvalidOwner(address(0));\\n        }\\n        _transferOwnership(newOwner);\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Internal function without access restriction.\\n     */\\n    function _transferOwnership(address newOwner) internal virtual {\\n        address oldOwner = _owner;\\n        _owner = newOwner;\\n        emit OwnershipTransferred(oldOwner, newOwner);\\n    }\\n}\\n\",\"keccak256\":\"0xff6d0bb2e285473e5311d9d3caacb525ae3538a80758c10649a4d61029b017bb\",\"license\":\"MIT\"},\"@openzeppelin/contracts/interfaces/draft-IERC6093.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (interfaces/draft-IERC6093.sol)\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Standard ERC20 Errors\\n * Interface of the https://eips.ethereum.org/EIPS/eip-6093[ERC-6093] custom errors for ERC20 tokens.\\n */\\ninterface IERC20Errors {\\n    /**\\n     * @dev Indicates an error related to the current `balance` of a `sender`. Used in transfers.\\n     * @param sender Address whose tokens are being transferred.\\n     * @param balance Current balance for the interacting account.\\n     * @param needed Minimum amount required to perform a transfer.\\n     */\\n    error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed);\\n\\n    /**\\n     * @dev Indicates a failure with the token `sender`. Used in transfers.\\n     * @param sender Address whose tokens are being transferred.\\n     */\\n    error ERC20InvalidSender(address sender);\\n\\n    /**\\n     * @dev Indicates a failure with the token `receiver`. Used in transfers.\\n     * @param receiver Address to which tokens are being transferred.\\n     */\\n    error ERC20InvalidReceiver(address receiver);\\n\\n    /**\\n     * @dev Indicates a failure with the `spender`\\u2019s `allowance`. Used in transfers.\\n     * @param spender Address that may be allowed to operate on tokens without being their owner.\\n     * @param allowance Amount of tokens a `spender` is allowed to operate with.\\n     * @param needed Minimum amount required to perform a transfer.\\n     */\\n    error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed);\\n\\n    /**\\n     * @dev Indicates a failure with the `approver` of a token to be approved. Used in approvals.\\n     * @param approver Address initiating an approval operation.\\n     */\\n    error ERC20InvalidApprover(address approver);\\n\\n    /**\\n     * @dev Indicates a failure with the `spender` to be approved. Used in approvals.\\n     * @param spender Address that may be allowed to operate on tokens without being their owner.\\n     */\\n    error ERC20InvalidSpender(address spender);\\n}\\n\\n/**\\n * @dev Standard ERC721 Errors\\n * Interface of the https://eips.ethereum.org/EIPS/eip-6093[ERC-6093] custom errors for ERC721 tokens.\\n */\\ninterface IERC721Errors {\\n    /**\\n     * @dev Indicates that an address can't be an owner. For example, `address(0)` is a forbidden owner in EIP-20.\\n     * Used in balance queries.\\n     * @param owner Address of the current owner of a token.\\n     */\\n    error ERC721InvalidOwner(address owner);\\n\\n    /**\\n     * @dev Indicates a `tokenId` whose `owner` is the zero address.\\n     * @param tokenId Identifier number of a token.\\n     */\\n    error ERC721NonexistentToken(uint256 tokenId);\\n\\n    /**\\n     * @dev Indicates an error related to the ownership over a particular token. Used in transfers.\\n     * @param sender Address whose tokens are being transferred.\\n     * @param tokenId Identifier number of a token.\\n     * @param owner Address of the current owner of a token.\\n     */\\n    error ERC721IncorrectOwner(address sender, uint256 tokenId, address owner);\\n\\n    /**\\n     * @dev Indicates a failure with the token `sender`. Used in transfers.\\n     * @param sender Address whose tokens are being transferred.\\n     */\\n    error ERC721InvalidSender(address sender);\\n\\n    /**\\n     * @dev Indicates a failure with the token `receiver`. Used in transfers.\\n     * @param receiver Address to which tokens are being transferred.\\n     */\\n    error ERC721InvalidReceiver(address receiver);\\n\\n    /**\\n     * @dev Indicates a failure with the `operator`\\u2019s approval. Used in transfers.\\n     * @param operator Address that may be allowed to operate on tokens without being their owner.\\n     * @param tokenId Identifier number of a token.\\n     */\\n    error ERC721InsufficientApproval(address operator, uint256 tokenId);\\n\\n    /**\\n     * @dev Indicates a failure with the `approver` of a token to be approved. Used in approvals.\\n     * @param approver Address initiating an approval operation.\\n     */\\n    error ERC721InvalidApprover(address approver);\\n\\n    /**\\n     * @dev Indicates a failure with the `operator` to be approved. Used in approvals.\\n     * @param operator Address that may be allowed to operate on tokens without being their owner.\\n     */\\n    error ERC721InvalidOperator(address operator);\\n}\\n\\n/**\\n * @dev Standard ERC1155 Errors\\n * Interface of the https://eips.ethereum.org/EIPS/eip-6093[ERC-6093] custom errors for ERC1155 tokens.\\n */\\ninterface IERC1155Errors {\\n    /**\\n     * @dev Indicates an error related to the current `balance` of a `sender`. Used in transfers.\\n     * @param sender Address whose tokens are being transferred.\\n     * @param balance Current balance for the interacting account.\\n     * @param needed Minimum amount required to perform a transfer.\\n     * @param tokenId Identifier number of a token.\\n     */\\n    error ERC1155InsufficientBalance(address sender, uint256 balance, uint256 needed, uint256 tokenId);\\n\\n    /**\\n     * @dev Indicates a failure with the token `sender`. Used in transfers.\\n     * @param sender Address whose tokens are being transferred.\\n     */\\n    error ERC1155InvalidSender(address sender);\\n\\n    /**\\n     * @dev Indicates a failure with the token `receiver`. Used in transfers.\\n     * @param receiver Address to which tokens are being transferred.\\n     */\\n    error ERC1155InvalidReceiver(address receiver);\\n\\n    /**\\n     * @dev Indicates a failure with the `operator`\\u2019s approval. Used in transfers.\\n     * @param operator Address that may be allowed to operate on tokens without being their owner.\\n     * @param owner Address of the current owner of a token.\\n     */\\n    error ERC1155MissingApprovalForAll(address operator, address owner);\\n\\n    /**\\n     * @dev Indicates a failure with the `approver` of a token to be approved. Used in approvals.\\n     * @param approver Address initiating an approval operation.\\n     */\\n    error ERC1155InvalidApprover(address approver);\\n\\n    /**\\n     * @dev Indicates a failure with the `operator` to be approved. Used in approvals.\\n     * @param operator Address that may be allowed to operate on tokens without being their owner.\\n     */\\n    error ERC1155InvalidOperator(address operator);\\n\\n    /**\\n     * @dev Indicates an array length mismatch between ids and values in a safeBatchTransferFrom operation.\\n     * Used in batch transfers.\\n     * @param idsLength Length of the array of token identifiers\\n     * @param valuesLength Length of the array of token amounts\\n     */\\n    error ERC1155InvalidArrayLength(uint256 idsLength, uint256 valuesLength);\\n}\\n\",\"keccak256\":\"0x60c65f701957fdd6faea1acb0bb45825791d473693ed9ecb34726fdfaa849dd7\",\"license\":\"MIT\"},\"@openzeppelin/contracts/token/ERC1155/ERC1155.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (token/ERC1155/ERC1155.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {IERC1155} from \\\"./IERC1155.sol\\\";\\nimport {IERC1155Receiver} from \\\"./IERC1155Receiver.sol\\\";\\nimport {IERC1155MetadataURI} from \\\"./extensions/IERC1155MetadataURI.sol\\\";\\nimport {Context} from \\\"../../utils/Context.sol\\\";\\nimport {IERC165, ERC165} from \\\"../../utils/introspection/ERC165.sol\\\";\\nimport {Arrays} from \\\"../../utils/Arrays.sol\\\";\\nimport {IERC1155Errors} from \\\"../../interfaces/draft-IERC6093.sol\\\";\\n\\n/**\\n * @dev Implementation of the basic standard multi-token.\\n * See https://eips.ethereum.org/EIPS/eip-1155\\n * Originally based on code by Enjin: https://github.com/enjin/erc-1155\\n */\\nabstract contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, IERC1155Errors {\\n    using Arrays for uint256[];\\n    using Arrays for address[];\\n\\n    mapping(uint256 id => mapping(address account => uint256)) private _balances;\\n\\n    mapping(address account => mapping(address operator => bool)) private _operatorApprovals;\\n\\n    // Used as the URI for all token types by relying on ID substitution, e.g. https://token-cdn-domain/{id}.json\\n    string private _uri;\\n\\n    /**\\n     * @dev See {_setURI}.\\n     */\\n    constructor(string memory uri_) {\\n        _setURI(uri_);\\n    }\\n\\n    /**\\n     * @dev See {IERC165-supportsInterface}.\\n     */\\n    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {\\n        return\\n            interfaceId == type(IERC1155).interfaceId ||\\n            interfaceId == type(IERC1155MetadataURI).interfaceId ||\\n            super.supportsInterface(interfaceId);\\n    }\\n\\n    /**\\n     * @dev See {IERC1155MetadataURI-uri}.\\n     *\\n     * This implementation returns the same URI for *all* token types. It relies\\n     * on the token type ID substitution mechanism\\n     * https://eips.ethereum.org/EIPS/eip-1155#metadata[defined in the EIP].\\n     *\\n     * Clients calling this function must replace the `\\\\{id\\\\}` substring with the\\n     * actual token type ID.\\n     */\\n    function uri(uint256 /* id */) public view virtual returns (string memory) {\\n        return _uri;\\n    }\\n\\n    /**\\n     * @dev See {IERC1155-balanceOf}.\\n     */\\n    function balanceOf(address account, uint256 id) public view virtual returns (uint256) {\\n        return _balances[id][account];\\n    }\\n\\n    /**\\n     * @dev See {IERC1155-balanceOfBatch}.\\n     *\\n     * Requirements:\\n     *\\n     * - `accounts` and `ids` must have the same length.\\n     */\\n    function balanceOfBatch(\\n        address[] memory accounts,\\n        uint256[] memory ids\\n    ) public view virtual returns (uint256[] memory) {\\n        if (accounts.length != ids.length) {\\n            revert ERC1155InvalidArrayLength(ids.length, accounts.length);\\n        }\\n\\n        uint256[] memory batchBalances = new uint256[](accounts.length);\\n\\n        for (uint256 i = 0; i < accounts.length; ++i) {\\n            batchBalances[i] = balanceOf(accounts.unsafeMemoryAccess(i), ids.unsafeMemoryAccess(i));\\n        }\\n\\n        return batchBalances;\\n    }\\n\\n    /**\\n     * @dev See {IERC1155-setApprovalForAll}.\\n     */\\n    function setApprovalForAll(address operator, bool approved) public virtual {\\n        _setApprovalForAll(_msgSender(), operator, approved);\\n    }\\n\\n    /**\\n     * @dev See {IERC1155-isApprovedForAll}.\\n     */\\n    function isApprovedForAll(address account, address operator) public view virtual returns (bool) {\\n        return _operatorApprovals[account][operator];\\n    }\\n\\n    /**\\n     * @dev See {IERC1155-safeTransferFrom}.\\n     */\\n    function safeTransferFrom(address from, address to, uint256 id, uint256 value, bytes memory data) public virtual {\\n        address sender = _msgSender();\\n        if (from != sender && !isApprovedForAll(from, sender)) {\\n            revert ERC1155MissingApprovalForAll(sender, from);\\n        }\\n        _safeTransferFrom(from, to, id, value, data);\\n    }\\n\\n    /**\\n     * @dev See {IERC1155-safeBatchTransferFrom}.\\n     */\\n    function safeBatchTransferFrom(\\n        address from,\\n        address to,\\n        uint256[] memory ids,\\n        uint256[] memory values,\\n        bytes memory data\\n    ) public virtual {\\n        address sender = _msgSender();\\n        if (from != sender && !isApprovedForAll(from, sender)) {\\n            revert ERC1155MissingApprovalForAll(sender, from);\\n        }\\n        _safeBatchTransferFrom(from, to, ids, values, data);\\n    }\\n\\n    /**\\n     * @dev Transfers a `value` amount of tokens of type `id` from `from` to `to`. Will mint (or burn) if `from`\\n     * (or `to`) is the zero address.\\n     *\\n     * Emits a {TransferSingle} event if the arrays contain one element, and {TransferBatch} otherwise.\\n     *\\n     * Requirements:\\n     *\\n     * - If `to` refers to a smart contract, it must implement either {IERC1155Receiver-onERC1155Received}\\n     *   or {IERC1155Receiver-onERC1155BatchReceived} and return the acceptance magic value.\\n     * - `ids` and `values` must have the same length.\\n     *\\n     * NOTE: The ERC-1155 acceptance check is not performed in this function. See {_updateWithAcceptanceCheck} instead.\\n     */\\n    function _update(address from, address to, uint256[] memory ids, uint256[] memory values) internal virtual {\\n        if (ids.length != values.length) {\\n            revert ERC1155InvalidArrayLength(ids.length, values.length);\\n        }\\n\\n        address operator = _msgSender();\\n\\n        for (uint256 i = 0; i < ids.length; ++i) {\\n            uint256 id = ids.unsafeMemoryAccess(i);\\n            uint256 value = values.unsafeMemoryAccess(i);\\n\\n            if (from != address(0)) {\\n                uint256 fromBalance = _balances[id][from];\\n                if (fromBalance < value) {\\n                    revert ERC1155InsufficientBalance(from, fromBalance, value, id);\\n                }\\n                unchecked {\\n                    // Overflow not possible: value <= fromBalance\\n                    _balances[id][from] = fromBalance - value;\\n                }\\n            }\\n\\n            if (to != address(0)) {\\n                _balances[id][to] += value;\\n            }\\n        }\\n\\n        if (ids.length == 1) {\\n            uint256 id = ids.unsafeMemoryAccess(0);\\n            uint256 value = values.unsafeMemoryAccess(0);\\n            emit TransferSingle(operator, from, to, id, value);\\n        } else {\\n            emit TransferBatch(operator, from, to, ids, values);\\n        }\\n    }\\n\\n    /**\\n     * @dev Version of {_update} that performs the token acceptance check by calling\\n     * {IERC1155Receiver-onERC1155Received} or {IERC1155Receiver-onERC1155BatchReceived} on the receiver address if it\\n     * contains code (eg. is a smart contract at the moment of execution).\\n     *\\n     * IMPORTANT: Overriding this function is discouraged because it poses a reentrancy risk from the receiver. So any\\n     * update to the contract state after this function would break the check-effect-interaction pattern. Consider\\n     * overriding {_update} instead.\\n     */\\n    function _updateWithAcceptanceCheck(\\n        address from,\\n        address to,\\n        uint256[] memory ids,\\n        uint256[] memory values,\\n        bytes memory data\\n    ) internal virtual {\\n        _update(from, to, ids, values);\\n        if (to != address(0)) {\\n            address operator = _msgSender();\\n            if (ids.length == 1) {\\n                uint256 id = ids.unsafeMemoryAccess(0);\\n                uint256 value = values.unsafeMemoryAccess(0);\\n                _doSafeTransferAcceptanceCheck(operator, from, to, id, value, data);\\n            } else {\\n                _doSafeBatchTransferAcceptanceCheck(operator, from, to, ids, values, data);\\n            }\\n        }\\n    }\\n\\n    /**\\n     * @dev Transfers a `value` tokens of token type `id` from `from` to `to`.\\n     *\\n     * Emits a {TransferSingle} event.\\n     *\\n     * Requirements:\\n     *\\n     * - `to` cannot be the zero address.\\n     * - `from` must have a balance of tokens of type `id` of at least `value` amount.\\n     * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155Received} and return the\\n     * acceptance magic value.\\n     */\\n    function _safeTransferFrom(address from, address to, uint256 id, uint256 value, bytes memory data) internal {\\n        if (to == address(0)) {\\n            revert ERC1155InvalidReceiver(address(0));\\n        }\\n        if (from == address(0)) {\\n            revert ERC1155InvalidSender(address(0));\\n        }\\n        (uint256[] memory ids, uint256[] memory values) = _asSingletonArrays(id, value);\\n        _updateWithAcceptanceCheck(from, to, ids, values, data);\\n    }\\n\\n    /**\\n     * @dev xref:ROOT:erc1155.adoc#batch-operations[Batched] version of {_safeTransferFrom}.\\n     *\\n     * Emits a {TransferBatch} event.\\n     *\\n     * Requirements:\\n     *\\n     * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155BatchReceived} and return the\\n     * acceptance magic value.\\n     * - `ids` and `values` must have the same length.\\n     */\\n    function _safeBatchTransferFrom(\\n        address from,\\n        address to,\\n        uint256[] memory ids,\\n        uint256[] memory values,\\n        bytes memory data\\n    ) internal {\\n        if (to == address(0)) {\\n            revert ERC1155InvalidReceiver(address(0));\\n        }\\n        if (from == address(0)) {\\n            revert ERC1155InvalidSender(address(0));\\n        }\\n        _updateWithAcceptanceCheck(from, to, ids, values, data);\\n    }\\n\\n    /**\\n     * @dev Sets a new URI for all token types, by relying on the token type ID\\n     * substitution mechanism\\n     * https://eips.ethereum.org/EIPS/eip-1155#metadata[defined in the EIP].\\n     *\\n     * By this mechanism, any occurrence of the `\\\\{id\\\\}` substring in either the\\n     * URI or any of the values in the JSON file at said URI will be replaced by\\n     * clients with the token type ID.\\n     *\\n     * For example, the `https://token-cdn-domain/\\\\{id\\\\}.json` URI would be\\n     * interpreted by clients as\\n     * `https://token-cdn-domain/000000000000000000000000000000000000000000000000000000000004cce0.json`\\n     * for token type ID 0x4cce0.\\n     *\\n     * See {uri}.\\n     *\\n     * Because these URIs cannot be meaningfully represented by the {URI} event,\\n     * this function emits no events.\\n     */\\n    function _setURI(string memory newuri) internal virtual {\\n        _uri = newuri;\\n    }\\n\\n    /**\\n     * @dev Creates a `value` amount of tokens of type `id`, and assigns them to `to`.\\n     *\\n     * Emits a {TransferSingle} event.\\n     *\\n     * Requirements:\\n     *\\n     * - `to` cannot be the zero address.\\n     * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155Received} and return the\\n     * acceptance magic value.\\n     */\\n    function _mint(address to, uint256 id, uint256 value, bytes memory data) internal {\\n        if (to == address(0)) {\\n            revert ERC1155InvalidReceiver(address(0));\\n        }\\n        (uint256[] memory ids, uint256[] memory values) = _asSingletonArrays(id, value);\\n        _updateWithAcceptanceCheck(address(0), to, ids, values, data);\\n    }\\n\\n    /**\\n     * @dev xref:ROOT:erc1155.adoc#batch-operations[Batched] version of {_mint}.\\n     *\\n     * Emits a {TransferBatch} event.\\n     *\\n     * Requirements:\\n     *\\n     * - `ids` and `values` must have the same length.\\n     * - `to` cannot be the zero address.\\n     * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155BatchReceived} and return the\\n     * acceptance magic value.\\n     */\\n    function _mintBatch(address to, uint256[] memory ids, uint256[] memory values, bytes memory data) internal {\\n        if (to == address(0)) {\\n            revert ERC1155InvalidReceiver(address(0));\\n        }\\n        _updateWithAcceptanceCheck(address(0), to, ids, values, data);\\n    }\\n\\n    /**\\n     * @dev Destroys a `value` amount of tokens of type `id` from `from`\\n     *\\n     * Emits a {TransferSingle} event.\\n     *\\n     * Requirements:\\n     *\\n     * - `from` cannot be the zero address.\\n     * - `from` must have at least `value` amount of tokens of type `id`.\\n     */\\n    function _burn(address from, uint256 id, uint256 value) internal {\\n        if (from == address(0)) {\\n            revert ERC1155InvalidSender(address(0));\\n        }\\n        (uint256[] memory ids, uint256[] memory values) = _asSingletonArrays(id, value);\\n        _updateWithAcceptanceCheck(from, address(0), ids, values, \\\"\\\");\\n    }\\n\\n    /**\\n     * @dev xref:ROOT:erc1155.adoc#batch-operations[Batched] version of {_burn}.\\n     *\\n     * Emits a {TransferBatch} event.\\n     *\\n     * Requirements:\\n     *\\n     * - `from` cannot be the zero address.\\n     * - `from` must have at least `value` amount of tokens of type `id`.\\n     * - `ids` and `values` must have the same length.\\n     */\\n    function _burnBatch(address from, uint256[] memory ids, uint256[] memory values) internal {\\n        if (from == address(0)) {\\n            revert ERC1155InvalidSender(address(0));\\n        }\\n        _updateWithAcceptanceCheck(from, address(0), ids, values, \\\"\\\");\\n    }\\n\\n    /**\\n     * @dev Approve `operator` to operate on all of `owner` tokens\\n     *\\n     * Emits an {ApprovalForAll} event.\\n     *\\n     * Requirements:\\n     *\\n     * - `operator` cannot be the zero address.\\n     */\\n    function _setApprovalForAll(address owner, address operator, bool approved) internal virtual {\\n        if (operator == address(0)) {\\n            revert ERC1155InvalidOperator(address(0));\\n        }\\n        _operatorApprovals[owner][operator] = approved;\\n        emit ApprovalForAll(owner, operator, approved);\\n    }\\n\\n    /**\\n     * @dev Performs an acceptance check by calling {IERC1155-onERC1155Received} on the `to` address\\n     * if it contains code at the moment of execution.\\n     */\\n    function _doSafeTransferAcceptanceCheck(\\n        address operator,\\n        address from,\\n        address to,\\n        uint256 id,\\n        uint256 value,\\n        bytes memory data\\n    ) private {\\n        if (to.code.length > 0) {\\n            try IERC1155Receiver(to).onERC1155Received(operator, from, id, value, data) returns (bytes4 response) {\\n                if (response != IERC1155Receiver.onERC1155Received.selector) {\\n                    // Tokens rejected\\n                    revert ERC1155InvalidReceiver(to);\\n                }\\n            } catch (bytes memory reason) {\\n                if (reason.length == 0) {\\n                    // non-ERC1155Receiver implementer\\n                    revert ERC1155InvalidReceiver(to);\\n                } else {\\n                    /// @solidity memory-safe-assembly\\n                    assembly {\\n                        revert(add(32, reason), mload(reason))\\n                    }\\n                }\\n            }\\n        }\\n    }\\n\\n    /**\\n     * @dev Performs a batch acceptance check by calling {IERC1155-onERC1155BatchReceived} on the `to` address\\n     * if it contains code at the moment of execution.\\n     */\\n    function _doSafeBatchTransferAcceptanceCheck(\\n        address operator,\\n        address from,\\n        address to,\\n        uint256[] memory ids,\\n        uint256[] memory values,\\n        bytes memory data\\n    ) private {\\n        if (to.code.length > 0) {\\n            try IERC1155Receiver(to).onERC1155BatchReceived(operator, from, ids, values, data) returns (\\n                bytes4 response\\n            ) {\\n                if (response != IERC1155Receiver.onERC1155BatchReceived.selector) {\\n                    // Tokens rejected\\n                    revert ERC1155InvalidReceiver(to);\\n                }\\n            } catch (bytes memory reason) {\\n                if (reason.length == 0) {\\n                    // non-ERC1155Receiver implementer\\n                    revert ERC1155InvalidReceiver(to);\\n                } else {\\n                    /// @solidity memory-safe-assembly\\n                    assembly {\\n                        revert(add(32, reason), mload(reason))\\n                    }\\n                }\\n            }\\n        }\\n    }\\n\\n    /**\\n     * @dev Creates an array in memory with only one value for each of the elements provided.\\n     */\\n    function _asSingletonArrays(\\n        uint256 element1,\\n        uint256 element2\\n    ) private pure returns (uint256[] memory array1, uint256[] memory array2) {\\n        /// @solidity memory-safe-assembly\\n        assembly {\\n            // Load the free memory pointer\\n            array1 := mload(0x40)\\n            // Set array length to 1\\n            mstore(array1, 1)\\n            // Store the single element at the next word after the length (where content starts)\\n            mstore(add(array1, 0x20), element1)\\n\\n            // Repeat for next array locating it right after the first array\\n            array2 := add(array1, 0x40)\\n            mstore(array2, 1)\\n            mstore(add(array2, 0x20), element2)\\n\\n            // Update the free memory pointer by pointing after the second array\\n            mstore(0x40, add(array2, 0x40))\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0xd9b0b8ee1ac6dfee14eb1ad4383a4739dbaa0f2036594bb3a16f0408085dadde\",\"license\":\"MIT\"},\"@openzeppelin/contracts/token/ERC1155/IERC1155.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.1) (token/ERC1155/IERC1155.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {IERC165} from \\\"../../utils/introspection/IERC165.sol\\\";\\n\\n/**\\n * @dev Required interface of an ERC1155 compliant contract, as defined in the\\n * https://eips.ethereum.org/EIPS/eip-1155[EIP].\\n */\\ninterface IERC1155 is IERC165 {\\n    /**\\n     * @dev Emitted when `value` amount of tokens of type `id` are transferred from `from` to `to` by `operator`.\\n     */\\n    event TransferSingle(address indexed operator, address indexed from, address indexed to, uint256 id, uint256 value);\\n\\n    /**\\n     * @dev Equivalent to multiple {TransferSingle} events, where `operator`, `from` and `to` are the same for all\\n     * transfers.\\n     */\\n    event TransferBatch(\\n        address indexed operator,\\n        address indexed from,\\n        address indexed to,\\n        uint256[] ids,\\n        uint256[] values\\n    );\\n\\n    /**\\n     * @dev Emitted when `account` grants or revokes permission to `operator` to transfer their tokens, according to\\n     * `approved`.\\n     */\\n    event ApprovalForAll(address indexed account, address indexed operator, bool approved);\\n\\n    /**\\n     * @dev Emitted when the URI for token type `id` changes to `value`, if it is a non-programmatic URI.\\n     *\\n     * If an {URI} event was emitted for `id`, the standard\\n     * https://eips.ethereum.org/EIPS/eip-1155#metadata-extensions[guarantees] that `value` will equal the value\\n     * returned by {IERC1155MetadataURI-uri}.\\n     */\\n    event URI(string value, uint256 indexed id);\\n\\n    /**\\n     * @dev Returns the value of tokens of token type `id` owned by `account`.\\n     *\\n     * Requirements:\\n     *\\n     * - `account` cannot be the zero address.\\n     */\\n    function balanceOf(address account, uint256 id) external view returns (uint256);\\n\\n    /**\\n     * @dev xref:ROOT:erc1155.adoc#batch-operations[Batched] version of {balanceOf}.\\n     *\\n     * Requirements:\\n     *\\n     * - `accounts` and `ids` must have the same length.\\n     */\\n    function balanceOfBatch(\\n        address[] calldata accounts,\\n        uint256[] calldata ids\\n    ) external view returns (uint256[] memory);\\n\\n    /**\\n     * @dev Grants or revokes permission to `operator` to transfer the caller's tokens, according to `approved`,\\n     *\\n     * Emits an {ApprovalForAll} event.\\n     *\\n     * Requirements:\\n     *\\n     * - `operator` cannot be the caller.\\n     */\\n    function setApprovalForAll(address operator, bool approved) external;\\n\\n    /**\\n     * @dev Returns true if `operator` is approved to transfer ``account``'s tokens.\\n     *\\n     * See {setApprovalForAll}.\\n     */\\n    function isApprovedForAll(address account, address operator) external view returns (bool);\\n\\n    /**\\n     * @dev Transfers a `value` amount of tokens of type `id` from `from` to `to`.\\n     *\\n     * WARNING: This function can potentially allow a reentrancy attack when transferring tokens\\n     * to an untrusted contract, when invoking {onERC1155Received} on the receiver.\\n     * Ensure to follow the checks-effects-interactions pattern and consider employing\\n     * reentrancy guards when interacting with untrusted contracts.\\n     *\\n     * Emits a {TransferSingle} event.\\n     *\\n     * Requirements:\\n     *\\n     * - `to` cannot be the zero address.\\n     * - If the caller is not `from`, it must have been approved to spend ``from``'s tokens via {setApprovalForAll}.\\n     * - `from` must have a balance of tokens of type `id` of at least `value` amount.\\n     * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155Received} and return the\\n     * acceptance magic value.\\n     */\\n    function safeTransferFrom(address from, address to, uint256 id, uint256 value, bytes calldata data) external;\\n\\n    /**\\n     * @dev xref:ROOT:erc1155.adoc#batch-operations[Batched] version of {safeTransferFrom}.\\n     *\\n     * WARNING: This function can potentially allow a reentrancy attack when transferring tokens\\n     * to an untrusted contract, when invoking {onERC1155BatchReceived} on the receiver.\\n     * Ensure to follow the checks-effects-interactions pattern and consider employing\\n     * reentrancy guards when interacting with untrusted contracts.\\n     *\\n     * Emits either a {TransferSingle} or a {TransferBatch} event, depending on the length of the array arguments.\\n     *\\n     * Requirements:\\n     *\\n     * - `ids` and `values` must have the same length.\\n     * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155BatchReceived} and return the\\n     * acceptance magic value.\\n     */\\n    function safeBatchTransferFrom(\\n        address from,\\n        address to,\\n        uint256[] calldata ids,\\n        uint256[] calldata values,\\n        bytes calldata data\\n    ) external;\\n}\\n\",\"keccak256\":\"0x6caffc9cfdc623eca9f87a686071708af5d5c17454d65022843fdddbc53c0cce\",\"license\":\"MIT\"},\"@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (token/ERC1155/IERC1155Receiver.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {IERC165} from \\\"../../utils/introspection/IERC165.sol\\\";\\n\\n/**\\n * @dev Interface that must be implemented by smart contracts in order to receive\\n * ERC-1155 token transfers.\\n */\\ninterface IERC1155Receiver is IERC165 {\\n    /**\\n     * @dev Handles the receipt of a single ERC1155 token type. This function is\\n     * called at the end of a `safeTransferFrom` after the balance has been updated.\\n     *\\n     * NOTE: To accept the transfer, this must return\\n     * `bytes4(keccak256(\\\"onERC1155Received(address,address,uint256,uint256,bytes)\\\"))`\\n     * (i.e. 0xf23a6e61, or its own function selector).\\n     *\\n     * @param operator The address which initiated the transfer (i.e. msg.sender)\\n     * @param from The address which previously owned the token\\n     * @param id The ID of the token being transferred\\n     * @param value The amount of tokens being transferred\\n     * @param data Additional data with no specified format\\n     * @return `bytes4(keccak256(\\\"onERC1155Received(address,address,uint256,uint256,bytes)\\\"))` if transfer is allowed\\n     */\\n    function onERC1155Received(\\n        address operator,\\n        address from,\\n        uint256 id,\\n        uint256 value,\\n        bytes calldata data\\n    ) external returns (bytes4);\\n\\n    /**\\n     * @dev Handles the receipt of a multiple ERC1155 token types. This function\\n     * is called at the end of a `safeBatchTransferFrom` after the balances have\\n     * been updated.\\n     *\\n     * NOTE: To accept the transfer(s), this must return\\n     * `bytes4(keccak256(\\\"onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)\\\"))`\\n     * (i.e. 0xbc197c81, or its own function selector).\\n     *\\n     * @param operator The address which initiated the batch transfer (i.e. msg.sender)\\n     * @param from The address which previously owned the token\\n     * @param ids An array containing ids of each token being transferred (order and length must match values array)\\n     * @param values An array containing amounts of each token being transferred (order and length must match ids array)\\n     * @param data Additional data with no specified format\\n     * @return `bytes4(keccak256(\\\"onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)\\\"))` if transfer is allowed\\n     */\\n    function onERC1155BatchReceived(\\n        address operator,\\n        address from,\\n        uint256[] calldata ids,\\n        uint256[] calldata values,\\n        bytes calldata data\\n    ) external returns (bytes4);\\n}\\n\",\"keccak256\":\"0xb69597a63b202e28401128bed6a6d259e8730191274471af7303eafb247881a3\",\"license\":\"MIT\"},\"@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (token/ERC1155/extensions/IERC1155MetadataURI.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {IERC1155} from \\\"../IERC1155.sol\\\";\\n\\n/**\\n * @dev Interface of the optional ERC1155MetadataExtension interface, as defined\\n * in the https://eips.ethereum.org/EIPS/eip-1155#metadata-extensions[EIP].\\n */\\ninterface IERC1155MetadataURI is IERC1155 {\\n    /**\\n     * @dev Returns the URI for token type `id`.\\n     *\\n     * If the `\\\\{id\\\\}` substring is present in the URI, it must be replaced by\\n     * clients with the actual token type ID.\\n     */\\n    function uri(uint256 id) external view returns (string memory);\\n}\\n\",\"keccak256\":\"0xe92b5e199b963d108ad6e06feeede151ba23849e0d064956535489ff967ffe68\",\"license\":\"MIT\"},\"@openzeppelin/contracts/token/ERC20/IERC20.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (token/ERC20/IERC20.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Interface of the ERC20 standard as defined in the EIP.\\n */\\ninterface IERC20 {\\n    /**\\n     * @dev Emitted when `value` tokens are moved from one account (`from`) to\\n     * another (`to`).\\n     *\\n     * Note that `value` may be zero.\\n     */\\n    event Transfer(address indexed from, address indexed to, uint256 value);\\n\\n    /**\\n     * @dev Emitted when the allowance of a `spender` for an `owner` is set by\\n     * a call to {approve}. `value` is the new allowance.\\n     */\\n    event Approval(address indexed owner, address indexed spender, uint256 value);\\n\\n    /**\\n     * @dev Returns the value of tokens in existence.\\n     */\\n    function totalSupply() external view returns (uint256);\\n\\n    /**\\n     * @dev Returns the value of tokens owned by `account`.\\n     */\\n    function balanceOf(address account) external view returns (uint256);\\n\\n    /**\\n     * @dev Moves a `value` amount of tokens from the caller's account to `to`.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function transfer(address to, uint256 value) external returns (bool);\\n\\n    /**\\n     * @dev Returns the remaining number of tokens that `spender` will be\\n     * allowed to spend on behalf of `owner` through {transferFrom}. This is\\n     * zero by default.\\n     *\\n     * This value changes when {approve} or {transferFrom} are called.\\n     */\\n    function allowance(address owner, address spender) external view returns (uint256);\\n\\n    /**\\n     * @dev Sets a `value` amount of tokens as the allowance of `spender` over the\\n     * caller's tokens.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * IMPORTANT: Beware that changing an allowance with this method brings the risk\\n     * that someone may use both the old and the new allowance by unfortunate\\n     * transaction ordering. One possible solution to mitigate this race\\n     * condition is to first reduce the spender's allowance to 0 and set the\\n     * desired value afterwards:\\n     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729\\n     *\\n     * Emits an {Approval} event.\\n     */\\n    function approve(address spender, uint256 value) external returns (bool);\\n\\n    /**\\n     * @dev Moves a `value` amount of tokens from `from` to `to` using the\\n     * allowance mechanism. `value` is then deducted from the caller's\\n     * allowance.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function transferFrom(address from, address to, uint256 value) external returns (bool);\\n}\\n\",\"keccak256\":\"0xc6a8ff0ea489379b61faa647490411b80102578440ab9d84e9a957cc12164e70\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Arrays.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (utils/Arrays.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {StorageSlot} from \\\"./StorageSlot.sol\\\";\\nimport {Math} from \\\"./math/Math.sol\\\";\\n\\n/**\\n * @dev Collection of functions related to array types.\\n */\\nlibrary Arrays {\\n    using StorageSlot for bytes32;\\n\\n    /**\\n     * @dev Searches a sorted `array` and returns the first index that contains\\n     * a value greater or equal to `element`. If no such index exists (i.e. all\\n     * values in the array are strictly less than `element`), the array length is\\n     * returned. Time complexity O(log n).\\n     *\\n     * `array` is expected to be sorted in ascending order, and to contain no\\n     * repeated elements.\\n     */\\n    function findUpperBound(uint256[] storage array, uint256 element) internal view returns (uint256) {\\n        uint256 low = 0;\\n        uint256 high = array.length;\\n\\n        if (high == 0) {\\n            return 0;\\n        }\\n\\n        while (low < high) {\\n            uint256 mid = Math.average(low, high);\\n\\n            // Note that mid will always be strictly less than high (i.e. it will be a valid array index)\\n            // because Math.average rounds towards zero (it does integer division with truncation).\\n            if (unsafeAccess(array, mid).value > element) {\\n                high = mid;\\n            } else {\\n                low = mid + 1;\\n            }\\n        }\\n\\n        // At this point `low` is the exclusive upper bound. We will return the inclusive upper bound.\\n        if (low > 0 && unsafeAccess(array, low - 1).value == element) {\\n            return low - 1;\\n        } else {\\n            return low;\\n        }\\n    }\\n\\n    /**\\n     * @dev Access an array in an \\\"unsafe\\\" way. Skips solidity \\\"index-out-of-range\\\" check.\\n     *\\n     * WARNING: Only use if you are certain `pos` is lower than the array length.\\n     */\\n    function unsafeAccess(address[] storage arr, uint256 pos) internal pure returns (StorageSlot.AddressSlot storage) {\\n        bytes32 slot;\\n        // We use assembly to calculate the storage slot of the element at index `pos` of the dynamic array `arr`\\n        // following https://docs.soliditylang.org/en/v0.8.20/internals/layout_in_storage.html#mappings-and-dynamic-arrays.\\n\\n        /// @solidity memory-safe-assembly\\n        assembly {\\n            mstore(0, arr.slot)\\n            slot := add(keccak256(0, 0x20), pos)\\n        }\\n        return slot.getAddressSlot();\\n    }\\n\\n    /**\\n     * @dev Access an array in an \\\"unsafe\\\" way. Skips solidity \\\"index-out-of-range\\\" check.\\n     *\\n     * WARNING: Only use if you are certain `pos` is lower than the array length.\\n     */\\n    function unsafeAccess(bytes32[] storage arr, uint256 pos) internal pure returns (StorageSlot.Bytes32Slot storage) {\\n        bytes32 slot;\\n        // We use assembly to calculate the storage slot of the element at index `pos` of the dynamic array `arr`\\n        // following https://docs.soliditylang.org/en/v0.8.20/internals/layout_in_storage.html#mappings-and-dynamic-arrays.\\n\\n        /// @solidity memory-safe-assembly\\n        assembly {\\n            mstore(0, arr.slot)\\n            slot := add(keccak256(0, 0x20), pos)\\n        }\\n        return slot.getBytes32Slot();\\n    }\\n\\n    /**\\n     * @dev Access an array in an \\\"unsafe\\\" way. Skips solidity \\\"index-out-of-range\\\" check.\\n     *\\n     * WARNING: Only use if you are certain `pos` is lower than the array length.\\n     */\\n    function unsafeAccess(uint256[] storage arr, uint256 pos) internal pure returns (StorageSlot.Uint256Slot storage) {\\n        bytes32 slot;\\n        // We use assembly to calculate the storage slot of the element at index `pos` of the dynamic array `arr`\\n        // following https://docs.soliditylang.org/en/v0.8.20/internals/layout_in_storage.html#mappings-and-dynamic-arrays.\\n\\n        /// @solidity memory-safe-assembly\\n        assembly {\\n            mstore(0, arr.slot)\\n            slot := add(keccak256(0, 0x20), pos)\\n        }\\n        return slot.getUint256Slot();\\n    }\\n\\n    /**\\n     * @dev Access an array in an \\\"unsafe\\\" way. Skips solidity \\\"index-out-of-range\\\" check.\\n     *\\n     * WARNING: Only use if you are certain `pos` is lower than the array length.\\n     */\\n    function unsafeMemoryAccess(uint256[] memory arr, uint256 pos) internal pure returns (uint256 res) {\\n        assembly {\\n            res := mload(add(add(arr, 0x20), mul(pos, 0x20)))\\n        }\\n    }\\n\\n    /**\\n     * @dev Access an array in an \\\"unsafe\\\" way. Skips solidity \\\"index-out-of-range\\\" check.\\n     *\\n     * WARNING: Only use if you are certain `pos` is lower than the array length.\\n     */\\n    function unsafeMemoryAccess(address[] memory arr, uint256 pos) internal pure returns (address res) {\\n        assembly {\\n            res := mload(add(add(arr, 0x20), mul(pos, 0x20)))\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x8806d620b6571932b662cfd48fbd518d4f70df1f88a23b5724cacde64a77bda1\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Context.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.1) (utils/Context.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Provides information about the current execution context, including the\\n * sender of the transaction and its data. While these are generally available\\n * via msg.sender and msg.data, they should not be accessed in such a direct\\n * manner, since when dealing with meta-transactions the account sending and\\n * paying for execution may not be the actual sender (as far as an application\\n * is concerned).\\n *\\n * This contract is only required for intermediate, library-like contracts.\\n */\\nabstract contract Context {\\n    function _msgSender() internal view virtual returns (address) {\\n        return msg.sender;\\n    }\\n\\n    function _msgData() internal view virtual returns (bytes calldata) {\\n        return msg.data;\\n    }\\n\\n    function _contextSuffixLength() internal view virtual returns (uint256) {\\n        return 0;\\n    }\\n}\\n\",\"keccak256\":\"0x493033a8d1b176a037b2cc6a04dad01a5c157722049bbecf632ca876224dd4b2\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/ReentrancyGuard.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (utils/ReentrancyGuard.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Contract module that helps prevent reentrant calls to a function.\\n *\\n * Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier\\n * available, which can be applied to functions to make sure there are no nested\\n * (reentrant) calls to them.\\n *\\n * Note that because there is a single `nonReentrant` guard, functions marked as\\n * `nonReentrant` may not call one another. This can be worked around by making\\n * those functions `private`, and then adding `external` `nonReentrant` entry\\n * points to them.\\n *\\n * TIP: If you would like to learn more about reentrancy and alternative ways\\n * to protect against it, check out our blog post\\n * https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].\\n */\\nabstract contract ReentrancyGuard {\\n    // Booleans are more expensive than uint256 or any type that takes up a full\\n    // word because each write operation emits an extra SLOAD to first read the\\n    // slot's contents, replace the bits taken up by the boolean, and then write\\n    // back. This is the compiler's defense against contract upgrades and\\n    // pointer aliasing, and it cannot be disabled.\\n\\n    // The values being non-zero value makes deployment a bit more expensive,\\n    // but in exchange the refund on every call to nonReentrant will be lower in\\n    // amount. Since refunds are capped to a percentage of the total\\n    // transaction's gas, it is best to keep them low in cases like this one, to\\n    // increase the likelihood of the full refund coming into effect.\\n    uint256 private constant NOT_ENTERED = 1;\\n    uint256 private constant ENTERED = 2;\\n\\n    uint256 private _status;\\n\\n    /**\\n     * @dev Unauthorized reentrant call.\\n     */\\n    error ReentrancyGuardReentrantCall();\\n\\n    constructor() {\\n        _status = NOT_ENTERED;\\n    }\\n\\n    /**\\n     * @dev Prevents a contract from calling itself, directly or indirectly.\\n     * Calling a `nonReentrant` function from another `nonReentrant`\\n     * function is not supported. It is possible to prevent this from happening\\n     * by making the `nonReentrant` function external, and making it call a\\n     * `private` function that does the actual work.\\n     */\\n    modifier nonReentrant() {\\n        _nonReentrantBefore();\\n        _;\\n        _nonReentrantAfter();\\n    }\\n\\n    function _nonReentrantBefore() private {\\n        // On the first call to nonReentrant, _status will be NOT_ENTERED\\n        if (_status == ENTERED) {\\n            revert ReentrancyGuardReentrantCall();\\n        }\\n\\n        // Any calls to nonReentrant after this point will fail\\n        _status = ENTERED;\\n    }\\n\\n    function _nonReentrantAfter() private {\\n        // By storing the original value once again, a refund is triggered (see\\n        // https://eips.ethereum.org/EIPS/eip-2200)\\n        _status = NOT_ENTERED;\\n    }\\n\\n    /**\\n     * @dev Returns true if the reentrancy guard is currently set to \\\"entered\\\", which indicates there is a\\n     * `nonReentrant` function in the call stack.\\n     */\\n    function _reentrancyGuardEntered() internal view returns (bool) {\\n        return _status == ENTERED;\\n    }\\n}\\n\",\"keccak256\":\"0xf980daa263b661ab8ddee7d4fd833c7da7e7995e2c359ff1f17e67e4112f2236\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/StorageSlot.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (utils/StorageSlot.sol)\\n// This file was procedurally generated from scripts/generate/templates/StorageSlot.js.\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Library for reading and writing primitive types to specific storage slots.\\n *\\n * Storage slots are often used to avoid storage conflict when dealing with upgradeable contracts.\\n * This library helps with reading and writing to such slots without the need for inline assembly.\\n *\\n * The functions in this library return Slot structs that contain a `value` member that can be used to read or write.\\n *\\n * Example usage to set ERC1967 implementation slot:\\n * ```solidity\\n * contract ERC1967 {\\n *     bytes32 internal constant _IMPLEMENTATION_SLOT = 0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc;\\n *\\n *     function _getImplementation() internal view returns (address) {\\n *         return StorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value;\\n *     }\\n *\\n *     function _setImplementation(address newImplementation) internal {\\n *         require(newImplementation.code.length > 0);\\n *         StorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value = newImplementation;\\n *     }\\n * }\\n * ```\\n */\\nlibrary StorageSlot {\\n    struct AddressSlot {\\n        address value;\\n    }\\n\\n    struct BooleanSlot {\\n        bool value;\\n    }\\n\\n    struct Bytes32Slot {\\n        bytes32 value;\\n    }\\n\\n    struct Uint256Slot {\\n        uint256 value;\\n    }\\n\\n    struct StringSlot {\\n        string value;\\n    }\\n\\n    struct BytesSlot {\\n        bytes value;\\n    }\\n\\n    /**\\n     * @dev Returns an `AddressSlot` with member `value` located at `slot`.\\n     */\\n    function getAddressSlot(bytes32 slot) internal pure returns (AddressSlot storage r) {\\n        /// @solidity memory-safe-assembly\\n        assembly {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns an `BooleanSlot` with member `value` located at `slot`.\\n     */\\n    function getBooleanSlot(bytes32 slot) internal pure returns (BooleanSlot storage r) {\\n        /// @solidity memory-safe-assembly\\n        assembly {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns an `Bytes32Slot` with member `value` located at `slot`.\\n     */\\n    function getBytes32Slot(bytes32 slot) internal pure returns (Bytes32Slot storage r) {\\n        /// @solidity memory-safe-assembly\\n        assembly {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns an `Uint256Slot` with member `value` located at `slot`.\\n     */\\n    function getUint256Slot(bytes32 slot) internal pure returns (Uint256Slot storage r) {\\n        /// @solidity memory-safe-assembly\\n        assembly {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns an `StringSlot` with member `value` located at `slot`.\\n     */\\n    function getStringSlot(bytes32 slot) internal pure returns (StringSlot storage r) {\\n        /// @solidity memory-safe-assembly\\n        assembly {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns an `StringSlot` representation of the string storage pointer `store`.\\n     */\\n    function getStringSlot(string storage store) internal pure returns (StringSlot storage r) {\\n        /// @solidity memory-safe-assembly\\n        assembly {\\n            r.slot := store.slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns an `BytesSlot` with member `value` located at `slot`.\\n     */\\n    function getBytesSlot(bytes32 slot) internal pure returns (BytesSlot storage r) {\\n        /// @solidity memory-safe-assembly\\n        assembly {\\n            r.slot := slot\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns an `BytesSlot` representation of the bytes storage pointer `store`.\\n     */\\n    function getBytesSlot(bytes storage store) internal pure returns (BytesSlot storage r) {\\n        /// @solidity memory-safe-assembly\\n        assembly {\\n            r.slot := store.slot\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x32ba59b4b7299237c8ba56319110989d7978a039faf754793064e967e5894418\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/introspection/ERC165.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (utils/introspection/ERC165.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {IERC165} from \\\"./IERC165.sol\\\";\\n\\n/**\\n * @dev Implementation of the {IERC165} interface.\\n *\\n * Contracts that want to implement ERC165 should inherit from this contract and override {supportsInterface} to check\\n * for the additional interface id that will be supported. For example:\\n *\\n * ```solidity\\n * function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {\\n *     return interfaceId == type(MyInterface).interfaceId || super.supportsInterface(interfaceId);\\n * }\\n * ```\\n */\\nabstract contract ERC165 is IERC165 {\\n    /**\\n     * @dev See {IERC165-supportsInterface}.\\n     */\\n    function supportsInterface(bytes4 interfaceId) public view virtual returns (bool) {\\n        return interfaceId == type(IERC165).interfaceId;\\n    }\\n}\\n\",\"keccak256\":\"0x9e8778b14317ba9e256c30a76fd6c32b960af621987f56069e1e819c77c6a133\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/introspection/IERC165.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (utils/introspection/IERC165.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Interface of the ERC165 standard, as defined in the\\n * https://eips.ethereum.org/EIPS/eip-165[EIP].\\n *\\n * Implementers can declare support of contract interfaces, which can then be\\n * queried by others ({ERC165Checker}).\\n *\\n * For an implementation, see {ERC165}.\\n */\\ninterface IERC165 {\\n    /**\\n     * @dev Returns true if this contract implements the interface defined by\\n     * `interfaceId`. See the corresponding\\n     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]\\n     * to learn more about how these ids are created.\\n     *\\n     * This function call must use less than 30 000 gas.\\n     */\\n    function supportsInterface(bytes4 interfaceId) external view returns (bool);\\n}\\n\",\"keccak256\":\"0x4296879f55019b23e135000eb36896057e7101fb7fb859c5ef690cf14643757b\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/math/Math.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (utils/math/Math.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Standard math utilities missing in the Solidity language.\\n */\\nlibrary Math {\\n    /**\\n     * @dev Muldiv operation overflow.\\n     */\\n    error MathOverflowedMulDiv();\\n\\n    enum Rounding {\\n        Floor, // Toward negative infinity\\n        Ceil, // Toward positive infinity\\n        Trunc, // Toward zero\\n        Expand // Away from zero\\n    }\\n\\n    /**\\n     * @dev Returns the addition of two unsigned integers, with an overflow flag.\\n     */\\n    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            uint256 c = a + b;\\n            if (c < a) return (false, 0);\\n            return (true, c);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the subtraction of two unsigned integers, with an overflow flag.\\n     */\\n    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            if (b > a) return (false, 0);\\n            return (true, a - b);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the multiplication of two unsigned integers, with an overflow flag.\\n     */\\n    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            // Gas optimization: this is cheaper than requiring 'a' not being zero, but the\\n            // benefit is lost if 'b' is also tested.\\n            // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522\\n            if (a == 0) return (true, 0);\\n            uint256 c = a * b;\\n            if (c / a != b) return (false, 0);\\n            return (true, c);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the division of two unsigned integers, with a division by zero flag.\\n     */\\n    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            if (b == 0) return (false, 0);\\n            return (true, a / b);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the remainder of dividing two unsigned integers, with a division by zero flag.\\n     */\\n    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            if (b == 0) return (false, 0);\\n            return (true, a % b);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the largest of two numbers.\\n     */\\n    function max(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a > b ? a : b;\\n    }\\n\\n    /**\\n     * @dev Returns the smallest of two numbers.\\n     */\\n    function min(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a < b ? a : b;\\n    }\\n\\n    /**\\n     * @dev Returns the average of two numbers. The result is rounded towards\\n     * zero.\\n     */\\n    function average(uint256 a, uint256 b) internal pure returns (uint256) {\\n        // (a + b) / 2 can overflow.\\n        return (a & b) + (a ^ b) / 2;\\n    }\\n\\n    /**\\n     * @dev Returns the ceiling of the division of two numbers.\\n     *\\n     * This differs from standard division with `/` in that it rounds towards infinity instead\\n     * of rounding towards zero.\\n     */\\n    function ceilDiv(uint256 a, uint256 b) internal pure returns (uint256) {\\n        if (b == 0) {\\n            // Guarantee the same behavior as in a regular Solidity division.\\n            return a / b;\\n        }\\n\\n        // (a + b - 1) / b can overflow on addition, so we distribute.\\n        return a == 0 ? 0 : (a - 1) / b + 1;\\n    }\\n\\n    /**\\n     * @notice Calculates floor(x * y / denominator) with full precision. Throws if result overflows a uint256 or\\n     * denominator == 0.\\n     * @dev Original credit to Remco Bloemen under MIT license (https://xn--2-umb.com/21/muldiv) with further edits by\\n     * Uniswap Labs also under MIT license.\\n     */\\n    function mulDiv(uint256 x, uint256 y, uint256 denominator) internal pure returns (uint256 result) {\\n        unchecked {\\n            // 512-bit multiply [prod1 prod0] = x * y. Compute the product mod 2^256 and mod 2^256 - 1, then use\\n            // use the Chinese Remainder Theorem to reconstruct the 512 bit result. The result is stored in two 256\\n            // variables such that product = prod1 * 2^256 + prod0.\\n            uint256 prod0 = x * y; // Least significant 256 bits of the product\\n            uint256 prod1; // Most significant 256 bits of the product\\n            assembly {\\n                let mm := mulmod(x, y, not(0))\\n                prod1 := sub(sub(mm, prod0), lt(mm, prod0))\\n            }\\n\\n            // Handle non-overflow cases, 256 by 256 division.\\n            if (prod1 == 0) {\\n                // Solidity will revert if denominator == 0, unlike the div opcode on its own.\\n                // The surrounding unchecked block does not change this fact.\\n                // See https://docs.soliditylang.org/en/latest/control-structures.html#checked-or-unchecked-arithmetic.\\n                return prod0 / denominator;\\n            }\\n\\n            // Make sure the result is less than 2^256. Also prevents denominator == 0.\\n            if (denominator <= prod1) {\\n                revert MathOverflowedMulDiv();\\n            }\\n\\n            ///////////////////////////////////////////////\\n            // 512 by 256 division.\\n            ///////////////////////////////////////////////\\n\\n            // Make division exact by subtracting the remainder from [prod1 prod0].\\n            uint256 remainder;\\n            assembly {\\n                // Compute remainder using mulmod.\\n                remainder := mulmod(x, y, denominator)\\n\\n                // Subtract 256 bit number from 512 bit number.\\n                prod1 := sub(prod1, gt(remainder, prod0))\\n                prod0 := sub(prod0, remainder)\\n            }\\n\\n            // Factor powers of two out of denominator and compute largest power of two divisor of denominator.\\n            // Always >= 1. See https://cs.stackexchange.com/q/138556/92363.\\n\\n            uint256 twos = denominator & (0 - denominator);\\n            assembly {\\n                // Divide denominator by twos.\\n                denominator := div(denominator, twos)\\n\\n                // Divide [prod1 prod0] by twos.\\n                prod0 := div(prod0, twos)\\n\\n                // Flip twos such that it is 2^256 / twos. If twos is zero, then it becomes one.\\n                twos := add(div(sub(0, twos), twos), 1)\\n            }\\n\\n            // Shift in bits from prod1 into prod0.\\n            prod0 |= prod1 * twos;\\n\\n            // Invert denominator mod 2^256. Now that denominator is an odd number, it has an inverse modulo 2^256 such\\n            // that denominator * inv = 1 mod 2^256. Compute the inverse by starting with a seed that is correct for\\n            // four bits. That is, denominator * inv = 1 mod 2^4.\\n            uint256 inverse = (3 * denominator) ^ 2;\\n\\n            // Use the Newton-Raphson iteration to improve the precision. Thanks to Hensel's lifting lemma, this also\\n            // works in modular arithmetic, doubling the correct bits in each step.\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^8\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^16\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^32\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^64\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^128\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^256\\n\\n            // Because the division is now exact we can divide by multiplying with the modular inverse of denominator.\\n            // This will give us the correct result modulo 2^256. Since the preconditions guarantee that the outcome is\\n            // less than 2^256, this is the final result. We don't need to compute the high bits of the result and prod1\\n            // is no longer required.\\n            result = prod0 * inverse;\\n            return result;\\n        }\\n    }\\n\\n    /**\\n     * @notice Calculates x * y / denominator with full precision, following the selected rounding direction.\\n     */\\n    function mulDiv(uint256 x, uint256 y, uint256 denominator, Rounding rounding) internal pure returns (uint256) {\\n        uint256 result = mulDiv(x, y, denominator);\\n        if (unsignedRoundsUp(rounding) && mulmod(x, y, denominator) > 0) {\\n            result += 1;\\n        }\\n        return result;\\n    }\\n\\n    /**\\n     * @dev Returns the square root of a number. If the number is not a perfect square, the value is rounded\\n     * towards zero.\\n     *\\n     * Inspired by Henry S. Warren, Jr.'s \\\"Hacker's Delight\\\" (Chapter 11).\\n     */\\n    function sqrt(uint256 a) internal pure returns (uint256) {\\n        if (a == 0) {\\n            return 0;\\n        }\\n\\n        // For our first guess, we get the biggest power of 2 which is smaller than the square root of the target.\\n        //\\n        // We know that the \\\"msb\\\" (most significant bit) of our target number `a` is a power of 2 such that we have\\n        // `msb(a) <= a < 2*msb(a)`. This value can be written `msb(a)=2**k` with `k=log2(a)`.\\n        //\\n        // This can be rewritten `2**log2(a) <= a < 2**(log2(a) + 1)`\\n        // \\u2192 `sqrt(2**k) <= sqrt(a) < sqrt(2**(k+1))`\\n        // \\u2192 `2**(k/2) <= sqrt(a) < 2**((k+1)/2) <= 2**(k/2 + 1)`\\n        //\\n        // Consequently, `2**(log2(a) / 2)` is a good first approximation of `sqrt(a)` with at least 1 correct bit.\\n        uint256 result = 1 << (log2(a) >> 1);\\n\\n        // At this point `result` is an estimation with one bit of precision. We know the true value is a uint128,\\n        // since it is the square root of a uint256. Newton's method converges quadratically (precision doubles at\\n        // every iteration). We thus need at most 7 iteration to turn our partial result with one bit of precision\\n        // into the expected uint128 result.\\n        unchecked {\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            return min(result, a / result);\\n        }\\n    }\\n\\n    /**\\n     * @notice Calculates sqrt(a), following the selected rounding direction.\\n     */\\n    function sqrt(uint256 a, Rounding rounding) internal pure returns (uint256) {\\n        unchecked {\\n            uint256 result = sqrt(a);\\n            return result + (unsignedRoundsUp(rounding) && result * result < a ? 1 : 0);\\n        }\\n    }\\n\\n    /**\\n     * @dev Return the log in base 2 of a positive value rounded towards zero.\\n     * Returns 0 if given 0.\\n     */\\n    function log2(uint256 value) internal pure returns (uint256) {\\n        uint256 result = 0;\\n        unchecked {\\n            if (value >> 128 > 0) {\\n                value >>= 128;\\n                result += 128;\\n            }\\n            if (value >> 64 > 0) {\\n                value >>= 64;\\n                result += 64;\\n            }\\n            if (value >> 32 > 0) {\\n                value >>= 32;\\n                result += 32;\\n            }\\n            if (value >> 16 > 0) {\\n                value >>= 16;\\n                result += 16;\\n            }\\n            if (value >> 8 > 0) {\\n                value >>= 8;\\n                result += 8;\\n            }\\n            if (value >> 4 > 0) {\\n                value >>= 4;\\n                result += 4;\\n            }\\n            if (value >> 2 > 0) {\\n                value >>= 2;\\n                result += 2;\\n            }\\n            if (value >> 1 > 0) {\\n                result += 1;\\n            }\\n        }\\n        return result;\\n    }\\n\\n    /**\\n     * @dev Return the log in base 2, following the selected rounding direction, of a positive value.\\n     * Returns 0 if given 0.\\n     */\\n    function log2(uint256 value, Rounding rounding) internal pure returns (uint256) {\\n        unchecked {\\n            uint256 result = log2(value);\\n            return result + (unsignedRoundsUp(rounding) && 1 << result < value ? 1 : 0);\\n        }\\n    }\\n\\n    /**\\n     * @dev Return the log in base 10 of a positive value rounded towards zero.\\n     * Returns 0 if given 0.\\n     */\\n    function log10(uint256 value) internal pure returns (uint256) {\\n        uint256 result = 0;\\n        unchecked {\\n            if (value >= 10 ** 64) {\\n                value /= 10 ** 64;\\n                result += 64;\\n            }\\n            if (value >= 10 ** 32) {\\n                value /= 10 ** 32;\\n                result += 32;\\n            }\\n            if (value >= 10 ** 16) {\\n                value /= 10 ** 16;\\n                result += 16;\\n            }\\n            if (value >= 10 ** 8) {\\n                value /= 10 ** 8;\\n                result += 8;\\n            }\\n            if (value >= 10 ** 4) {\\n                value /= 10 ** 4;\\n                result += 4;\\n            }\\n            if (value >= 10 ** 2) {\\n                value /= 10 ** 2;\\n                result += 2;\\n            }\\n            if (value >= 10 ** 1) {\\n                result += 1;\\n            }\\n        }\\n        return result;\\n    }\\n\\n    /**\\n     * @dev Return the log in base 10, following the selected rounding direction, of a positive value.\\n     * Returns 0 if given 0.\\n     */\\n    function log10(uint256 value, Rounding rounding) internal pure returns (uint256) {\\n        unchecked {\\n            uint256 result = log10(value);\\n            return result + (unsignedRoundsUp(rounding) && 10 ** result < value ? 1 : 0);\\n        }\\n    }\\n\\n    /**\\n     * @dev Return the log in base 256 of a positive value rounded towards zero.\\n     * Returns 0 if given 0.\\n     *\\n     * Adding one to the result gives the number of pairs of hex symbols needed to represent `value` as a hex string.\\n     */\\n    function log256(uint256 value) internal pure returns (uint256) {\\n        uint256 result = 0;\\n        unchecked {\\n            if (value >> 128 > 0) {\\n                value >>= 128;\\n                result += 16;\\n            }\\n            if (value >> 64 > 0) {\\n                value >>= 64;\\n                result += 8;\\n            }\\n            if (value >> 32 > 0) {\\n                value >>= 32;\\n                result += 4;\\n            }\\n            if (value >> 16 > 0) {\\n                value >>= 16;\\n                result += 2;\\n            }\\n            if (value >> 8 > 0) {\\n                result += 1;\\n            }\\n        }\\n        return result;\\n    }\\n\\n    /**\\n     * @dev Return the log in base 256, following the selected rounding direction, of a positive value.\\n     * Returns 0 if given 0.\\n     */\\n    function log256(uint256 value, Rounding rounding) internal pure returns (uint256) {\\n        unchecked {\\n            uint256 result = log256(value);\\n            return result + (unsignedRoundsUp(rounding) && 1 << (result << 3) < value ? 1 : 0);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns whether a provided rounding mode is considered rounding up for unsigned integers.\\n     */\\n    function unsignedRoundsUp(Rounding rounding) internal pure returns (bool) {\\n        return uint8(rounding) % 2 == 1;\\n    }\\n}\\n\",\"keccak256\":\"0x005ec64c6313f0555d59e278f9a7a5ab2db5bdc72a027f255a37c327af1ec02d\",\"license\":\"MIT\"},\"contracts/ConditionalTokens.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0\\n// Adapted from Gnosis Conditional Token Framework for Solidity ^0.8.0\\n// Original: https://github.com/gnosis/conditional-tokens-contracts\\npragma solidity ^0.8.0;\\n\\nimport { IERC20 } from \\\"@openzeppelin/contracts/token/ERC20/IERC20.sol\\\";\\nimport { ERC1155 } from \\\"@openzeppelin/contracts/token/ERC1155/ERC1155.sol\\\";\\n\\n/**\\n * @title ConditionalTokens\\n * @notice Core Gnosis Conditional Token Framework \\u2014 markets are conditionIds, not deployed contracts.\\n * @dev Ported from Gnosis CTF (^0.5.1) to Solidity ^0.8.0 (SafeMath removed, native overflow).\\n * ERC-1155 position IDs are derived deterministically from collateral + conditionId + indexSet.\\n */\\ncontract ConditionalTokens is ERC1155 {\\n    /////////////////////////////\\n    // Events\\n    /////////////////////////////\\n\\n    /// @dev Emitted on prepareCondition()\\n    event ConditionPreparation(\\n        bytes32 indexed conditionId,\\n        address indexed oracle,\\n        bytes32 indexed questionId,\\n        uint256 outcomeSlotCount\\n    );\\n\\n    /// @dev Emitted on reportPayouts()\\n    event ConditionResolution(\\n        bytes32 indexed conditionId,\\n        address indexed oracle,\\n        bytes32 indexed questionId,\\n        uint256 outcomeSlotCount,\\n        uint256[] payoutNumerators\\n    );\\n\\n    /// @dev Emitted on splitPosition()\\n    event PositionSplit(\\n        address indexed stakeholder,\\n        IERC20 collateralToken,\\n        bytes32 indexed parentCollectionId,\\n        bytes32 indexed conditionId,\\n        uint256[] partition,\\n        uint256 amount\\n    );\\n\\n    /// @dev Emitted on mergePositions()\\n    event PositionsMerge(\\n        address indexed stakeholder,\\n        IERC20 collateralToken,\\n        bytes32 indexed parentCollectionId,\\n        bytes32 indexed conditionId,\\n        uint256[] partition,\\n        uint256 amount\\n    );\\n\\n    event PayoutRedemption(\\n        address indexed redeemer,\\n        IERC20 indexed collateralToken,\\n        bytes32 indexed parentCollectionId,\\n        bytes32 conditionId,\\n        uint256[] indexSets,\\n        uint256 payout\\n    );\\n\\n    /////////////////////////////\\n    // State\\n    /////////////////////////////\\n\\n    /// @notice Payout numerators per conditionId. Empty = not prepared.\\n    mapping(bytes32 => uint256[]) public payoutNumerators;\\n\\n    /// @notice Payout denominator; nonzero = condition resolved.\\n    mapping(bytes32 => uint256) public payoutDenominator;\\n\\n    constructor() ERC1155(\\\"\\\") {}\\n\\n    /////////////////////////////\\n    // Core Functions\\n    /////////////////////////////\\n\\n    /**\\n     * @notice Registers a new condition (market) on-chain.\\n     * @param oracle         The address that will call reportPayouts() for this condition.\\n     * @param questionId     Unique question identifier (keccak256 of IPFS CID).\\n     * @param outcomeSlotCount Number of outcomes (2 for binary YES/NO).\\n     */\\n    function prepareCondition(address oracle, bytes32 questionId, uint256 outcomeSlotCount) external {\\n        require(outcomeSlotCount <= 256, \\\"CTF: too many outcome slots\\\");\\n        require(outcomeSlotCount > 1, \\\"CTF: need more than one outcome slot\\\");\\n        bytes32 conditionId = getConditionId(oracle, questionId, outcomeSlotCount);\\n        require(payoutNumerators[conditionId].length == 0, \\\"CTF: condition already prepared\\\");\\n        payoutNumerators[conditionId] = new uint256[](outcomeSlotCount);\\n        emit ConditionPreparation(conditionId, oracle, questionId, outcomeSlotCount);\\n    }\\n\\n    /**\\n     * @notice Called by the oracle to resolve a condition.\\n     * @param questionId  The question ID the oracle is answering.\\n     * @param payouts     Array of payout numerators per outcome slot.\\n     */\\n    function reportPayouts(bytes32 questionId, uint256[] calldata payouts) external {\\n        uint256 outcomeSlotCount = payouts.length;\\n        require(outcomeSlotCount > 1, \\\"CTF: need more than one outcome slot\\\");\\n        bytes32 conditionId = getConditionId(msg.sender, questionId, outcomeSlotCount);\\n        require(payoutNumerators[conditionId].length == outcomeSlotCount, \\\"CTF: condition not prepared\\\");\\n        require(payoutDenominator[conditionId] == 0, \\\"CTF: already resolved\\\");\\n\\n        uint256 den = 0;\\n        for (uint256 i = 0; i < outcomeSlotCount; i++) {\\n            uint256 num = payouts[i];\\n            den += num;\\n            require(payoutNumerators[conditionId][i] == 0, \\\"CTF: numerator already set\\\");\\n            payoutNumerators[conditionId][i] = num;\\n        }\\n        require(den > 0, \\\"CTF: all-zero payout\\\");\\n        payoutDenominator[conditionId] = den;\\n        emit ConditionResolution(conditionId, msg.sender, questionId, outcomeSlotCount, payoutNumerators[conditionId]);\\n    }\\n\\n    /**\\n     * @notice Splits a collateral position into outcome positions.\\n     * @param collateralToken  ERC-20 used as collateral (e.g. USDC).\\n     * @param parentCollectionId  bytes32(0) for root positions.\\n     * @param conditionId      The condition to split on.\\n     * @param partition        Array of disjoint index sets.\\n     * @param amount           Amount of collateral to lock.\\n     */\\n    function splitPosition(\\n        IERC20 collateralToken,\\n        bytes32 parentCollectionId,\\n        bytes32 conditionId,\\n        uint256[] calldata partition,\\n        uint256 amount\\n    ) external {\\n        require(partition.length > 1, \\\"CTF: need at least 2 partition elements\\\");\\n        uint256 outcomeSlotCount = payoutNumerators[conditionId].length;\\n        require(outcomeSlotCount > 0, \\\"CTF: condition not prepared\\\");\\n\\n        uint256 fullIndexSet = (1 << outcomeSlotCount) - 1;\\n        uint256 freeIndexSet = fullIndexSet;\\n        uint256[] memory positionIds = new uint256[](partition.length);\\n        uint256[] memory amounts = new uint256[](partition.length);\\n\\n        for (uint256 i = 0; i < partition.length; i++) {\\n            uint256 indexSet = partition[i];\\n            require(indexSet > 0 && indexSet < fullIndexSet, \\\"CTF: invalid index set\\\");\\n            require((indexSet & freeIndexSet) == indexSet, \\\"CTF: partition not disjoint\\\");\\n            freeIndexSet ^= indexSet;\\n            positionIds[i] = getPositionId(collateralToken, getCollectionId(parentCollectionId, conditionId, indexSet));\\n            amounts[i] = amount;\\n        }\\n\\n        if (freeIndexSet == 0) {\\n            if (parentCollectionId == bytes32(0)) {\\n                require(collateralToken.transferFrom(msg.sender, address(this), amount), \\\"CTF: collateral transfer failed\\\");\\n            } else {\\n                _burn(msg.sender, getPositionId(collateralToken, parentCollectionId), amount);\\n            }\\n        } else {\\n            _burn(\\n                msg.sender,\\n                getPositionId(\\n                    collateralToken,\\n                    getCollectionId(parentCollectionId, conditionId, fullIndexSet ^ freeIndexSet)\\n                ),\\n                amount\\n            );\\n        }\\n\\n        _mintBatch(msg.sender, positionIds, amounts, \\\"\\\");\\n        emit PositionSplit(msg.sender, collateralToken, parentCollectionId, conditionId, partition, amount);\\n    }\\n\\n    /**\\n     * @notice Merges outcome positions back into collateral.\\n     */\\n    function mergePositions(\\n        IERC20 collateralToken,\\n        bytes32 parentCollectionId,\\n        bytes32 conditionId,\\n        uint256[] calldata partition,\\n        uint256 amount\\n    ) external {\\n        require(partition.length > 1, \\\"CTF: need at least 2 partition elements\\\");\\n        uint256 outcomeSlotCount = payoutNumerators[conditionId].length;\\n        require(outcomeSlotCount > 0, \\\"CTF: condition not prepared\\\");\\n\\n        uint256 fullIndexSet = (1 << outcomeSlotCount) - 1;\\n        uint256 freeIndexSet = fullIndexSet;\\n        uint256[] memory positionIds = new uint256[](partition.length);\\n        uint256[] memory amounts = new uint256[](partition.length);\\n\\n        for (uint256 i = 0; i < partition.length; i++) {\\n            uint256 indexSet = partition[i];\\n            require(indexSet > 0 && indexSet < fullIndexSet, \\\"CTF: invalid index set\\\");\\n            require((indexSet & freeIndexSet) == indexSet, \\\"CTF: partition not disjoint\\\");\\n            freeIndexSet ^= indexSet;\\n            positionIds[i] = getPositionId(collateralToken, getCollectionId(parentCollectionId, conditionId, indexSet));\\n            amounts[i] = amount;\\n        }\\n\\n        _burnBatch(msg.sender, positionIds, amounts);\\n\\n        if (freeIndexSet == 0) {\\n            if (parentCollectionId == bytes32(0)) {\\n                require(collateralToken.transfer(msg.sender, amount), \\\"CTF: collateral return failed\\\");\\n            } else {\\n                _mint(msg.sender, getPositionId(collateralToken, parentCollectionId), amount, \\\"\\\");\\n            }\\n        } else {\\n            _mint(\\n                msg.sender,\\n                getPositionId(\\n                    collateralToken,\\n                    getCollectionId(parentCollectionId, conditionId, fullIndexSet ^ freeIndexSet)\\n                ),\\n                amount,\\n                \\\"\\\"\\n            );\\n        }\\n\\n        emit PositionsMerge(msg.sender, collateralToken, parentCollectionId, conditionId, partition, amount);\\n    }\\n\\n    /**\\n     * @notice Redeems winning outcome positions for collateral after resolution.\\n     */\\n    function redeemPositions(\\n        IERC20 collateralToken,\\n        bytes32 parentCollectionId,\\n        bytes32 conditionId,\\n        uint256[] calldata indexSets\\n    ) external {\\n        uint256 den = payoutDenominator[conditionId];\\n        require(den > 0, \\\"CTF: condition not resolved\\\");\\n        uint256 outcomeSlotCount = payoutNumerators[conditionId].length;\\n        require(outcomeSlotCount > 0, \\\"CTF: condition not prepared\\\");\\n\\n        uint256 totalPayout = 0;\\n        uint256 fullIndexSet = (1 << outcomeSlotCount) - 1;\\n\\n        for (uint256 i = 0; i < indexSets.length; i++) {\\n            uint256 indexSet = indexSets[i];\\n            require(indexSet > 0 && indexSet < fullIndexSet, \\\"CTF: invalid index set\\\");\\n            uint256 positionId = getPositionId(\\n                collateralToken,\\n                getCollectionId(parentCollectionId, conditionId, indexSet)\\n            );\\n\\n            uint256 payoutNumerator = 0;\\n            for (uint256 j = 0; j < outcomeSlotCount; j++) {\\n                if (indexSet & (1 << j) != 0) {\\n                    payoutNumerator += payoutNumerators[conditionId][j];\\n                }\\n            }\\n\\n            uint256 payoutStake = balanceOf(msg.sender, positionId);\\n            if (payoutStake > 0) {\\n                totalPayout += (payoutStake * payoutNumerator) / den;\\n                _burn(msg.sender, positionId, payoutStake);\\n            }\\n        }\\n\\n        if (totalPayout > 0) {\\n            if (parentCollectionId == bytes32(0)) {\\n                require(collateralToken.transfer(msg.sender, totalPayout), \\\"CTF: payout transfer failed\\\");\\n            } else {\\n                _mint(msg.sender, getPositionId(collateralToken, parentCollectionId), totalPayout, \\\"\\\");\\n            }\\n        }\\n\\n        emit PayoutRedemption(msg.sender, collateralToken, parentCollectionId, conditionId, indexSets, totalPayout);\\n    }\\n\\n    /////////////////////////////\\n    // View Helpers\\n    /////////////////////////////\\n\\n    /// @notice Returns number of outcome slots, or 0 if not prepared.\\n    function getOutcomeSlotCount(bytes32 conditionId) external view returns (uint256) {\\n        return payoutNumerators[conditionId].length;\\n    }\\n\\n    /// @notice conditionId = keccak256(oracle, questionId, outcomeSlotCount)\\n    function getConditionId(address oracle, bytes32 questionId, uint256 outcomeSlotCount)\\n        public\\n        pure\\n        returns (bytes32)\\n    {\\n        return keccak256(abi.encodePacked(oracle, questionId, outcomeSlotCount));\\n    }\\n\\n    /// @notice collectionId = keccak256(parentCollectionId ^ keccak256(conditionId, indexSet))\\n    function getCollectionId(bytes32 parentCollectionId, bytes32 conditionId, uint256 indexSet)\\n        public\\n        pure\\n        returns (bytes32)\\n    {\\n        return bytes32(uint256(keccak256(abi.encodePacked(conditionId, indexSet))) + uint256(parentCollectionId));\\n    }\\n\\n    /// @notice positionId = keccak256(collateralToken, collectionId)\\n    function getPositionId(IERC20 collateralToken, bytes32 collectionId) public pure returns (uint256) {\\n        return uint256(keccak256(abi.encodePacked(collateralToken, collectionId)));\\n    }\\n}\\n\",\"keccak256\":\"0xf24494cb839273e2a8a0847dfe38cbb80101c9cd6e979523d46e80a8c3ff206c\",\"license\":\"LGPL-3.0\"},\"contracts/PredictionMarketAMM.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.20;\\n\\nimport { IERC20 } from \\\"@openzeppelin/contracts/token/ERC20/IERC20.sol\\\";\\nimport { IERC1155 } from \\\"@openzeppelin/contracts/token/ERC1155/IERC1155.sol\\\";\\nimport { IERC1155Receiver } from \\\"@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol\\\";\\nimport { Ownable } from \\\"@openzeppelin/contracts/access/Ownable.sol\\\";\\nimport { ReentrancyGuard } from \\\"@openzeppelin/contracts/utils/ReentrancyGuard.sol\\\";\\nimport { ConditionalTokens } from \\\"./ConditionalTokens.sol\\\";\\n\\n/**\\n * @title PredictionMarketAMM\\n * @notice AMM for trading YES/NO ERC-1155 CTF outcome tokens.\\n *\\n * @dev This contract preserves the core probability-weighted pricing logic from the original\\n *      speedrun-ethereum PredictionMarket.sol but adapts it to:\\n *       - Trade ERC-1155 CTF positions instead of ERC-20 tokens\\n *       - Use USDC (ERC-20) as collateral instead of ETH\\n *       - Support multiple markets (pools) without deploying a new contract per market\\n *       - Disable trading after the CTF condition is resolved\\n *\\n * PRICING ALGORITHM (preserved from original):\\n *  Buy/Sell price = initialTokenValue \\u00d7 avgProbability \\u00d7 amount\\n *  Where probability = targetTokensSold / totalTokensSold for both outcomes\\n *  avgProbability = (probabilityBefore + probabilityAfter) / 2\\n *\\n * Each pool is identified by a `conditionId` derived from the CTF:\\n *  conditionId = keccak256(adapter, questionId, outcomeSlotCount)\\n */\\ncontract PredictionMarketAMM is Ownable, ReentrancyGuard, IERC1155Receiver {\\n    ////////////////////////////////////////////////////\\n    // Constants\\n    ////////////////////////////////////////////////////\\n\\n    uint256 private constant PRECISION = 1e6; // Match USDC decimals\\n\\n    ////////////////////////////////////////////////////\\n    // Types\\n    ////////////////////////////////////////////////////\\n\\n    struct Pool {\\n        uint256 yesTokenId;        // ERC-1155 positionId for YES outcome\\n        uint256 noTokenId;         // ERC-1155 positionId for NO outcome\\n        uint256 yesReserve;        // YES token balance held by this AMM\\n        uint256 noReserve;         // NO token balance held by this AMM\\n        uint256 usdcCollateral;    // Total USDC backing this pool\\n        uint256 lpTradingRevenue;  // Accumulated USDC from buy/sell spreads\\n        uint256 initialYesProbability; // Starting YES probability (1-99)\\n        uint256 percentageLocked;  // % of supply locked by LP to set initial probability (1-99)\\n        address lpOwner;           // Address that seeded liquidity\\n        bool resolved;             // True after CTF condition is resolved\\n        bool exists;\\n    }\\n\\n    ////////////////////////////////////////////////////\\n    // State\\n    ////////////////////////////////////////////////////\\n\\n    /// @notice The Gnosis CTF contract\\n    ConditionalTokens public immutable ctf;\\n\\n    /// @notice The collateral ERC-20 (USDC on Sepolia: 0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238)\\n    IERC20 public immutable collateral;\\n\\n    /// @notice conditionId \\u2192 Pool\\n    mapping(bytes32 => Pool) public pools;\\n\\n    /// @notice List of all conditionIds for enumeration\\n    bytes32[] public allPools;\\n\\n    ////////////////////////////////////////////////////\\n    // Events\\n    ////////////////////////////////////////////////////\\n\\n    event PoolCreated(bytes32 indexed conditionId, uint256 yesTokenId, uint256 noTokenId, uint256 usdcCollateral);\\n    event LiquidityAdded(bytes32 indexed conditionId, address indexed provider, uint256 usdcAmount, uint256 tokenAmount);\\n    event LiquidityRemoved(bytes32 indexed conditionId, address indexed provider, uint256 usdcAmount, uint256 tokenAmount);\\n    event TokensBought(bytes32 indexed conditionId, address indexed buyer, uint256 outcome, uint256 tokenAmount, uint256 usdcPaid);\\n    event TokensSold(bytes32 indexed conditionId, address indexed seller, uint256 outcome, uint256 tokenAmount, uint256 usdcReceived);\\n    event PoolResolved(bytes32 indexed conditionId);\\n\\n    ////////////////////////////////////////////////////\\n    // Errors\\n    ////////////////////////////////////////////////////\\n\\n    error PoolAlreadyExists(bytes32 conditionId);\\n    error PoolNotFound(bytes32 conditionId);\\n    error PoolResolved_();\\n    error PoolNotResolved();\\n    error InsufficientReserve(uint256 outcome, uint256 requested);\\n    error InsufficientLiquidity();\\n    error InsufficientBalance(uint256 requested, uint256 available);\\n    error InvalidProbability();\\n    error InvalidPercentage();\\n    error AmountZero();\\n    error WrongUsdcAmount();\\n    error NotLPOwner();\\n    error TransferFailed();\\n    error OnlyFromCTF();\\n\\n    ////////////////////////////////////////////////////\\n    // Modifiers\\n    ////////////////////////////////////////////////////\\n\\n    modifier poolExists(bytes32 conditionId) {\\n        if (!pools[conditionId].exists) revert PoolNotFound(conditionId);\\n        _;\\n    }\\n\\n    modifier notResolved(bytes32 conditionId) {\\n        if (pools[conditionId].resolved) revert PoolResolved_();\\n        _;\\n    }\\n\\n    ////////////////////////////////////////////////////\\n    // Constructor\\n    ////////////////////////////////////////////////////\\n\\n    constructor(address _ctf, address _collateral) Ownable(msg.sender) {\\n        ctf = ConditionalTokens(_ctf);\\n        collateral = IERC20(_collateral);\\n    }\\n\\n    ////////////////////////////////////////////////////\\n    // Pool Management\\n    ////////////////////////////////////////////////////\\n\\n    /**\\n     * @notice Creates an AMM pool for a CTF binary market and seeds initial liquidity.\\n     * @dev Caller must have already approved this contract to spend `usdcAmount` USDC.\\n     *      The USDC is split-positioned into YES/NO ERC-1155 tokens by the CTF;\\n     *      then deposited into the pool as reserves.\\n     *\\n     * @param conditionId         The CTF conditionId derived from keccak256(adapter, questionId, 2).\\n     * @param yesTokenId          ERC-1155 YES positionId from the CTF.\\n     * @param noTokenId           ERC-1155 NO positionId from the CTF.\\n     * @param usdcAmount          Amount of USDC to provide as initial liquidity.\\n     * @param initialYesProbability Starting YES probability (1-99).\\n     * @param percentageToLock    % of token supply locked to simulate initial probability (1-99).\\n     */\\n    function createPool(\\n        bytes32 conditionId,\\n        uint256 yesTokenId,\\n        uint256 noTokenId,\\n        uint256 usdcAmount,\\n        uint8 initialYesProbability,\\n        uint8 percentageToLock\\n    ) external nonReentrant {\\n        if (pools[conditionId].exists) revert PoolAlreadyExists(conditionId);\\n        if (usdcAmount == 0) revert AmountZero();\\n        if (initialYesProbability == 0 || initialYesProbability >= 100) revert InvalidProbability();\\n        if (percentageToLock == 0 || percentageToLock >= 100) revert InvalidPercentage();\\n\\n        // Pull USDC from caller\\n        if (!collateral.transferFrom(msg.sender, address(this), usdcAmount)) revert TransferFailed();\\n\\n        // Split USDC \\u2192 YES + NO ERC-1155 tokens via the CTF\\n        collateral.approve(address(ctf), usdcAmount);\\n        uint256[] memory partition = new uint256[](2);\\n        partition[0] = 1; // indexSet for YES (bit 0)\\n        partition[1] = 2; // indexSet for NO  (bit 1)\\n        ctf.splitPosition(collateral, bytes32(0), conditionId, partition, usdcAmount);\\n\\n        // In CTF, 1 collateral = 1 YES + 1 NO. No artificial scaling.\\n        uint256 tokenAmount = usdcAmount;\\n\\n        // Calculate locked tokens to simulate initial probability\\n        uint256 lockedYes = (tokenAmount * initialYesProbability * percentageToLock * 2) / 10000;\\n        uint256 lockedNo  = (tokenAmount * (100 - initialYesProbability) * percentageToLock * 2) / 10000;\\n\\n        // Pool holds the non-locked tokens as reserves\\n        uint256 yesReserve = tokenAmount - lockedYes;\\n        uint256 noReserve  = tokenAmount - lockedNo;\\n\\n        // Transfer locked tokens to LP owner (held off-AMM, simulating initial probability)\\n        ctf.safeTransferFrom(address(this), msg.sender, yesTokenId, lockedYes, \\\"\\\");\\n        ctf.safeTransferFrom(address(this), msg.sender, noTokenId,  lockedNo,  \\\"\\\");\\n\\n        pools[conditionId] = Pool({\\n            yesTokenId:            yesTokenId,\\n            noTokenId:             noTokenId,\\n            yesReserve:            yesReserve,\\n            noReserve:             noReserve,\\n            usdcCollateral:        usdcAmount,\\n            lpTradingRevenue:      0,\\n            initialYesProbability: initialYesProbability,\\n            percentageLocked:      percentageToLock,\\n            lpOwner:               msg.sender,\\n            resolved:              false,\\n            exists:                true\\n        });\\n\\n        allPools.push(conditionId);\\n\\n        emit PoolCreated(conditionId, yesTokenId, noTokenId, usdcAmount);\\n    }\\n\\n    /**\\n     * @notice LP owner adds more liquidity to an existing pool.\\n     */\\n    function addLiquidity(bytes32 conditionId, uint256 usdcAmount)\\n        external\\n        nonReentrant\\n        poolExists(conditionId)\\n        notResolved(conditionId)\\n    {\\n        Pool storage pool = pools[conditionId];\\n        if (msg.sender != pool.lpOwner) revert NotLPOwner();\\n        if (usdcAmount == 0) revert AmountZero();\\n\\n        if (!collateral.transferFrom(msg.sender, address(this), usdcAmount)) revert TransferFailed();\\n\\n        collateral.approve(address(ctf), usdcAmount);\\n        uint256[] memory partition = new uint256[](2);\\n        partition[0] = 1;\\n        partition[1] = 2;\\n        ctf.splitPosition(collateral, bytes32(0), conditionId, partition, usdcAmount);\\n\\n        uint256 additionalTokens = usdcAmount;\\n        pool.yesReserve    += additionalTokens;\\n        pool.noReserve     += additionalTokens;\\n        pool.usdcCollateral += usdcAmount;\\n\\n        emit LiquidityAdded(conditionId, msg.sender, usdcAmount, additionalTokens);\\n    }\\n\\n    /**\\n     * @notice LP owner removes liquidity from an existing pool.\\n     */\\n    function removeLiquidity(bytes32 conditionId, uint256 usdcAmount)\\n        external\\n        nonReentrant\\n        poolExists(conditionId)\\n        notResolved(conditionId)\\n    {\\n        Pool storage pool = pools[conditionId];\\n        if (msg.sender != pool.lpOwner) revert NotLPOwner();\\n        if (usdcAmount == 0) revert AmountZero();\\n        if (usdcAmount > pool.usdcCollateral) revert InsufficientLiquidity();\\n\\n        uint256 tokensToRemove = usdcAmount;\\n        if (tokensToRemove > pool.yesReserve) revert InsufficientReserve(0, tokensToRemove);\\n        if (tokensToRemove > pool.noReserve)  revert InsufficientReserve(1, tokensToRemove);\\n\\n        pool.yesReserve     -= tokensToRemove;\\n        pool.noReserve      -= tokensToRemove;\\n        pool.usdcCollateral -= usdcAmount;\\n\\n        // Merge YES+NO tokens back into USDC via CTF\\n        _approveERC1155ForCTF();\\n        uint256[] memory partition = new uint256[](2);\\n        partition[0] = 1;\\n        partition[1] = 2;\\n        ctf.mergePositions(collateral, bytes32(0), conditionId, partition, tokensToRemove);\\n\\n        if (!collateral.transfer(msg.sender, usdcAmount)) revert TransferFailed();\\n\\n        emit LiquidityRemoved(conditionId, msg.sender, usdcAmount, tokensToRemove);\\n    }\\n\\n    /**\\n     * @notice LP owner withdraws liquidity + trading revenue after resolution.\\n     */\\n    function withdrawAfterResolution(bytes32 conditionId)\\n        external\\n        nonReentrant\\n        poolExists(conditionId)\\n    {\\n        Pool storage pool = pools[conditionId];\\n        if (msg.sender != pool.lpOwner) revert NotLPOwner();\\n        if (!pool.resolved) revert PoolNotResolved();\\n\\n        uint256 revenue = pool.lpTradingRevenue;\\n        pool.lpTradingRevenue = 0;\\n\\n        if (revenue > 0) {\\n            if (!collateral.transfer(msg.sender, revenue)) revert TransferFailed();\\n        }\\n        // YES/NO reserve positions held by this AMM are redeemed via CTF.redeemPositions by LP separately\\n    }\\n\\n    ////////////////////////////////////////////////////\\n    // Trading\\n    ////////////////////////////////////////////////////\\n\\n    /**\\n     * @notice Buys outcome tokens with USDC.\\n     * @dev Caller must have approved this contract for `maxUsdcIn` USDC.\\n     * @param conditionId    The pool's conditionId.\\n     * @param outcome        0 = YES, 1 = NO.\\n     * @param tokenAmount    Number of outcome tokens to buy (18 decimals).\\n     * @param maxUsdcIn      Maximum USDC willing to pay (slippage protection).\\n     */\\n    function buyTokens(\\n        bytes32 conditionId,\\n        uint256 outcome,\\n        uint256 tokenAmount,\\n        uint256 maxUsdcIn\\n    ) external nonReentrant poolExists(conditionId) notResolved(conditionId) {\\n        if (tokenAmount == 0) revert AmountZero();\\n        Pool storage pool = pools[conditionId];\\n\\n        uint256 usdcCost = getBuyPrice(conditionId, outcome, tokenAmount);\\n        if (usdcCost > maxUsdcIn) revert WrongUsdcAmount();\\n\\n        // Check reserve\\n        (uint256 targetReserve,) = _getReserves(pool, outcome);\\n        if (tokenAmount > targetReserve) revert InsufficientReserve(outcome, tokenAmount);\\n\\n        // Collect USDC from buyer\\n        if (!collateral.transferFrom(msg.sender, address(this), usdcCost)) revert TransferFailed();\\n        pool.lpTradingRevenue += usdcCost;\\n\\n        // Deduct from reserve\\n        if (outcome == 0) pool.yesReserve -= tokenAmount;\\n        else                pool.noReserve  -= tokenAmount;\\n\\n        // Transfer outcome tokens to buyer\\n        uint256 tokenId = outcome == 0 ? pool.yesTokenId : pool.noTokenId;\\n        ctf.safeTransferFrom(address(this), msg.sender, tokenId, tokenAmount, \\\"\\\");\\n\\n        emit TokensBought(conditionId, msg.sender, outcome, tokenAmount, usdcCost);\\n    }\\n\\n    /**\\n     * @notice Sells outcome tokens for USDC.\\n     * @dev Caller must have called ctf.setApprovalForAll(ammAddress, true) first.\\n     * @param conditionId   The pool's conditionId.\\n     * @param outcome       0 = YES, 1 = NO.\\n     * @param tokenAmount   Number of outcome tokens to sell.\\n     * @param minUsdcOut    Minimum USDC to receive (slippage protection).\\n     */\\n    function sellTokens(\\n        bytes32 conditionId,\\n        uint256 outcome,\\n        uint256 tokenAmount,\\n        uint256 minUsdcOut\\n    ) external nonReentrant poolExists(conditionId) notResolved(conditionId) {\\n        if (tokenAmount == 0) revert AmountZero();\\n        Pool storage pool = pools[conditionId];\\n\\n        uint256 usdcPayout = getSellPrice(conditionId, outcome, tokenAmount);\\n        if (usdcPayout < minUsdcOut) revert InsufficientLiquidity();\\n        if (usdcPayout > pool.lpTradingRevenue) revert InsufficientLiquidity();\\n\\n        // Receive outcome tokens from seller\\n        uint256 tokenId = outcome == 0 ? pool.yesTokenId : pool.noTokenId;\\n        ctf.safeTransferFrom(msg.sender, address(this), tokenId, tokenAmount, \\\"\\\");\\n\\n        pool.lpTradingRevenue -= usdcPayout;\\n        if (outcome == 0) pool.yesReserve += tokenAmount;\\n        else               pool.noReserve  += tokenAmount;\\n\\n        if (!collateral.transfer(msg.sender, usdcPayout)) revert TransferFailed();\\n\\n        emit TokensSold(conditionId, msg.sender, outcome, tokenAmount, usdcPayout);\\n    }\\n\\n    ////////////////////////////////////////////////////\\n    // Resolution Hook\\n    ////////////////////////////////////////////////////\\n\\n    /**\\n     * @notice Marks a pool as resolved so trading is disabled.\\n     * @dev Anyone can call this once the CTF condition has been resolved.\\n     *      The actual payout distribution happens via ctf.redeemPositions().\\n     */\\n    function markResolved(bytes32 conditionId) external poolExists(conditionId) {\\n        Pool storage pool = pools[conditionId];\\n        if (pool.resolved) return;\\n        // Verify CTF has resolved: payoutDenominator > 0\\n        require(ctf.payoutDenominator(conditionId) > 0, \\\"AMM: CTF not resolved yet\\\");\\n        pool.resolved = true;\\n        emit PoolResolved(conditionId);\\n    }\\n\\n    ////////////////////////////////////////////////////\\n    // Price View Functions (preserve original algorithm)\\n    ////////////////////////////////////////////////////\\n\\n    /**\\n     * @notice Calculate USDC cost to buy `tokenAmount` outcome tokens.\\n     *  Preserves the original probability-weighted price model.\\n     */\\n    function getBuyPrice(bytes32 conditionId, uint256 outcome, uint256 tokenAmount)\\n        public\\n        view\\n        poolExists(conditionId)\\n        returns (uint256)\\n    {\\n        return _calculatePrice(conditionId, outcome, tokenAmount, false);\\n    }\\n\\n    /**\\n     * @notice Calculate USDC received for selling `tokenAmount` outcome tokens.\\n     */\\n    function getSellPrice(bytes32 conditionId, uint256 outcome, uint256 tokenAmount)\\n        public\\n        view\\n        poolExists(conditionId)\\n        returns (uint256)\\n    {\\n        return _calculatePrice(conditionId, outcome, tokenAmount, true);\\n    }\\n\\n    /**\\n     * @notice Returns current implied probability of YES outcome (scaled by PRECISION).\\n     */\\n    function getYesProbability(bytes32 conditionId) external view poolExists(conditionId) returns (uint256) {\\n        Pool storage pool = pools[conditionId];\\n        // Total supply per token side = collateral amount\\n        // Probability \\u2248 yesSold / (yesSold + noSold)\\n        uint256 totalSupplyApprox = pool.usdcCollateral;\\n        uint256 yesSold = totalSupplyApprox - pool.yesReserve;\\n        uint256 noSold  = totalSupplyApprox - pool.noReserve;\\n        uint256 total   = yesSold + noSold;\\n        if (total == 0) return PRECISION / 2;\\n        return (yesSold * PRECISION) / total;\\n    }\\n\\n    ////////////////////////////////////////////////////\\n    // Internal Pricing (preserved from original AMM)\\n    ////////////////////////////////////////////////////\\n\\n    function _calculatePrice(\\n        bytes32 conditionId,\\n        uint256 outcome,\\n        uint256 tradingAmount,\\n        bool isSelling\\n    ) private view returns (uint256) {\\n        if (tradingAmount == 0) return 0;\\n\\n        Pool storage pool = pools[conditionId];\\n        (uint256 targetReserve, uint256 otherReserve) = _getReserves(pool, outcome);\\n\\n        // Total supply per token side = collateral amount\\n        uint256 totalSupply = pool.usdcCollateral;\\n\\n        uint256 targetSold = totalSupply - targetReserve;\\n        uint256 otherSold  = totalSupply - otherReserve;\\n\\n        uint256 totalSoldBefore = targetSold + otherSold;\\n        uint256 probabilityBefore = _probability(targetSold, totalSoldBefore);\\n\\n        uint256 targetSoldAfter;\\n        uint256 totalSoldAfter;\\n\\n        if (isSelling) {\\n            if (targetSold < tradingAmount) revert InsufficientReserve(outcome, tradingAmount);\\n            targetSoldAfter = targetSold - tradingAmount;\\n            totalSoldAfter  = totalSoldBefore - tradingAmount;\\n        } else {\\n            if (targetReserve < tradingAmount) revert InsufficientReserve(outcome, tradingAmount);\\n            targetSoldAfter = targetSold + tradingAmount;\\n            totalSoldAfter  = totalSoldBefore + tradingAmount;\\n        }\\n\\n        uint256 probabilityAfter = _probability(targetSoldAfter, totalSoldAfter);\\n        uint256 probabilityAvg   = (probabilityBefore + probabilityAfter) / 2;\\n\\n        return (probabilityAvg * tradingAmount) / PRECISION;\\n    }\\n\\n    function _getReserves(Pool storage pool, uint256 outcome)\\n        private\\n        view\\n        returns (uint256 targetReserve, uint256 otherReserve)\\n    {\\n        if (outcome == 0) return (pool.yesReserve, pool.noReserve);\\n        return (pool.noReserve, pool.yesReserve);\\n    }\\n\\n    function _probability(uint256 sold, uint256 total) private pure returns (uint256) {\\n        if (total == 0) return 0;\\n        return (sold * PRECISION) / total;\\n    }\\n\\n    ////////////////////////////////////////////////////\\n    // ERC-1155 Receiver\\n    ////////////////////////////////////////////////////\\n\\n    function _approveERC1155ForCTF() private {\\n        // CTF needs approval to burn position tokens during mergePositions\\n        if (!IERC1155(address(ctf)).isApprovedForAll(address(this), address(ctf))) {\\n            IERC1155(address(ctf)).setApprovalForAll(address(ctf), true);\\n        }\\n    }\\n\\n    function onERC1155Received(address, address, uint256, uint256, bytes calldata)\\n        external\\n        pure\\n        override\\n        returns (bytes4)\\n    {\\n        return IERC1155Receiver.onERC1155Received.selector;\\n    }\\n\\n    function onERC1155BatchReceived(address, address, uint256[] calldata, uint256[] calldata, bytes calldata)\\n        external\\n        pure\\n        override\\n        returns (bytes4)\\n    {\\n        return IERC1155Receiver.onERC1155BatchReceived.selector;\\n    }\\n\\n    function supportsInterface(bytes4 interfaceId) external pure override returns (bool) {\\n        return interfaceId == type(IERC1155Receiver).interfaceId;\\n    }\\n\\n    ////////////////////////////////////////////////////\\n    // View\\n    ////////////////////////////////////////////////////\\n\\n    function getPool(bytes32 conditionId) external view returns (Pool memory) {\\n        return pools[conditionId];\\n    }\\n\\n    function getAllPools() external view returns (bytes32[] memory) {\\n        return allPools;\\n    }\\n}\\n\",\"keccak256\":\"0xc88ea1ec2ea00978bda8e8730fadbe30af6ca9ef6af343f1e7bcce4155f3c5a6\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x60c0346200017357601f6200224038819003918201601f19168301916001600160401b038311848410176200017857808492604094855283398101031262000173576200005a602062000052836200018e565b92016200018e565b9033156200015a5760008054336001600160a01b0319821681178355604051946001600160a01b0394909385939192918416907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09080a360018055166080521660a05261209c9081620001a4823960805181818161081f01528181610b4201528181610bbd01528181610c1901528181610cdc01528181610d3601528181610d7201528181610dcd0152818161115a0152818161148f015281816116440152818161178f0152611d50015260a0518181816103de01528181610565015281816107b001528181610ae1015281816112040152818161144001526118140152f35b604051631e4fbdf760e01b815260006004820152602490fd5b600080fd5b634e487b7160e01b600052604160045260246000fd5b51906001600160a01b0382168203620001735756fe6080604052600436101561001257600080fd5b6000803560e01c806301bd4fa4146116c857806301ffc9a71461168d5780632111c08c1461167357806322a9339f1461162e5780633b57e2bc146113a957806341d1de971461136f578063715018a6146113155780638da5cb5b146112ee5780639e3a1497146110c2578063a905505314610a44578063b5217bb41461099c578063baa066ee146106fa578063bc197c8114610669578063c02a74cd1461062d578063c6a2618314610613578063c6ca37fa146104c1578063d88ff1f41461040d578063d8dfeb45146103c8578063ebd24b961461036d578063f23a6e6114610311578063f2fde38b146102815763f6c009271461010f57600080fd5b3461027e57602036600319011261027e5760408161016092610140835161013581611b6a565b82815282602082015282858201528260608201528260808201528260a08201528260c08201528260e082015282610100820152826101208201520152600435815260026020522061014060405161018b81611b6a565b60ff600884549485845260018101546020850152600281015460408501526003810154606085015260048101546080850152600581015460a0850152600681015460c0850152600781015460e0850152015460018060a01b038116610100840152818160a01c16151561012084015260a81c161515828201526040519283526020810151602084015260408101516040840152606081015160608401526080810151608084015260a081015160a084015260c081015160c084015260e081015160e084015260018060a01b0361010082015116610100840152610120810151151561012084015201511515610140820152f35b80fd5b503461027e57602036600319011261027e5761029b611a89565b6102a3611b14565b6001600160a01b039081169081156102f857600054826bffffffffffffffffffffffff60a01b821617600055167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0600080a380f35b604051631e4fbdf760e01b815260048101849052602490fd5b503461027e5760a036600319011261027e5761032b611a89565b50610334611a9f565b5060843567ffffffffffffffff811161036957610355903690600401611ae6565b505060405163f23a6e6160e01b8152602090f35b5080fd5b503461027e57602036600319011261027e5760ff6008604060043593848152600260205220015460a81c16156103b0576103a8602091611e98565b604051908152f35b6024906040519063299f9ab360e11b82526004820152fd5b503461027e578060031936011261027e576040517f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03168152602090f35b503461027e578060031936011261027e5760405180916003549081835260208093018092600383527fc2575a0e9e593c00f959f8c92f12db2869c3395a3b0502d05e2516446f71f85b90835b8181106104ad575050508461046f910385611ba3565b60405193838594850191818652518092526040850193925b82811061049657505050500390f35b835185528695509381019392810192600101610487565b825484529286019260019283019201610459565b503461027e57602080600319360112610369576004356104df611ce3565b8083526002825260ff600860408520015460a81c16156103b0578252600281526040822060088101546001600160a01b039081811633036106015760a01c60ff16156105ef57600584920182815491558061053d575b826001805580f35b60405163a9059cbb60e01b8152336004820152602481019190915291839183916044918391907f0000000000000000000000000000000000000000000000000000000000000000165af19182156105e45783926105b7575b5050156105a55738818180610535565b6040516312171d8360e31b8152600490fd5b6105d69250803d106105dd575b6105ce8183611ba3565b810190611bc5565b3880610595565b503d6105c4565b6040513d85823e3d90fd5b6040516303a29a6d60e51b8152600490fd5b60405163049e02dd60e31b8152600490fd5b503461027e5760206103a861062736611a04565b91611e6e565b503461027e57602036600319011261027e57600435808252600260205260ff600860408420015460a81c16156103b05761066690611d13565b80f35b503461027e5760a036600319011261027e57610683611a89565b5061068c611a9f565b5067ffffffffffffffff6044358181116106f6576106ae903690600401611ab5565b50506064358181116106f6576106c8903690600401611ab5565b5050608435908111610369576106e2903690600401611ae6565b505060405163bc197c8160e01b8152602090f35b8280fd5b503461027e5761070936611a6b565b610714939293611ce3565b82855260206002815260ff600860408820015460a81c1615610983578386526002815260ff600860408820015460a01c1661097157821561095f57838652600281526040862090610766848787611e41565b92831161094d576107778683612019565b50841161092f576040516323b872dd60e01b8152336004820152306024820152604481018490526001600160a01b03919081816064818c7f000000000000000000000000000000000000000000000000000000000000000088165af1918215610924578992610907575b5050156105a5578160058893016107f9858254611d06565b9055861580156108f15760028201610812878254611ca2565b90555b156108e75754905b7f000000000000000000000000000000000000000000000000000000000000000016803b156106f65784839161086c9383604051809681958294637921219560e11b8452333060048601611caf565b03925af180156108dc576108c4575b50506040805194855260208501929092529083015233917f11f0346aa32c203156c9ccb9e50e8414bc3b658fef0a1da39548ff22dfe2cbc29080606081015b0390a36001805580f35b6108cd90611b40565b6108d857843861087b565b8480fd5b6040513d84823e3d90fd5b600101549061081d565b60038201610900878254611ca2565b9055610815565b61091d9250803d106105dd576105ce8183611ba3565b38806107e1565b6040513d8b823e3d90fd5b604486856040519163315276c960e01b835260048301526024820152fd5b604051631a26ff6760e01b8152600490fd5b6040516365e52d5160e11b8152600490fd5b60405163a118386760e01b8152600490fd5b60405163299f9ab360e11b815260048101859052602490fd5b503461027e57602036600319011261027e57604061016091600435815260026020522060ff8154916001810154906002810154600382015460048301546005840154916006850154936008600787015496015496604051998a5260208a015260408901526060880152608087015260a086015260c085015260e084015260018060a01b038116610100840152818160a01c16151561012084015260a81c161515610140820152f35b503461027e5760c036600319011261027e5760843560ff811681036110bd5760a4359060ff821682036110bd57610a79611ce3565b6004358352600260205260ff600860408520015460a81c166110a4576064351561095f5760ff8116158015611096575b6110845760ff8216158015611076575b611064576040516323b872dd60e01b81523360048201523060248201526064803560448301527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03811692909160209082908189875af190811561105957869161103a575b50156105a55760405163095ea7b360e01b81526001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000166004820152606435602482015285926020908290604490829087905af180156105e45761101b575b50604051610b9781611b87565b6002815260403660208301376001610bae82611bdd565b526002610bba82611bea565b527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03163b156106f657610c1491839160405193849283926372ce427560e01b8452606435916004359060048601611bfa565b0381837f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03165af180156108dc57611007575b5050610c6b60ff8316610c6660ff8416606435611c59565b611c59565b918260011b9280840460021490151715610ff35760ff821660640360ff8111610fdf57610ca490610c6660ff8085169216606435611c59565b928360011b9380850460021490151715610fdf5784612710610cca818404606435611ca2565b95610cd9828204606435611ca2565b937f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03163b15610fdb578383610d31926040519384928392637921219560e11b845204602435333060048601611caf565b0381837f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03165af1908115610fd0578491610fbc575b50507f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03163b156106f657604051637921219560e11b815291839183918291610dc8919004604435333060048601611caf565b0381837f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03165af180156108dc57610fa8575b505060ff92839160405195610e1687611b6a565b602435875260443560208801526040870152606086015260643560808601528560a08601521660c08401521660e08201523361010082015281610120820152600161014082015260043582526002602052600860408320825181556020830151600182015560408301516002820155606083015160038201556080830151600482015560a0830151600582015560c0830151600682015560e08301516007820155019060018060a01b03610100820151169082549160ff60a01b610120830151151560a01b169161014060ff60a81b910151151560a81b169269ffffffffffffffffffff60b01b16171717905560035468010000000000000000811015610f9457806001610f279201600355611a1e565b81549060031b90600435821b91600019901b19161790556040517fad5d800b2751f02b548dc08d6de483a992370b185957e44035813e261298961d6004359180610f8a606435604435602435846040919493926060820195825260208201520152565b0390a26001805580f35b634e487b7160e01b82526041600452602482fd5b610fb190611b40565b6108d8578438610e02565b610fc590611b40565b6106f6578238610d6e565b6040513d86823e3d90fd5b8380fd5b634e487b7160e01b85526011600452602485fd5b634e487b7160e01b84526011600452602484fd5b61101090611b40565b6106f6578238610c4e565b6110339060203d6020116105dd576105ce8183611ba3565b5038610b8a565b611053915060203d6020116105dd576105ce8183611ba3565b38610b25565b6040513d88823e3d90fd5b604051631f3b85d360e01b8152600490fd5b50606460ff83161015610ab9565b604051631ddde97960e31b8152600490fd5b50606460ff82161015610aa9565b60246040516375ce148f60e11b81526004356004820152fd5b600080fd5b503461027e576110d136611a6b565b6110dc939293611ce3565b82855260206002815260ff600860408820015460a81c1615610983578386526002815260ff600860408820015460a01c1661097157821561095f57838652600281526040862061112d848787611e6e565b9283106112dc576005810190815484116112dc57861580156112d1578154925b6001600160a01b03938a907f00000000000000000000000000000000000000000000000000000000000000008616803b156106f6578983916111a89383604051809681958294637921219560e11b8452303360048601611caf565b03925af180156108dc576112b9575b50506111c4868254611ca2565b9055156112a4576002016111d9858254611d06565b90555b60405163a9059cbb60e01b815233600482015260248101849052908290829060449082908b907f0000000000000000000000000000000000000000000000000000000000000000165af191821561129957879261127c575b5050156105a5576040805194855260208501929092529083015233917ff4ae5a6ef5896e75a87f99ddc305504b519d343497456ede5aba8a936184882a9080606081016108ba565b6112929250803d106105dd576105ce8183611ba3565b3880611234565b6040513d89823e3d90fd5b6003016112b2858254611d06565b90556111dc565b6112c290611b40565b6112cd5789386111b7565b8980fd5b60018201549261114d565b60405163bb55fd2760e01b8152600490fd5b503461027e578060031936011261027e57546040516001600160a01b039091168152602090f35b503461027e578060031936011261027e5761132e611b14565b600080546001600160a01b0319811682556001600160a01b03167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08280a380f35b503461027e57602036600319011261027e576004359060035482101561027e57602061139a83611a1e565b90549060031b1c604051908152f35b503461027e576113b8366119ee565b906113c1611ce3565b80835260029160209280845260ff600860408720015460a81c16156116155782855280845260ff600860408720015460a01c16610971578285528084526040852060088101546001600160a01b03908116330361060157831561095f576040516323b872dd60e01b8152336004820152306024820152604481018590527f00000000000000000000000000000000000000000000000000000000000000008281169188816064818d875af190811561160a578a916115ed575b50156105a55760405163095ea7b360e01b81527f0000000000000000000000000000000000000000000000000000000000000000939093166001600160a01b0381166004850152602484018790528993909289908290604490829088905af18015610fd0576115d0575b506040516114f181611b87565b8581526040368a830137600161150682611bdd565b528561151182611bea565b52823b15610fdb5786928885809461153f604051978896879586946372ce427560e01b865260048601611bfa565b03925af180156108dc576115b8575b50506004918101611560848254611d06565b905560038101611571848254611d06565b90550161157f828254611d06565b9055604051928184528301527f47b0d68dd7ea64624970139aa6c676e4e099d12cee4af2dfe393f2353fea86b160403393a36001805580f35b6115c190611b40565b6115cc57853861154e565b8580fd5b6115e690893d8b116105dd576105ce8183611ba3565b50386114e4565b6116049150893d8b116105dd576105ce8183611ba3565b3861147a565b6040513d8c823e3d90fd5b60405163299f9ab360e11b815260048101849052602490fd5b503461027e578060031936011261027e576040517f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03168152602090f35b503461027e5760206103a861168736611a04565b91611e41565b503461027e57602036600319011261027e5760043563ffffffff60e01b811680910361036957604051630271189760e51b9091148152602090f35b503461027e576116d7366119ee565b906116e0611ce3565b80835260029160209280845260ff600860408720015460a81c16156116155782855280845260ff600860408720015460a01c16610971578285528084526040852060088101546001600160a01b0391908216330361060157831561095f5760048101908154908186116112dc57848101908154908188116119d057600301918254918289116119b057926117838980948e9a999897946117838361178a99611ca2565b9055611ca2565b9055807f00000000000000000000000000000000000000000000000000000000000000001660405163e985e9c560e01b81523060048201528160248201528781604481855afa908115611905578591611993575b5015611929575b604051926117f284611b87565b80845260403689860137600161180785611bdd565b5261181184611bea565b527f000000000000000000000000000000000000000000000000000000000000000090803b156108d85785859161186295838a60405198899586948593639e7212ad60e01b85528a60048601611bfa565b03925af18015610fd05787938591611910575b505060405163a9059cbb60e01b815233600482015260248101869052938492604492849291165af19081156119055785916118e8575b50156105a557604051928184528301527f317e53ec6bc434475c6a7c12af460342fa47661758139f35045090a232213a0c60403393a36001805580f35b6118ff9150843d86116105dd576105ce8183611ba3565b386118ab565b6040513d87823e3d90fd5b61191c91929450611b40565b6106f65785918338611875565b80919293503b1561198f5760405163a22cb46560e01b81526004810182905260016024820152878160448183865af180156119845761196d575b50908692916117e5565b61197b909791939297611b40565b95909138611963565b6040513d8a823e3d90fd5b8680fd5b6119aa9150883d8a116105dd576105ce8183611ba3565b386117de565b60405163315276c960e01b815260016004820152602481018a9052604490fd5b60448b896040519163315276c960e01b835260048301526024820152fd5b60409060031901126110bd576004359060243590565b60609060031901126110bd57600435906024359060443590565b600354811015611a555760036000527fc2575a0e9e593c00f959f8c92f12db2869c3395a3b0502d05e2516446f71f85b0190600090565b634e487b7160e01b600052603260045260246000fd5b60809060031901126110bd5760043590602435906044359060643590565b600435906001600160a01b03821682036110bd57565b602435906001600160a01b03821682036110bd57565b9181601f840112156110bd5782359167ffffffffffffffff83116110bd576020808501948460051b0101116110bd57565b9181601f840112156110bd5782359167ffffffffffffffff83116110bd57602083818601950101116110bd57565b6000546001600160a01b03163303611b2857565b60405163118cdaa760e01b8152336004820152602490fd5b67ffffffffffffffff8111611b5457604052565b634e487b7160e01b600052604160045260246000fd5b610160810190811067ffffffffffffffff821117611b5457604052565b6060810190811067ffffffffffffffff821117611b5457604052565b90601f8019910116810190811067ffffffffffffffff821117611b5457604052565b908160209103126110bd575180151581036110bd5790565b805115611a555760200190565b805160011015611a555760400190565b9493929060a086019060018060a01b03168652602092600084880152604087015260a0606087015281518091528260c0870192019260005b828110611c455750505060809150930152565b845184529381019392810192600101611c32565b81810292918115918404141715611c6c57565b634e487b7160e01b600052601160045260246000fd5b8115611c8c570490565b634e487b7160e01b600052601260045260246000fd5b91908203918211611c6c57565b929060c0949260018060a01b0380921685521660208401526040830152606082015260a06080820152600060a08201520190565b600260015414611cf4576002600155565b604051633ee5aeb560e01b8152600490fd5b91908201809211611c6c57565b906000918083526020926002845260086040822001805460ff8160a01c16611e395760405163dd34de6760e01b81526004810185905286816024817f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03165afa908115610fd0578491611e0c575b5015611dc75760ff60a01b1916600160a01b179055919250907f23004c314d5aaccc6f9a5d28f836bae97e209ee1a080bb8c1c6c3ca8391a13a69080a2565b60405162461bcd60e51b815260048101879052601960248201527f414d4d3a20435446206e6f74207265736f6c76656420796574000000000000006044820152606490fd5b90508681813d8311611e32575b611e238183611ba3565b81010312610fdb575138611d88565b503d611e19565b505050509050565b92919083600052600260205260ff60086040600020015460a81c161561098357611e6b9293611efc565b90565b92919083600052600260205260ff60086040600020015460a81c161561098357611e6b9293611fad565b60005260026020526040600020611ecf611ec960048301546003611ec0600286015483611ca2565b94015490611ca2565b82611d06565b8015611ef357620f424091828102928184041490151715611c6c57611e6b91611c82565b50506207a12090565b8215611fa55760005260026020526040600020906004611f38611ec9611f228486612019565b939095015492611f328685611ca2565b93611ca2565b9184611f44848461203a565b9410611f875750611f8392611f758593611f6f85611f69620f424099611f7b97611d06565b92611d06565b9061203a565b90611d06565b60011c611c59565b0490565b604490856040519163315276c960e01b835260048301526024820152fd5b505050600090565b8215611fa55760005260026020526040600020611fe1611ec96004611f32611fd58686612019565b92909501549485611ca2565b90611fec828261203a565b92848210611f875750611f8392611f758593611f6f85612013620f424099611f7b97611ca2565b92611ca2565b91901561202d576002600383015492015490565b6003600283015492015490565b90801561205f57620f424091828102928184041490151715611c6c57611e6b91611c82565b505060009056fea2646970667358221220b212a72869401d7e40ac259771dad48571e72d802a94a37b6f23401383fa954c64736f6c63430008140033",
+  "deployedBytecode": "0x6080604052600436101561001257600080fd5b6000803560e01c806301bd4fa4146116c857806301ffc9a71461168d5780632111c08c1461167357806322a9339f1461162e5780633b57e2bc146113a957806341d1de971461136f578063715018a6146113155780638da5cb5b146112ee5780639e3a1497146110c2578063a905505314610a44578063b5217bb41461099c578063baa066ee146106fa578063bc197c8114610669578063c02a74cd1461062d578063c6a2618314610613578063c6ca37fa146104c1578063d88ff1f41461040d578063d8dfeb45146103c8578063ebd24b961461036d578063f23a6e6114610311578063f2fde38b146102815763f6c009271461010f57600080fd5b3461027e57602036600319011261027e5760408161016092610140835161013581611b6a565b82815282602082015282858201528260608201528260808201528260a08201528260c08201528260e082015282610100820152826101208201520152600435815260026020522061014060405161018b81611b6a565b60ff600884549485845260018101546020850152600281015460408501526003810154606085015260048101546080850152600581015460a0850152600681015460c0850152600781015460e0850152015460018060a01b038116610100840152818160a01c16151561012084015260a81c161515828201526040519283526020810151602084015260408101516040840152606081015160608401526080810151608084015260a081015160a084015260c081015160c084015260e081015160e084015260018060a01b0361010082015116610100840152610120810151151561012084015201511515610140820152f35b80fd5b503461027e57602036600319011261027e5761029b611a89565b6102a3611b14565b6001600160a01b039081169081156102f857600054826bffffffffffffffffffffffff60a01b821617600055167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0600080a380f35b604051631e4fbdf760e01b815260048101849052602490fd5b503461027e5760a036600319011261027e5761032b611a89565b50610334611a9f565b5060843567ffffffffffffffff811161036957610355903690600401611ae6565b505060405163f23a6e6160e01b8152602090f35b5080fd5b503461027e57602036600319011261027e5760ff6008604060043593848152600260205220015460a81c16156103b0576103a8602091611e98565b604051908152f35b6024906040519063299f9ab360e11b82526004820152fd5b503461027e578060031936011261027e576040517f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03168152602090f35b503461027e578060031936011261027e5760405180916003549081835260208093018092600383527fc2575a0e9e593c00f959f8c92f12db2869c3395a3b0502d05e2516446f71f85b90835b8181106104ad575050508461046f910385611ba3565b60405193838594850191818652518092526040850193925b82811061049657505050500390f35b835185528695509381019392810192600101610487565b825484529286019260019283019201610459565b503461027e57602080600319360112610369576004356104df611ce3565b8083526002825260ff600860408520015460a81c16156103b0578252600281526040822060088101546001600160a01b039081811633036106015760a01c60ff16156105ef57600584920182815491558061053d575b826001805580f35b60405163a9059cbb60e01b8152336004820152602481019190915291839183916044918391907f0000000000000000000000000000000000000000000000000000000000000000165af19182156105e45783926105b7575b5050156105a55738818180610535565b6040516312171d8360e31b8152600490fd5b6105d69250803d106105dd575b6105ce8183611ba3565b810190611bc5565b3880610595565b503d6105c4565b6040513d85823e3d90fd5b6040516303a29a6d60e51b8152600490fd5b60405163049e02dd60e31b8152600490fd5b503461027e5760206103a861062736611a04565b91611e6e565b503461027e57602036600319011261027e57600435808252600260205260ff600860408420015460a81c16156103b05761066690611d13565b80f35b503461027e5760a036600319011261027e57610683611a89565b5061068c611a9f565b5067ffffffffffffffff6044358181116106f6576106ae903690600401611ab5565b50506064358181116106f6576106c8903690600401611ab5565b5050608435908111610369576106e2903690600401611ae6565b505060405163bc197c8160e01b8152602090f35b8280fd5b503461027e5761070936611a6b565b610714939293611ce3565b82855260206002815260ff600860408820015460a81c1615610983578386526002815260ff600860408820015460a01c1661097157821561095f57838652600281526040862090610766848787611e41565b92831161094d576107778683612019565b50841161092f576040516323b872dd60e01b8152336004820152306024820152604481018490526001600160a01b03919081816064818c7f000000000000000000000000000000000000000000000000000000000000000088165af1918215610924578992610907575b5050156105a5578160058893016107f9858254611d06565b9055861580156108f15760028201610812878254611ca2565b90555b156108e75754905b7f000000000000000000000000000000000000000000000000000000000000000016803b156106f65784839161086c9383604051809681958294637921219560e11b8452333060048601611caf565b03925af180156108dc576108c4575b50506040805194855260208501929092529083015233917f11f0346aa32c203156c9ccb9e50e8414bc3b658fef0a1da39548ff22dfe2cbc29080606081015b0390a36001805580f35b6108cd90611b40565b6108d857843861087b565b8480fd5b6040513d84823e3d90fd5b600101549061081d565b60038201610900878254611ca2565b9055610815565b61091d9250803d106105dd576105ce8183611ba3565b38806107e1565b6040513d8b823e3d90fd5b604486856040519163315276c960e01b835260048301526024820152fd5b604051631a26ff6760e01b8152600490fd5b6040516365e52d5160e11b8152600490fd5b60405163a118386760e01b8152600490fd5b60405163299f9ab360e11b815260048101859052602490fd5b503461027e57602036600319011261027e57604061016091600435815260026020522060ff8154916001810154906002810154600382015460048301546005840154916006850154936008600787015496015496604051998a5260208a015260408901526060880152608087015260a086015260c085015260e084015260018060a01b038116610100840152818160a01c16151561012084015260a81c161515610140820152f35b503461027e5760c036600319011261027e5760843560ff811681036110bd5760a4359060ff821682036110bd57610a79611ce3565b6004358352600260205260ff600860408520015460a81c166110a4576064351561095f5760ff8116158015611096575b6110845760ff8216158015611076575b611064576040516323b872dd60e01b81523360048201523060248201526064803560448301527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03811692909160209082908189875af190811561105957869161103a575b50156105a55760405163095ea7b360e01b81526001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000166004820152606435602482015285926020908290604490829087905af180156105e45761101b575b50604051610b9781611b87565b6002815260403660208301376001610bae82611bdd565b526002610bba82611bea565b527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03163b156106f657610c1491839160405193849283926372ce427560e01b8452606435916004359060048601611bfa565b0381837f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03165af180156108dc57611007575b5050610c6b60ff8316610c6660ff8416606435611c59565b611c59565b918260011b9280840460021490151715610ff35760ff821660640360ff8111610fdf57610ca490610c6660ff8085169216606435611c59565b928360011b9380850460021490151715610fdf5784612710610cca818404606435611ca2565b95610cd9828204606435611ca2565b937f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03163b15610fdb578383610d31926040519384928392637921219560e11b845204602435333060048601611caf565b0381837f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03165af1908115610fd0578491610fbc575b50507f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03163b156106f657604051637921219560e11b815291839183918291610dc8919004604435333060048601611caf565b0381837f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03165af180156108dc57610fa8575b505060ff92839160405195610e1687611b6a565b602435875260443560208801526040870152606086015260643560808601528560a08601521660c08401521660e08201523361010082015281610120820152600161014082015260043582526002602052600860408320825181556020830151600182015560408301516002820155606083015160038201556080830151600482015560a0830151600582015560c0830151600682015560e08301516007820155019060018060a01b03610100820151169082549160ff60a01b610120830151151560a01b169161014060ff60a81b910151151560a81b169269ffffffffffffffffffff60b01b16171717905560035468010000000000000000811015610f9457806001610f279201600355611a1e565b81549060031b90600435821b91600019901b19161790556040517fad5d800b2751f02b548dc08d6de483a992370b185957e44035813e261298961d6004359180610f8a606435604435602435846040919493926060820195825260208201520152565b0390a26001805580f35b634e487b7160e01b82526041600452602482fd5b610fb190611b40565b6108d8578438610e02565b610fc590611b40565b6106f6578238610d6e565b6040513d86823e3d90fd5b8380fd5b634e487b7160e01b85526011600452602485fd5b634e487b7160e01b84526011600452602484fd5b61101090611b40565b6106f6578238610c4e565b6110339060203d6020116105dd576105ce8183611ba3565b5038610b8a565b611053915060203d6020116105dd576105ce8183611ba3565b38610b25565b6040513d88823e3d90fd5b604051631f3b85d360e01b8152600490fd5b50606460ff83161015610ab9565b604051631ddde97960e31b8152600490fd5b50606460ff82161015610aa9565b60246040516375ce148f60e11b81526004356004820152fd5b600080fd5b503461027e576110d136611a6b565b6110dc939293611ce3565b82855260206002815260ff600860408820015460a81c1615610983578386526002815260ff600860408820015460a01c1661097157821561095f57838652600281526040862061112d848787611e6e565b9283106112dc576005810190815484116112dc57861580156112d1578154925b6001600160a01b03938a907f00000000000000000000000000000000000000000000000000000000000000008616803b156106f6578983916111a89383604051809681958294637921219560e11b8452303360048601611caf565b03925af180156108dc576112b9575b50506111c4868254611ca2565b9055156112a4576002016111d9858254611d06565b90555b60405163a9059cbb60e01b815233600482015260248101849052908290829060449082908b907f0000000000000000000000000000000000000000000000000000000000000000165af191821561129957879261127c575b5050156105a5576040805194855260208501929092529083015233917ff4ae5a6ef5896e75a87f99ddc305504b519d343497456ede5aba8a936184882a9080606081016108ba565b6112929250803d106105dd576105ce8183611ba3565b3880611234565b6040513d89823e3d90fd5b6003016112b2858254611d06565b90556111dc565b6112c290611b40565b6112cd5789386111b7565b8980fd5b60018201549261114d565b60405163bb55fd2760e01b8152600490fd5b503461027e578060031936011261027e57546040516001600160a01b039091168152602090f35b503461027e578060031936011261027e5761132e611b14565b600080546001600160a01b0319811682556001600160a01b03167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08280a380f35b503461027e57602036600319011261027e576004359060035482101561027e57602061139a83611a1e565b90549060031b1c604051908152f35b503461027e576113b8366119ee565b906113c1611ce3565b80835260029160209280845260ff600860408720015460a81c16156116155782855280845260ff600860408720015460a01c16610971578285528084526040852060088101546001600160a01b03908116330361060157831561095f576040516323b872dd60e01b8152336004820152306024820152604481018590527f00000000000000000000000000000000000000000000000000000000000000008281169188816064818d875af190811561160a578a916115ed575b50156105a55760405163095ea7b360e01b81527f0000000000000000000000000000000000000000000000000000000000000000939093166001600160a01b0381166004850152602484018790528993909289908290604490829088905af18015610fd0576115d0575b506040516114f181611b87565b8581526040368a830137600161150682611bdd565b528561151182611bea565b52823b15610fdb5786928885809461153f604051978896879586946372ce427560e01b865260048601611bfa565b03925af180156108dc576115b8575b50506004918101611560848254611d06565b905560038101611571848254611d06565b90550161157f828254611d06565b9055604051928184528301527f47b0d68dd7ea64624970139aa6c676e4e099d12cee4af2dfe393f2353fea86b160403393a36001805580f35b6115c190611b40565b6115cc57853861154e565b8580fd5b6115e690893d8b116105dd576105ce8183611ba3565b50386114e4565b6116049150893d8b116105dd576105ce8183611ba3565b3861147a565b6040513d8c823e3d90fd5b60405163299f9ab360e11b815260048101849052602490fd5b503461027e578060031936011261027e576040517f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03168152602090f35b503461027e5760206103a861168736611a04565b91611e41565b503461027e57602036600319011261027e5760043563ffffffff60e01b811680910361036957604051630271189760e51b9091148152602090f35b503461027e576116d7366119ee565b906116e0611ce3565b80835260029160209280845260ff600860408720015460a81c16156116155782855280845260ff600860408720015460a01c16610971578285528084526040852060088101546001600160a01b0391908216330361060157831561095f5760048101908154908186116112dc57848101908154908188116119d057600301918254918289116119b057926117838980948e9a999897946117838361178a99611ca2565b9055611ca2565b9055807f00000000000000000000000000000000000000000000000000000000000000001660405163e985e9c560e01b81523060048201528160248201528781604481855afa908115611905578591611993575b5015611929575b604051926117f284611b87565b80845260403689860137600161180785611bdd565b5261181184611bea565b527f000000000000000000000000000000000000000000000000000000000000000090803b156108d85785859161186295838a60405198899586948593639e7212ad60e01b85528a60048601611bfa565b03925af18015610fd05787938591611910575b505060405163a9059cbb60e01b815233600482015260248101869052938492604492849291165af19081156119055785916118e8575b50156105a557604051928184528301527f317e53ec6bc434475c6a7c12af460342fa47661758139f35045090a232213a0c60403393a36001805580f35b6118ff9150843d86116105dd576105ce8183611ba3565b386118ab565b6040513d87823e3d90fd5b61191c91929450611b40565b6106f65785918338611875565b80919293503b1561198f5760405163a22cb46560e01b81526004810182905260016024820152878160448183865af180156119845761196d575b50908692916117e5565b61197b909791939297611b40565b95909138611963565b6040513d8a823e3d90fd5b8680fd5b6119aa9150883d8a116105dd576105ce8183611ba3565b386117de565b60405163315276c960e01b815260016004820152602481018a9052604490fd5b60448b896040519163315276c960e01b835260048301526024820152fd5b60409060031901126110bd576004359060243590565b60609060031901126110bd57600435906024359060443590565b600354811015611a555760036000527fc2575a0e9e593c00f959f8c92f12db2869c3395a3b0502d05e2516446f71f85b0190600090565b634e487b7160e01b600052603260045260246000fd5b60809060031901126110bd5760043590602435906044359060643590565b600435906001600160a01b03821682036110bd57565b602435906001600160a01b03821682036110bd57565b9181601f840112156110bd5782359167ffffffffffffffff83116110bd576020808501948460051b0101116110bd57565b9181601f840112156110bd5782359167ffffffffffffffff83116110bd57602083818601950101116110bd57565b6000546001600160a01b03163303611b2857565b60405163118cdaa760e01b8152336004820152602490fd5b67ffffffffffffffff8111611b5457604052565b634e487b7160e01b600052604160045260246000fd5b610160810190811067ffffffffffffffff821117611b5457604052565b6060810190811067ffffffffffffffff821117611b5457604052565b90601f8019910116810190811067ffffffffffffffff821117611b5457604052565b908160209103126110bd575180151581036110bd5790565b805115611a555760200190565b805160011015611a555760400190565b9493929060a086019060018060a01b03168652602092600084880152604087015260a0606087015281518091528260c0870192019260005b828110611c455750505060809150930152565b845184529381019392810192600101611c32565b81810292918115918404141715611c6c57565b634e487b7160e01b600052601160045260246000fd5b8115611c8c570490565b634e487b7160e01b600052601260045260246000fd5b91908203918211611c6c57565b929060c0949260018060a01b0380921685521660208401526040830152606082015260a06080820152600060a08201520190565b600260015414611cf4576002600155565b604051633ee5aeb560e01b8152600490fd5b91908201809211611c6c57565b906000918083526020926002845260086040822001805460ff8160a01c16611e395760405163dd34de6760e01b81526004810185905286816024817f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03165afa908115610fd0578491611e0c575b5015611dc75760ff60a01b1916600160a01b179055919250907f23004c314d5aaccc6f9a5d28f836bae97e209ee1a080bb8c1c6c3ca8391a13a69080a2565b60405162461bcd60e51b815260048101879052601960248201527f414d4d3a20435446206e6f74207265736f6c76656420796574000000000000006044820152606490fd5b90508681813d8311611e32575b611e238183611ba3565b81010312610fdb575138611d88565b503d611e19565b505050509050565b92919083600052600260205260ff60086040600020015460a81c161561098357611e6b9293611efc565b90565b92919083600052600260205260ff60086040600020015460a81c161561098357611e6b9293611fad565b60005260026020526040600020611ecf611ec960048301546003611ec0600286015483611ca2565b94015490611ca2565b82611d06565b8015611ef357620f424091828102928184041490151715611c6c57611e6b91611c82565b50506207a12090565b8215611fa55760005260026020526040600020906004611f38611ec9611f228486612019565b939095015492611f328685611ca2565b93611ca2565b9184611f44848461203a565b9410611f875750611f8392611f758593611f6f85611f69620f424099611f7b97611d06565b92611d06565b9061203a565b90611d06565b60011c611c59565b0490565b604490856040519163315276c960e01b835260048301526024820152fd5b505050600090565b8215611fa55760005260026020526040600020611fe1611ec96004611f32611fd58686612019565b92909501549485611ca2565b90611fec828261203a565b92848210611f875750611f8392611f758593611f6f85612013620f424099611f7b97611ca2565b92611ca2565b91901561202d576002600383015492015490565b6003600283015492015490565b90801561205f57620f424091828102928184041490151715611c6c57611e6b91611c82565b505060009056fea2646970667358221220b212a72869401d7e40ac259771dad48571e72d802a94a37b6f23401383fa954c64736f6c63430008140033",
+  "devdoc": {
+    "details": "This contract preserves the core probability-weighted pricing logic from the original      speedrun-ethereum PredictionMarket.sol but adapts it to:       - Trade ERC-1155 CTF positions instead of ERC-20 tokens       - Use USDC (ERC-20) as collateral instead of ETH       - Support multiple markets (pools) without deploying a new contract per market       - Disable trading after the CTF condition is resolved PRICING ALGORITHM (preserved from original):  Buy/Sell price = initialTokenValue × avgProbability × amount  Where probability = targetTokensSold / totalTokensSold for both outcomes  avgProbability = (probabilityBefore + probabilityAfter) / 2 Each pool is identified by a `conditionId` derived from the CTF:  conditionId = keccak256(adapter, questionId, outcomeSlotCount)",
+    "errors": {
+      "OwnableInvalidOwner(address)": [
+        {
+          "details": "The owner is not a valid owner account. (eg. `address(0)`)"
+        }
+      ],
+      "OwnableUnauthorizedAccount(address)": [
+        {
+          "details": "The caller account is not authorized to perform an operation."
+        }
+      ],
+      "ReentrancyGuardReentrantCall()": [
+        {
+          "details": "Unauthorized reentrant call."
+        }
+      ]
+    },
+    "kind": "dev",
+    "methods": {
+      "buyTokens(bytes32,uint256,uint256,uint256)": {
+        "details": "Caller must have approved this contract for `maxUsdcIn` USDC.",
+        "params": {
+          "conditionId": "The pool's conditionId.",
+          "maxUsdcIn": "Maximum USDC willing to pay (slippage protection).",
+          "outcome": "0 = YES, 1 = NO.",
+          "tokenAmount": "Number of outcome tokens to buy (18 decimals)."
+        }
+      },
+      "createPool(bytes32,uint256,uint256,uint256,uint8,uint8)": {
+        "details": "Caller must have already approved this contract to spend `usdcAmount` USDC.      The USDC is split-positioned into YES/NO ERC-1155 tokens by the CTF;      then deposited into the pool as reserves.",
+        "params": {
+          "conditionId": "The CTF conditionId derived from keccak256(adapter, questionId, 2).",
+          "initialYesProbability": "Starting YES probability (1-99).",
+          "noTokenId": "ERC-1155 NO positionId from the CTF.",
+          "percentageToLock": "% of token supply locked to simulate initial probability (1-99).",
+          "usdcAmount": "Amount of USDC to provide as initial liquidity.",
+          "yesTokenId": "ERC-1155 YES positionId from the CTF."
+        }
+      },
+      "markResolved(bytes32)": {
+        "details": "Anyone can call this once the CTF condition has been resolved.      The actual payout distribution happens via ctf.redeemPositions()."
+      },
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
+      },
+      "sellTokens(bytes32,uint256,uint256,uint256)": {
+        "details": "Caller must have called ctf.setApprovalForAll(ammAddress, true) first.",
+        "params": {
+          "conditionId": "The pool's conditionId.",
+          "minUsdcOut": "Minimum USDC to receive (slippage protection).",
+          "outcome": "0 = YES, 1 = NO.",
+          "tokenAmount": "Number of outcome tokens to sell."
+        }
+      },
+      "supportsInterface(bytes4)": {
+        "details": "Returns true if this contract implements the interface defined by `interfaceId`. See the corresponding https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section] to learn more about how these ids are created. This function call must use less than 30 000 gas."
+      },
+      "transferOwnership(address)": {
+        "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      }
+    },
+    "title": "PredictionMarketAMM",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "addLiquidity(bytes32,uint256)": {
+        "notice": "LP owner adds more liquidity to an existing pool."
+      },
+      "allPools(uint256)": {
+        "notice": "List of all conditionIds for enumeration"
+      },
+      "buyTokens(bytes32,uint256,uint256,uint256)": {
+        "notice": "Buys outcome tokens with USDC."
+      },
+      "collateral()": {
+        "notice": "The collateral ERC-20 (USDC on Sepolia: 0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238)"
+      },
+      "createPool(bytes32,uint256,uint256,uint256,uint8,uint8)": {
+        "notice": "Creates an AMM pool for a CTF binary market and seeds initial liquidity."
+      },
+      "ctf()": {
+        "notice": "The Gnosis CTF contract"
+      },
+      "getBuyPrice(bytes32,uint256,uint256)": {
+        "notice": "Calculate USDC cost to buy `tokenAmount` outcome tokens.  Preserves the original probability-weighted price model."
+      },
+      "getSellPrice(bytes32,uint256,uint256)": {
+        "notice": "Calculate USDC received for selling `tokenAmount` outcome tokens."
+      },
+      "getYesProbability(bytes32)": {
+        "notice": "Returns current implied probability of YES outcome (scaled by PRECISION)."
+      },
+      "markResolved(bytes32)": {
+        "notice": "Marks a pool as resolved so trading is disabled."
+      },
+      "pools(bytes32)": {
+        "notice": "conditionId → Pool"
+      },
+      "removeLiquidity(bytes32,uint256)": {
+        "notice": "LP owner removes liquidity from an existing pool."
+      },
+      "sellTokens(bytes32,uint256,uint256,uint256)": {
+        "notice": "Sells outcome tokens for USDC."
+      },
+      "withdrawAfterResolution(bytes32)": {
+        "notice": "LP owner withdraws liquidity + trading revenue after resolution."
+      }
+    },
+    "notice": "AMM for trading YES/NO ERC-1155 CTF outcome tokens.",
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 8,
+        "contract": "contracts/PredictionMarketAMM.sol:PredictionMarketAMM",
+        "label": "_owner",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_address"
+      },
+      {
+        "astId": 1818,
+        "contract": "contracts/PredictionMarketAMM.sol:PredictionMarketAMM",
+        "label": "_status",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 4135,
+        "contract": "contracts/PredictionMarketAMM.sol:PredictionMarketAMM",
+        "label": "pools",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_mapping(t_bytes32,t_struct(Pool)4121_storage)"
+      },
+      {
+        "astId": 4139,
+        "contract": "contracts/PredictionMarketAMM.sol:PredictionMarketAMM",
+        "label": "allPools",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_array(t_bytes32)dyn_storage"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_array(t_bytes32)dyn_storage": {
+        "base": "t_bytes32",
+        "encoding": "dynamic_array",
+        "label": "bytes32[]",
+        "numberOfBytes": "32"
+      },
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_bytes32": {
+        "encoding": "inplace",
+        "label": "bytes32",
+        "numberOfBytes": "32"
+      },
+      "t_mapping(t_bytes32,t_struct(Pool)4121_storage)": {
+        "encoding": "mapping",
+        "key": "t_bytes32",
+        "label": "mapping(bytes32 => struct PredictionMarketAMM.Pool)",
+        "numberOfBytes": "32",
+        "value": "t_struct(Pool)4121_storage"
+      },
+      "t_struct(Pool)4121_storage": {
+        "encoding": "inplace",
+        "label": "struct PredictionMarketAMM.Pool",
+        "members": [
+          {
+            "astId": 4100,
+            "contract": "contracts/PredictionMarketAMM.sol:PredictionMarketAMM",
+            "label": "yesTokenId",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 4102,
+            "contract": "contracts/PredictionMarketAMM.sol:PredictionMarketAMM",
+            "label": "noTokenId",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 4104,
+            "contract": "contracts/PredictionMarketAMM.sol:PredictionMarketAMM",
+            "label": "yesReserve",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 4106,
+            "contract": "contracts/PredictionMarketAMM.sol:PredictionMarketAMM",
+            "label": "noReserve",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 4108,
+            "contract": "contracts/PredictionMarketAMM.sol:PredictionMarketAMM",
+            "label": "usdcCollateral",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 4110,
+            "contract": "contracts/PredictionMarketAMM.sol:PredictionMarketAMM",
+            "label": "lpTradingRevenue",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 4112,
+            "contract": "contracts/PredictionMarketAMM.sol:PredictionMarketAMM",
+            "label": "initialYesProbability",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 4114,
+            "contract": "contracts/PredictionMarketAMM.sol:PredictionMarketAMM",
+            "label": "percentageLocked",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 4116,
+            "contract": "contracts/PredictionMarketAMM.sol:PredictionMarketAMM",
+            "label": "lpOwner",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_address"
+          },
+          {
+            "astId": 4118,
+            "contract": "contracts/PredictionMarketAMM.sol:PredictionMarketAMM",
+            "label": "resolved",
+            "offset": 20,
+            "slot": "8",
+            "type": "t_bool"
+          },
+          {
+            "astId": 4120,
+            "contract": "contracts/PredictionMarketAMM.sol:PredictionMarketAMM",
+            "label": "exists",
+            "offset": 21,
+            "slot": "8",
+            "type": "t_bool"
+          }
+        ],
+        "numberOfBytes": "288"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

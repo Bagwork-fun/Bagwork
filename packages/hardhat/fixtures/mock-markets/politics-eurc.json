@@ -1,0 +1,9 @@
+{
+  "title": "Will EU headline inflation average below 2% in Q4 2026?",
+  "description": "Resolves YES if Eurostat HICP year-on-year headline inflation for the euro area averages below 2.0% across Oct–Dec 2026 releases. Otherwise NO.",
+  "outcomes": ["Yes", "No"],
+  "resolutionTime": 1798675200,
+  "category": "Politics",
+  "settlementAsset": "EURC",
+  "tags": ["ecb", "inflation"]
+}

@@ -1,0 +1,52 @@
+# dependencies
+node_modules
+**/node_modules
+
+# yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# eslint
+.eslintcache
+
+# misc
+.DS_Store
+*.log
+
+# IDE
+.vscode
+.idea
+
+# cli
+dist
+build
+out
+
+# Secrets and Sensitive files
+.env
+.env.*
+*.env*
+secrets.yaml
+**/secrets.yaml
+**/.env*
+**/secrets.yaml
+
+# Hardhat / Smart Contract artifacts
+artifacts
+cache
+typechain
+typechain-types
+coverage
+coverage.json
+
+# CRE Jobs temporary files
+**/tmp.js
+**/tmp.wasm
+**/tmp.*
+**/secrets.active.yaml
+**/.env.cre-run
+**/config.sim-run.json

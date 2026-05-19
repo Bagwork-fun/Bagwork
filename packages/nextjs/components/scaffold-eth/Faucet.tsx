@@ -1,15 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Address, AddressInput, Balance, EtherInput } from "@scaffold-ui/components";
+import { Dialog as DialogPrimitive } from "radix-ui";
 import { Address as AddressType, createWalletClient, http, parseEther } from "viem";
 import { hardhat } from "viem/chains";
 import { useAccount } from "wagmi";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
-import { useTargetNetwork, useTransactor } from "~~/hooks/scaffold-eth";
+import { Address, AddressInput, Balance, EtherInput } from "~~/components/scaffold-eth";
+import { useTransactor } from "~~/hooks/scaffold-eth";
 import { notification } from "~~/utils/scaffold-eth";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 
-// Account index to use from generated hardhat accounts.
 const FAUCET_ACCOUNT_INDEX = 0;
 
 const localWalletClient = createWalletClient({
@@ -17,15 +19,13 @@ const localWalletClient = createWalletClient({
   transport: http(),
 });
 
-/**
- * Faucet modal which lets you send ETH to any address.
- */
+/** Local-chain faucet modal: send ETH from the first prefunded Hardhat account. */
 export const Faucet = () => {
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const [inputAddress, setInputAddress] = useState<AddressType>();
   const [faucetAddress, setFaucetAddress] = useState<AddressType>();
   const [sendValue, setSendValue] = useState("");
-  const { targetNetwork } = useTargetNetwork();
 
   const { chain: ConnectedChain } = useAccount();
 
@@ -41,24 +41,22 @@ export const Faucet = () => {
           <>
             <p className="font-bold mt-0 mb-1">Cannot connect to local provider</p>
             <p className="m-0">
-              - Did you forget to run <code className="italic bg-base-300 text-base font-bold">yarn chain</code> ?
+              - Did you forget to run <code className="rounded bg-muted px-1 py-0.5 text-xs">yarn chain</code> ?
             </p>
-            <p className="mt-1 break-normal">
-              - Or you can change <code className="italic bg-base-300 text-base font-bold">targetNetwork</code> in{" "}
-              <code className="italic bg-base-300 text-base font-bold">scaffold.config.ts</code>
+            <p className="mt-1">
+              - Or update <code className="rounded bg-muted px-1 py-0.5 text-xs">targetNetwork</code> in{" "}
+              <code className="rounded bg-muted px-1 py-0.5 text-xs">scaffold.config.ts</code>
             </p>
           </>,
         );
         console.error("⚡️ ~ file: Faucet.tsx:getFaucetAddress ~ error", error);
       }
     };
-    getFaucetAddress();
+    void getFaucetAddress();
   }, []);
 
   const sendETH = async () => {
-    if (!faucetAddress || !inputAddress) {
-      return;
-    }
+    if (!faucetAddress || !inputAddress) return;
     try {
       setLoading(true);
       await faucetTxn({
@@ -66,69 +64,62 @@ export const Faucet = () => {
         value: parseEther(sendValue as `${number}`),
         account: faucetAddress,
       });
-      setLoading(false);
+      setOpen(false);
       setInputAddress(undefined);
       setSendValue("");
+      setLoading(false);
     } catch (error) {
       console.error("⚡️ ~ file: Faucet.tsx:sendETH ~ error", error);
       setLoading(false);
     }
   };
 
-  // Render only on local chain
   if (ConnectedChain?.id !== hardhat.id) {
     return null;
   }
 
   return (
-    <div>
-      <label htmlFor="faucet-modal" className="btn btn-primary btn-sm font-normal gap-1">
-        <BanknotesIcon className="h-4 w-4" />
-        <span>Faucet</span>
-      </label>
-      <input type="checkbox" id="faucet-modal" className="modal-toggle" />
-      <label htmlFor="faucet-modal" className="modal cursor-pointer">
-        <label className="modal-box relative">
-          {/* dummy input to capture event onclick on modal box */}
-          <input className="h-0 w-0 absolute top-0 left-0" />
-          <h3 className="text-xl font-bold mb-3">Local Faucet</h3>
-          <label htmlFor="faucet-modal" className="btn btn-ghost btn-sm btn-circle absolute right-3 top-3">
-            ✕
-          </label>
-          <div className="space-y-3">
-            <div className="flex space-x-4">
-              <div>
-                <span className="text-sm font-bold">From:</span>
-                <Address address={faucetAddress} onlyEnsOrAddress chain={targetNetwork} />
+    <DialogPrimitive.Root open={open} onOpenChange={setOpen}>
+      <Button size="sm" variant="secondary" type="button" className="shrink-0 gap-2" onClick={() => setOpen(true)}>
+        <BanknotesIcon className="size-4" />
+        Faucet
+      </Button>
+
+      <DialogPrimitive.Portal>
+        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/40 data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0" />
+        <DialogPrimitive.Content className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl border bg-card p-6 text-card-foreground shadow-xl ring-1 ring-border outline-none">
+          <div className="flex items-start justify-between gap-4 mb-4">
+            <h3 className="text-lg font-semibold">Local faucet</h3>
+            <Button variant="ghost" size="icon-sm" type="button" aria-label="Close" onClick={() => setOpen(false)}>
+              ✕
+            </Button>
+          </div>
+
+          <div className="space-y-4 text-sm">
+            <div className="flex flex-wrap gap-6">
+              <div className="min-w-0">
+                <span className="font-medium text-muted-foreground block text-xs uppercase tracking-wide">From</span>
+                <Address address={faucetAddress} onlyEnsOrAddress />
               </div>
               <div>
-                <span className="text-sm font-bold pl-3">Available:</span>
+                <span className="font-medium text-muted-foreground block text-xs uppercase tracking-wide">Available</span>
                 <Balance address={faucetAddress} />
               </div>
             </div>
-            <div className="flex flex-col space-y-3">
-              <AddressInput
-                placeholder="Destination Address"
-                value={inputAddress ?? ""}
-                onChange={value => setInputAddress(value as AddressType)}
-              />
-              <EtherInput
-                placeholder="Amount to send"
-                onValueChange={({ valueInEth }) => setSendValue(valueInEth)}
-                style={{ width: "100%" }}
-              />
-              <button className="h-10 btn btn-primary btn-sm px-2 rounded-full" onClick={sendETH} disabled={loading}>
-                {!loading ? (
-                  <BanknotesIcon className="h-6 w-6" />
-                ) : (
-                  <span className="loading loading-spinner loading-sm"></span>
-                )}
-                <span>Send</span>
-              </button>
-            </div>
+
+            <AddressInput
+              placeholder="Destination Address"
+              value={inputAddress ?? ""}
+              onChange={value => setInputAddress(value as AddressType)}
+            />
+            <EtherInput placeholder="Amount to send" value={sendValue} onChange={value => setSendValue(value)} />
+            <Button type="button" className="w-full gap-2" onClick={sendETH} disabled={loading}>
+              {loading ? <Spinner className="size-4" /> : <BanknotesIcon className="size-5" />}
+              Send ETH
+            </Button>
           </div>
-        </label>
-      </label>
-    </div>
+        </DialogPrimitive.Content>
+      </DialogPrimitive.Portal>
+    </DialogPrimitive.Root>
   );
 };

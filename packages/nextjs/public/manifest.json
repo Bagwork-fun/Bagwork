@@ -1,5 +1,5 @@
 {
-  "name": "Scaffold-ETH 2 DApp",
-  "description": "A DApp built with Scaffold-ETH",
-  "iconPath": "logo.svg"
+  "name": "Bagwork",
+  "description": "On-chain prediction markets",
+  "iconPath": "bagwork-logo.png"
 }

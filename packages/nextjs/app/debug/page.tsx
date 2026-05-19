@@ -11,12 +11,12 @@ const Debug: NextPage = () => {
   return (
     <>
       <DebugContracts />
-      <div className="text-center mt-8 bg-secondary p-10">
+      <div className="text-center mt-8 rounded-2xl border border-border bg-muted/40 px-10 py-10">
         <h1 className="text-4xl my-0">Debug Contracts</h1>
-        <p className="text-neutral">
+        <p className="text-muted-foreground">
           You can debug & interact with your deployed contracts here.
           <br /> Check{" "}
-          <code className="italic bg-base-300 text-base font-bold [word-spacing:-0.5rem] px-1">
+          <code className="rounded bg-muted px-1 py-0.5 text-xs font-mono font-bold [word-spacing:-0.35rem]">
             packages / nextjs / app / debug / page.tsx
           </code>{" "}
         </p>

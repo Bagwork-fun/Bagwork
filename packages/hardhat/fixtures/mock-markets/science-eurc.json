@@ -1,0 +1,9 @@
+{
+  "title": "Will Fusion Alpha Lab publish peer-reviewed breakeven results by Sep 2026?",
+  "description": "Resolves YES if Fusion Alpha Lab or a covered successor announces peer-reviewed experimental breakeven fusion results in Nature or Science by Sep 30, 2026. Otherwise NO.",
+  "outcomes": ["Yes", "No"],
+  "resolutionTime": 1759190400,
+  "category": "Science",
+  "settlementAsset": "EURC",
+  "tags": ["fusion", "research"]
+}

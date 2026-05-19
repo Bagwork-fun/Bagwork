@@ -1,0 +1,9 @@
+{
+  "title": "Will global passenger flights exceed 120M in the week of Dec 21–27, 2026?",
+  "description": "Resolves YES if aggregated global scheduled passenger flights for UTC week containing Dec 25, 2026 exceed 120 million according to the benchmark aviation tracker cited in appendix A of this market brief (linked off-chain). Otherwise NO.",
+  "outcomes": ["Yes", "No"],
+  "resolutionTime": 1796937600,
+  "category": "Other",
+  "settlementAsset": "USDC",
+  "tags": ["travel", "macro"]
+}

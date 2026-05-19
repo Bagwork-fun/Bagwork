@@ -27,16 +27,31 @@ async function main() {
   }
 
   const encryptedKey = process.env.DEPLOYER_PRIVATE_KEY_ENCRYPTED;
+  const rawKey = process.env.DEPLOYER_PRIVATE_KEY;
 
-  if (!encryptedKey) {
-    console.log("🚫️ You don't have a deployer account. Run `yarn generate` or `yarn account:import` first");
+  if (!encryptedKey && !rawKey) {
+    console.log("🚫️ You don't have a deployer account. Run `yarn generate` or `yarn account:import` first, or set DEPLOYER_PRIVATE_KEY in .env");
+    return;
+  }
+
+  // If raw key is provided, we can skip the decryption step
+  if (rawKey) {
+    const hardhat = spawn("hardhat", ["deploy", ...process.argv.slice(2)], {
+      stdio: "inherit",
+      env: process.env,
+      shell: process.platform === "win32",
+    });
+
+    hardhat.on("exit", code => {
+      process.exit(code || 0);
+    });
     return;
   }
 
   const pass = await password({ message: "Enter password to decrypt private key:" });
 
   try {
-    const wallet = await Wallet.fromEncryptedJson(encryptedKey, pass);
+    const wallet = await Wallet.fromEncryptedJson(encryptedKey!, pass);
     process.env.__RUNTIME_DEPLOYER_PRIVATE_KEY = wallet.privateKey;
 
     const hardhat = spawn("hardhat", ["deploy", ...process.argv.slice(2)], {

@@ -33,7 +33,7 @@ export const RPC_CHAIN_NAMES: Record<number, string> = {
   [chains.baseGoerli.id]: "base-goerli",
   [chains.baseSepolia.id]: "base-sepolia",
   [chains.celo.id]: "celo-mainnet",
-  [chains.celoSepolia.id]: "celo-sepolia",
+  [chains.celoAlfajores.id]: "celo-alfajores",
 };
 
 export const getAlchemyHttpUrl = (chainId: number) => {
@@ -45,6 +45,10 @@ export const getAlchemyHttpUrl = (chainId: number) => {
 export const NETWORKS_EXTRA_DATA: Record<string, ChainAttributes> = {
   [chains.hardhat.id]: {
     color: "#b8af0c",
+  },
+  [chains.arcTestnet.id]: {
+    color: ["#2775ca", "#6366f1"],
+    nativeCurrencyTokenAddress: "0x3600000000000000000000000000000000000000",
   },
   [chains.mainnet.id]: {
     color: "#ff8b9e",
@@ -87,7 +91,7 @@ export const NETWORKS_EXTRA_DATA: Record<string, ChainAttributes> = {
   [chains.celo.id]: {
     color: "#FCFF52",
   },
-  [chains.celoSepolia.id]: {
+  [chains.celoAlfajores.id]: {
     color: "#476520",
   },
 };
@@ -115,6 +119,23 @@ export function getBlockExplorerTxLink(chainId: number, txnHash: string) {
   }
 
   return `${blockExplorerTxURL}/tx/${txnHash}`;
+}
+
+/**
+ * Gives the block explorer URL for a given address.
+ * Defaults to Etherscan if no (wagmi) block explorer is configured for the network.
+ */
+export function getBlockExplorerAddressLink(network: chains.Chain, address: string) {
+  const blockExplorerBaseURL = network.blockExplorers?.default?.url;
+  if (network.id === chains.hardhat.id) {
+    return `/blockexplorer/address/${address}`;
+  }
+
+  if (!blockExplorerBaseURL) {
+    return `https://etherscan.io/address/${address}`;
+  }
+
+  return `${blockExplorerBaseURL}/address/${address}`;
 }
 
 /**

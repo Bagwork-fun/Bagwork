@@ -1,0 +1,9 @@
+{
+  "title": "Will Team Avalanche win the 2026 Continental Cup?",
+  "description": "Resolves YES if Team Avalanche wins the official 2026 Continental Cup final per league records. Otherwise NO.",
+  "outcomes": ["Yes", "No"],
+  "resolutionTime": 1798761600,
+  "category": "Sports",
+  "settlementAsset": "USDC",
+  "tags": ["soccer", "cup"]
+}

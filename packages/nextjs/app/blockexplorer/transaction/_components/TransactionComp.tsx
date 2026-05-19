@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Address } from "@scaffold-ui/components";
 import { Hash, Transaction, TransactionReceipt, formatEther, formatUnits } from "viem";
 import { hardhat } from "viem/chains";
 import { usePublicClient } from "wagmi";
+import { Address } from "~~/components/scaffold-eth";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
 import { decodeTransactionData, getFunctionDetails } from "~~/utils/scaffold-eth";
 import { replacer } from "~~/utils/scaffold-eth/common";
@@ -64,7 +64,7 @@ const TransactionComp = ({ txHash }: { txHash: Hash }) => {
                   <strong>From:</strong>
                 </td>
                 <td>
-                  <Address address={transaction.from} format="long" onlyEnsOrAddress chain={targetNetwork} />
+                  <Address address={transaction.from} format="long" onlyEnsOrAddress />
                 </td>
               </tr>
               <tr>
@@ -73,13 +73,11 @@ const TransactionComp = ({ txHash }: { txHash: Hash }) => {
                 </td>
                 <td>
                   {!receipt?.contractAddress ? (
-                    transaction.to && (
-                      <Address address={transaction.to} format="long" onlyEnsOrAddress chain={targetNetwork} />
-                    )
+                    transaction.to && <Address address={transaction.to} format="long" onlyEnsOrAddress />
                   ) : (
                     <span>
                       Contract Creation:
-                      <Address address={receipt.contractAddress} format="long" onlyEnsOrAddress chain={targetNetwork} />
+                      <Address address={receipt.contractAddress} format="long" onlyEnsOrAddress />
                     </span>
                   )}
                 </td>

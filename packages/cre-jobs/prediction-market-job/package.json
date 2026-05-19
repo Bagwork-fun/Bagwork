@@ -1,0 +1,23 @@
+{
+  "name": "prediction-market-cre-job",
+  "version": "1.0.0",
+  "description": "Chainlink CRE job for AI-powered CTF prediction market resolution via Gemini",
+  "main": "main.ts",
+  "scripts": {
+    "sync:contracts": "node scripts/sync-config-from-hardhat.cjs",
+    "simulate": "node scripts/run-cre-simulate-local.cjs",
+    "resolve": "node scripts/simulate-resolve.cjs",
+    "resolve:broadcast": "node scripts/simulate-resolve.cjs --broadcast",
+    "deploy": "cre workflow deploy ./ --target staging",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@chainlink/cre-sdk": "^1.1.4",
+    "viem": "^2.0.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.4.0"
+  }
+}
